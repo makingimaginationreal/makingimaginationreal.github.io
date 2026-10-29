@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BY47VM8M58"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BY47VM8M58');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MIR Studio 고객지원</title>
@@ -69,7 +77,7 @@ p { margin: 0; }
 .btn .arr { font-family: var(--body); }
 
 /* 첫 화면 */
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px; align-items: center; padding-block: 40px 56px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 32px; align-items: center; padding-block: 40px 56px; }
 .hero h1 { font: 400 clamp(2.6rem, 1.6rem + 4vw, 4.4rem)/1.12 var(--hand); }
 .hero .sign { font: 500 1.05rem/1.2 var(--latin); letter-spacing: .12em; color: var(--muted); margin: 14px 0 22px; text-transform: uppercase; }
 .hero .lede { color: var(--muted); max-width: 30em; margin-bottom: 24px; }
@@ -87,6 +95,15 @@ p { margin: 0; }
 .memo h2 svg { flex: none; }
 .memo .catch { font: 700 1.35rem/1.45 var(--title); }
 .memo p { color: var(--muted); }
+/* 설명문: 한 줄에 한 문장, 문장 첫머리 들여쓰기 */
+.sents span { display: block; text-indent: 1em; overflow: hidden; }
+@media (min-width: 821px) {
+  .sents span { white-space: nowrap; }
+  .hero .lede.sents { font-size: .95rem; max-width: none; }
+  .memo .sents { font-size: .98rem; }
+  .memo { max-width: 34rem; }
+}
+@media (max-width: 1120px) { .hero .wrap { grid-template-columns: 1fr; } }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .tags li { font: 700 .95rem/1 var(--title); padding: 7px 12px; border-radius: 8px; background: var(--sticky); transform: rotate(-1deg); }
 .tags li:nth-child(even) { transform: rotate(1.2deg); }
@@ -156,6 +173,8 @@ section.band { padding-block: 56px; }
 .news .pic.sticky { background: var(--sticky); display: grid; place-items: center; font: 700 1.6rem/1.25 var(--latin); text-align: center; padding: 16px; }
 .news .pic.od { background: var(--sea); }
 .news .pic.jv { background: var(--river); }
+.news .pic.app { display: grid; place-items: center; }
+.news .pic.app img { width: 52%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 22%; box-shadow: 0 10px 18px -8px rgba(0,0,0,.45); }
 .news .meta { padding: 14px 16px 16px; display: grid; gap: 4px; align-content: start; }
 .news .meta strong { font: 700 1.12rem/1.35 var(--title); }
 .news .meta time { font-size: .88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -258,6 +277,23 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
   <nav aria-label="바닥 메뉴"><a href="support.html">고객지원</a><a href="privacy.html">개인정보처리방침</a><a href="index.html#contact">문의</a></nav>
 </div></footer>
 <script>
+// 설명문 한 줄에 한 문장: 넓은 화면에서 문장이 칸보다 길면 글자 크기를 조금씩 줄여 한 줄에 맞춘다
+(function () {
+  function fit() {
+    document.querySelectorAll('.sents').forEach(function (p) {
+      p.style.fontSize = '';
+      var spans = p.querySelectorAll('span');
+      if (!spans.length || getComputedStyle(spans[0]).whiteSpace !== 'nowrap') return;
+      var size = parseFloat(getComputedStyle(p).fontSize), n = 0;
+      var over = function () { return Array.prototype.some.call(spans, function (s) { return s.scrollWidth > s.clientWidth + 1; }); };
+      while (over() && size > 12 && n++ < 40) { size -= 0.5; p.style.fontSize = size + 'px'; }
+    });
+  }
+  window.addEventListener('load', fit);
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+})();
 document.querySelectorAll('[data-copy]').forEach(function (b) {
   b.addEventListener('click', function () {
     var t = b.getAttribute('data-copy'), o = b.textContent;

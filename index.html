@@ -103,6 +103,7 @@ p { margin: 0; }
   .sents span { white-space: nowrap; }
   .hero .lede.sents { font-size: .95rem; max-width: none; }
   .memo .sents { font-size: .98rem; }
+  .memo .catch { white-space: nowrap; font-size: 1.2rem; }
   .memo { max-width: 34rem; }
 }
 @media (max-width: 1120px) { .hero .wrap { grid-template-columns: 1fr; } }
@@ -259,8 +260,8 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
 
   <article class="board odysail" aria-labelledby="t-od">
     <div class="memo">
-      <h2 id="t-od"><svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6v26" stroke="#2b2620" stroke-width="2.5" stroke-linecap="round"/><span class="s"><path d="M25 8c8 6 12 13 12 21H25z" fill="#c4693a" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M23 12c-6 5-9 11-9 17h9z" fill="#f3e3c4" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M8 33h32l-5 8H13z" fill="#1d4a6b" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M4 44c4-2 6-2 10 0s6 2 10 0 6-2 10 0 6 2 10 0" fill="none" stroke="#3b8bc4" stroke-width="2.4" stroke-linecap="round"/></svg>오디세일</h2>
-      <p class="catch">신화 속 바다에서,<br>나만의 항해를 시작하세요.</span></p>
+      <h2 id="t-od"><svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6v26" stroke="#2b2620" stroke-width="2.5" stroke-linecap="round"/><path d="M25 8c8 6 12 13 12 21H25z" fill="#c4693a" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M23 12c-6 5-9 11-9 17h9z" fill="#f3e3c4" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M8 33h32l-5 8H13z" fill="#1d4a6b" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M4 44c4-2 6-2 10 0s6 2 10 0 6-2 10 0 6 2 10 0" fill="none" stroke="#3b8bc4" stroke-width="2.4" stroke-linecap="round"/></svg>오디세일</h2>
+      <p class="catch">신화 속 바다에서, 나만의 항해를 시작하세요.</p>
       <p class="sents"><span>트로이 전쟁은 끝났어요.</span><span>키클롭스의 바위, 세이렌의 노래, 스킬라의 촉수, 제우스의 벼락을 피하세요.</span><span>아홉 바다를 건너 고향 이타카로 돌아가세요.</span></p>
       <ul class="tags"><li>아홉 해역</li><li>쉬운·일반 버전</li><li>키보드·터치</li></ul>
       <div class="actions"><a class="btn go" href="games/odysail.html">지금 플레이하기 <span class="arr">→</span></a><a class="btn" href="odysail.html">콘텐츠 소개 보기</a></div>
@@ -274,7 +275,7 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
   <article class="board jumpingvoca" aria-labelledby="t-jv">
     <div class="memo">
       <h2 id="t-jv"><span class="hl">점핑보카</span></h2>
-      <p class="catch">놀면서 배우는 영어 단어,<br>오늘도 한 칸 더!</p>
+      <p class="catch">놀면서 배우는 영단어, 오늘도 한 칸 더!</p>
       <p class="sents"><span>외우고 싶은 영단어를 붙여 넣으면 징검다리가 만들어져요.</span><span>3초 안에 맞는 뜻을 골라 기린 미르를 건너편까지 보내 주세요.</span><span>뒤에서는 사자 산예가 쫓아와요.</span></p>
       <ul class="tags"><li>내 단어 최대 1,000개</li><li>하트 3개</li><li>오답 노트</li></ul>
       <div class="actions"><a class="btn go" href="games/jumpingvoca.html">지금 플레이하기 <span class="arr">→</span></a><a class="btn" href="jumpingvoca.html">콘텐츠 소개 보기</a></div>
@@ -345,6 +346,15 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
       while (over() && size > 12 && n++ < 40) { size -= 0.5; p.style.fontSize = size + 'px'; }
     });
   }
+  function fitCatch() {
+    document.querySelectorAll('.memo .catch').forEach(function (c) {
+      c.style.fontSize = '';
+      if (getComputedStyle(c).whiteSpace !== 'nowrap') return;
+      var size = parseFloat(getComputedStyle(c).fontSize), n = 0;
+      while (c.scrollWidth > c.clientWidth + 1 && size > 13 && n++ < 40) { size -= 0.5; c.style.fontSize = size + 'px'; }
+    });
+  }
+  var _fit = fit; fit = function () { _fit(); fitCatch(); };
   window.addEventListener('load', fit);
   window.addEventListener('resize', fit);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);

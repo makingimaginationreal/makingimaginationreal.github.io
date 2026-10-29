@@ -97,6 +97,8 @@ p { margin: 0; }
 .memo p { color: var(--muted); }
 /* 설명문: 한 줄에 한 문장, 문장 첫머리 들여쓰기 */
 .sents span { display: block; text-indent: 1em; overflow: hidden; }
+.s { display: block; text-indent: 1em; }
+.letters dd .s { color: inherit; }
 @media (min-width: 821px) {
   .sents span { white-space: nowrap; }
   .hero .lede.sents { font-size: .95rem; max-width: none; }
@@ -249,20 +251,20 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
     <div class="phone"><img src="img/od-start.webp" width="540" height="1169" alt="오디세일 시작 화면"></div>
     <div class="phone"><img src="img/od-play.webp" width="540" height="1169" alt="오디세일 플레이 화면"></div>
   </div>
-  <p>트로이 전쟁이 끝나고, 오디세우스는 고향 이타카로 돌아가야 합니다. 신들의 시련이 기다리는 아홉 바다를 건너, 마지막에는 활시위를 당겨 도끼 12개를 꿰뚫으세요.</p>
+  <p><span class="s">트로이 전쟁이 끝나고, 오디세우스는 고향 이타카로 돌아가야 합니다.</span><span class="s">신들의 시련이 기다리는 아홉 바다를 건너, 마지막에는 활시위를 당겨 도끼 12개를 꿰뚫으세요.</span></p>
   <div class="actions"><a class="btn go" href="games/odysail.html">지금 플레이하기 <span class="arr">→</span></a></div>
 
   <h2>아홉 바다</h2>
   <div class="tablewrap"><table><thead><tr><th>해역</th><th>시련</th></tr></thead><tbody>
-    <tr><td>키클롭스의 섬</td><td>눈먼 거인이 바위를 던져요. 바위마다 크기와 속도가 다르고, 클수록 아파요.</td></tr>
-    <tr><td>라이스트리고네스의 섬</td><td>거인족이 창을 던지고, 좁은 틈만 남기고 양쪽을 막아요.</td></tr>
-    <tr><td>키르케의 섬</td><td>마법 음식에 맞으면 저주에 걸려요. 하늘색 물약으로 해독하세요.</td></tr>
-    <tr><td>저승의 섬</td><td>불화살이 통하지 않는 망령의 배가 나타나요.</td></tr>
-    <tr><td>세이렌의 섬</td><td>노래가 들리는 동안 방향키가 뒤섞여요.</td></tr>
-    <tr><td>스킬라와 카리브디스의 섬</td><td>촉수가 내리찍고, 소용돌이가 배를 삼켜요.</td></tr>
-    <tr><td>태양신의 섬</td><td>제우스의 벼락이 사방에서 날아와요.</td></tr>
-    <tr><td>칼립소의 섬</td><td>태풍이 배를 쫓아와요.</td></tr>
-    <tr><td>이타카의 섬</td><td>불화살로 도끼 12개를 모두 꿰뚫으면 귀향 성공!</td></tr>
+    <tr><td>키클롭스의 섬</td><td><span class="s">눈먼 거인이 바위를 던져요.</span><span class="s">바위마다 크기와 속도가 다르고, 클수록 아파요.</span></td></tr>
+    <tr><td>라이스트리고네스의 섬</td><td><span class="s">거인족이 창을 던지고, 좁은 틈만 남기고 양쪽을 막아요.</span></td></tr>
+    <tr><td>키르케의 섬</td><td><span class="s">마법 음식에 맞으면 저주에 걸려요.</span><span class="s">하늘색 물약으로 해독하세요.</span></td></tr>
+    <tr><td>저승의 섬</td><td><span class="s">불화살이 통하지 않는 망령의 배가 나타나요.</span></td></tr>
+    <tr><td>세이렌의 섬</td><td><span class="s">노래가 들리는 동안 방향키가 뒤섞여요.</span></td></tr>
+    <tr><td>스킬라와 카리브디스의 섬</td><td><span class="s">촉수가 내리찍고, 소용돌이가 배를 삼켜요.</span></td></tr>
+    <tr><td>태양신의 섬</td><td><span class="s">제우스의 벼락이 사방에서 날아와요.</span></td></tr>
+    <tr><td>칼립소의 섬</td><td><span class="s">태풍이 배를 쫓아와요.</span></td></tr>
+    <tr><td>이타카의 섬</td><td><span class="s">불화살로 도끼 12개를 모두 꿰뚫으면 귀향 성공!</span></td></tr>
   </tbody></table></div>
 
   <h2>조작법</h2>
@@ -275,10 +277,10 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
   </tbody></table></div>
 
   <h2>자주 묻는 질문</h2>
-  <details><summary>쉬운 버전과 일반 버전은 무엇이 다른가요?</summary><p>쉬운 버전은 배가 부서져도 그 바다부터 다시 시작해요. 일반 버전은 처음 바다부터 다시 시작해요. 최고 점수는 버전마다 따로 기록돼요.</p></details>
-  <details><summary>선체가 줄어들면 어떻게 회복하나요?</summary><p>바다에 떠 있는 트로이 목마를 주우면 선체가 고쳐져요.</p></details>
-  <details><summary>세이렌의 바다에서 배가 이상하게 움직여요</summary><p>세이렌의 노래가 들리는 동안에는 방향키가 뒤섞여요. 노래가 끝나면 원래대로 돌아와요.</p></details>
-  <p class="meta">다른 문제가 있으신가요? <a href="support.html">고객지원</a>에서 문의해 주세요.</p>
+  <details><summary>쉬운 버전과 일반 버전은 무엇이 다른가요?</summary><p><span class="s">쉬운 버전은 배가 부서져도 그 바다부터 다시 시작해요.</span><span class="s">일반 버전은 처음 바다부터 다시 시작해요.</span><span class="s">최고 점수는 버전마다 따로 기록돼요.</span></p></details>
+  <details><summary>선체가 줄어들면 어떻게 회복하나요?</summary><p><span class="s">바다에 떠 있는 트로이 목마를 주우면 선체가 고쳐져요.</span></p></details>
+  <details><summary>세이렌의 바다에서 배가 이상하게 움직여요</summary><p><span class="s">세이렌의 노래가 들리는 동안에는 방향키가 뒤섞여요.</span><span class="s">노래가 끝나면 원래대로 돌아와요.</span></p></details>
+  <p class="meta"><span class="s">다른 문제가 있으신가요? <a href="support.html">고객지원</a>에서 문의해 주세요.</span></p>
 </article></div></main>
 <footer><div class="wrap">
   <span><b>MIR</b>© 2026 MIR Studio · Making Imagination Real</span>

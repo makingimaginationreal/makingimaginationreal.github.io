@@ -97,6 +97,8 @@ p { margin: 0; }
 .memo p { color: var(--muted); }
 /* 설명문: 한 줄에 한 문장, 문장 첫머리 들여쓰기 */
 .sents span { display: block; text-indent: 1em; overflow: hidden; }
+.s { display: block; text-indent: 1em; }
+.letters dd .s { color: inherit; }
 @media (min-width: 821px) {
   .sents span { white-space: nowrap; }
   .hero .lede.sents { font-size: .95rem; max-width: none; }
@@ -253,12 +255,12 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
 </div></section>
 
 <section class="band" id="games"><div class="wrap">
-  <div class="shead"><h2>MIR의 <span class="hl">게임</span></h2><p>PC와 휴대폰 브라우저 어디서든 돌아가요.</p></div>
+  <div class="shead"><h2>MIR의 <span class="hl">게임</span></h2><p><span class="s">PC와 휴대폰 브라우저 어디서든 돌아가요.</span></p></div>
 
   <article class="board odysail" aria-labelledby="t-od">
     <div class="memo">
-      <h2 id="t-od"><svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6v26" stroke="#2b2620" stroke-width="2.5" stroke-linecap="round"/><path d="M25 8c8 6 12 13 12 21H25z" fill="#c4693a" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M23 12c-6 5-9 11-9 17h9z" fill="#f3e3c4" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M8 33h32l-5 8H13z" fill="#1d4a6b" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M4 44c4-2 6-2 10 0s6 2 10 0 6-2 10 0 6 2 10 0" fill="none" stroke="#3b8bc4" stroke-width="2.4" stroke-linecap="round"/></svg>오디세일</h2>
-      <p class="catch">신화 속 바다에서,<br>나만의 항해를 시작하세요.</p>
+      <h2 id="t-od"><svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6v26" stroke="#2b2620" stroke-width="2.5" stroke-linecap="round"/><span class="s"><path d="M25 8c8 6 12 13 12 21H25z" fill="#c4693a" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M23 12c-6 5-9 11-9 17h9z" fill="#f3e3c4" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M8 33h32l-5 8H13z" fill="#1d4a6b" stroke="#2b2620" stroke-width="2" stroke-linejoin="round"/><path d="M4 44c4-2 6-2 10 0s6 2 10 0 6-2 10 0 6 2 10 0" fill="none" stroke="#3b8bc4" stroke-width="2.4" stroke-linecap="round"/></svg>오디세일</h2>
+      <p class="catch">신화 속 바다에서,<br>나만의 항해를 시작하세요.</span></p>
       <p class="sents"><span>트로이 전쟁은 끝났어요.</span><span>키클롭스의 바위, 세이렌의 노래, 스킬라의 촉수, 제우스의 벼락을 피하세요.</span><span>아홉 바다를 건너 고향 이타카로 돌아가세요.</span></p>
       <ul class="tags"><li>아홉 해역</li><li>쉬운·일반 버전</li><li>키보드·터치</li></ul>
       <div class="actions"><a class="btn go" href="games/odysail.html">지금 플레이하기 <span class="arr">→</span></a><a class="btn" href="odysail.html">게임 소개 보기</a></div>
@@ -295,24 +297,24 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
   <div class="story">
     <div class="text">
       <h2 style="font:400 clamp(2.4rem,1.9rem + 2vw,3.2rem)/1 var(--hand)"><span class="hl">MIR</span> 이야기</h2>
-      <p>MIR는 작지만 특별한 아이디어로 일상의 작은 즐거움을 만드는 게임 스튜디오예요. 누구나 쉽게 즐길 수 있는 게임으로, 더 많은 사람들의 오늘이 조금 더 행복해지길 바라요. 이름은 세 단어의 첫 글자에서 왔어요.</p>
+      <p><span class="s">MIR는 작지만 특별한 아이디어로 일상의 작은 즐거움을 만드는 게임 스튜디오예요.</span><span class="s">누구나 쉽게 즐길 수 있는 게임으로, 더 많은 사람들의 오늘이 조금 더 행복해지길 바라요.</span><span class="s">이름은 세 단어의 첫 글자에서 왔어요.</span></p>
       <dl class="letters">
-        <div><dt>M</dt><dd><strong>Making · 끝까지 만들어요</strong><span>떠오른 아이디어를 기획부터 완성까지 하나의 게임으로 만들어요.</span></dd></div>
-        <div><dt>I</dt><dd><strong>Imagination · 상상해요</strong><span>작은 상상에서 새로운 놀이가 시작돼요.</span></dd></div>
-        <div><dt>R</dt><dd><strong>Real · 즐거움을 현실로 옮겨요</strong><span>상상이 실제 플레이가 되는 순간을 만들어요.</span></dd></div>
+        <div><dt>M</dt><dd><strong>Making · 끝까지 만들어요</strong><span class="s">떠오른 아이디어를 기획부터 완성까지 하나의 게임으로 만들어요.</span></dd></div>
+        <div><dt>I</dt><dd><strong>Imagination · 상상해요</strong><span class="s">작은 상상에서 새로운 놀이가 시작돼요.</span></dd></div>
+        <div><dt>R</dt><dd><strong>Real · 즐거움을 현실로 옮겨요</strong><span class="s">상상이 실제 플레이가 되는 순간을 만들어요.</span></dd></div>
       </dl>
-      <p class="store">점핑보카의 기린 이름도 미르예요.</p>
+      <p class="store"><span class="s">점핑보카의 기린 이름도 미르예요.</span></p>
     </div>
     <figure class="polaroid"><span class="tape" aria-hidden="true"></span><img src="img/polaroid.webp" width="264" height="235" loading="lazy" alt="창가에 놓인 웃는 노란 머그잔과 Good Game Good Day MIR 메모"><figcaption>Good Game, Good Day :)</figcaption></figure>
   </div>
 </div></section>
 
 <section class="band" id="news"><div class="wrap">
-  <div class="shead"><h2>소식</h2><p>MIR의 새 소식과 업데이트를 여기에 적어 둘게요.</p></div>
+  <div class="shead"><h2>소식</h2><p><span class="s">MIR의 새 소식과 업데이트를 여기에 적어 둘게요.</span></p></div>
   <ul class="news">
-    <li><div class="pic sticky">MIR<br>Making<br>Imagination Real</div><div class="meta"><strong>MIR Studio 홈페이지를 열었어요</strong><time datetime="2026-10-29">2026. 10. 29</time><p>게임, 고객지원, 개인정보처리방침을 한곳에 모았어요.</p></div></li>
-    <li><div class="pic od app"><img src="img/odysail-icon.webp" width="512" height="512" loading="lazy" alt="오디세일 앱 아이콘"></div><div class="meta"><strong>오디세일 웹 버전 공개</strong><time datetime="2026-10-29">2026. 10. 29</time><p>브라우저에서 바로 아홉 바다 항해를 시작할 수 있어요.</p></div></li>
-    <li><div class="pic jv app"><img src="img/jumpingvoca-icon.webp" width="512" height="512" loading="lazy" alt="점핑보카 앱 아이콘"></div><div class="meta"><strong>점핑보카 웹 버전 공개</strong><time datetime="2026-10-29">2026. 10. 29</time><p>내 단어를 붙여 넣고 바로 징검다리를 건너 보세요.</p></div></li>
+    <li><div class="pic sticky">MIR<br>Making<br>Imagination Real</div><div class="meta"><strong>MIR Studio 홈페이지를 열었어요</strong><time datetime="2026-10-29">2026. 10. 29</time><p><span class="s">게임, 고객지원, 개인정보처리방침을 한곳에 모았어요.</span></p></div></li>
+    <li><div class="pic od app"><img src="img/odysail-icon.webp" width="512" height="512" loading="lazy" alt="오디세일 앱 아이콘"></div><div class="meta"><strong>오디세일 웹 버전 공개</strong><time datetime="2026-10-29">2026. 10. 29</time><p><span class="s">브라우저에서 바로 아홉 바다 항해를 시작할 수 있어요.</span></p></div></li>
+    <li><div class="pic jv app"><img src="img/jumpingvoca-icon.webp" width="512" height="512" loading="lazy" alt="점핑보카 앱 아이콘"></div><div class="meta"><strong>점핑보카 웹 버전 공개</strong><time datetime="2026-10-29">2026. 10. 29</time><p><span class="s">내 단어를 붙여 넣고 바로 징검다리를 건너 보세요.</span></p></div></li>
   </ul>
 </div></section>
 
@@ -320,7 +322,7 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
   <div class="contact">
     <p class="contact-eye">Contact MIR</p>
     <h2>여러분의 이야기를 기다려요.</h2>
-    <p>작은 의견 하나가 새로운 상상의 시작이 될 수 있어요.<br>게임을 즐기며 발견한 불편한 점부터 재미있는 아이디어, 협업 및 이용 문의까지 여러분의 이야기를 언제나 기다리고 있습니다.</p>
+    <p><span class="s">작은 의견 하나가 새로운 상상의 시작이 될 수 있어요.</span><span class="s">게임을 즐기며 발견한 불편한 점부터 재미있는 아이디어, 협업 및 이용 문의까지 여러분의 이야기를 언제나 기다리고 있습니다.</span></p>
     <div class="mailbox"><code id="mail-home">makingimaginationreal@gmail.com</code><button class="copy" type="button" data-copy="makingimaginationreal@gmail.com" aria-controls="mail-home">주소 복사</button></div>
     <div class="links"><a href="mailto:makingimaginationreal@gmail.com">메일 앱으로 쓰기</a><a href="support.html">자주 묻는 질문</a><a href="privacy.html">개인정보처리방침</a></div>
   </div>

@@ -97,6 +97,8 @@ p { margin: 0; }
 .memo p { color: var(--muted); }
 /* 설명문: 한 줄에 한 문장, 문장 첫머리 들여쓰기 */
 .sents span { display: block; text-indent: 1em; overflow: hidden; }
+.s { display: block; text-indent: 1em; }
+.letters dd .s { color: inherit; }
 @media (min-width: 821px) {
   .sents span { white-space: nowrap; }
   .hero .lede.sents { font-size: .95rem; max-width: none; }
@@ -249,23 +251,23 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
     <div class="phone"><img src="img/jv-start.webp" width="540" height="1169" alt="점핑보카 시작 화면"></div>
     <div class="phone"><img src="img/jv-play.webp" width="540" height="1169" alt="점핑보카 플레이 화면"></div>
   </div>
-  <p>외우고 싶은 영단어를 입력하면 그 단어들로 징검다리가 만들어져요. 3초 안에 올바른 뜻을 골라 기린 미르를 건너편까지 보내 주세요. 틀리면 풍덩, 뒤에서는 사자 산예가 쫓아와요.</p>
+  <p><span class="s">외우고 싶은 영단어를 입력하면 그 단어들로 징검다리가 만들어져요.</span><span class="s">3초 안에 올바른 뜻을 골라 기린 미르를 건너편까지 보내 주세요.</span><span class="s">틀리면 풍덩, 뒤에서는 사자 산예가 쫓아와요.</span></p>
   <div class="actions"><a class="btn go" href="games/jumpingvoca.html">지금 플레이하기 <span class="arr">→</span></a></div>
 
   <h2>이렇게 플레이해요</h2>
   <ol>
-    <li>한 줄에 영단어 하나와 그 뜻을 적어요. 예: <code>apple 사과</code></li>
-    <li>문제 방식을 골라요: 영어 보고 뜻 고르기, 뜻 보고 영어 고르기, 둘을 1:1로 섞기</li>
-    <li><b>점핑 시작!</b>을 누르고, 3초 안에 맞는 징검다리를 눌러 건너요.</li>
-    <li>틀리거나 시간이 지나면 하트가 하나씩 줄어요. 하트 3개를 다 잃으면 산예에게 잡혀요.</li>
-    <li>결과 화면에서 이번 판에 틀린 단어만 모아 다시 연습할 수 있어요.</li>
+    <li><span class="s">한 줄에 영단어 하나와 그 뜻을 적어요.</span><span class="s">예: <code>apple 사과</code></span></li>
+    <li><span class="s">문제 방식을 골라요: 영어 보고 뜻 고르기, 뜻 보고 영어 고르기, 둘을 1:1로 섞기</span></li>
+    <li><span class="s"><b>점핑 시작!</b>을 누르고, 3초 안에 맞는 징검다리를 눌러 건너요.</span></li>
+    <li><span class="s">틀리거나 시간이 지나면 하트가 하나씩 줄어요.</span><span class="s">하트 3개를 다 잃으면 산예에게 잡혀요.</span></li>
+    <li><span class="s">결과 화면에서 이번 판에 틀린 단어만 모아 다시 연습할 수 있어요.</span></li>
   </ol>
 
   <h2>자주 묻는 질문</h2>
-  <details><summary>단어는 몇 개까지 넣을 수 있나요?</summary><p>최소 2개, 최대 1,000개까지 넣을 수 있어요. AI나 인터넷에서 복사한 목록을 그대로 붙여 넣어도 번호, 발음 기호, 이모지를 알아서 정리해요.</p></details>
-  <details><summary>저장된 영단어장은 몇 개까지 되나요?</summary><p>30개까지 저장돼요. 가득 차면 안 쓰는 영단어장을 ✕로 지운 뒤 다시 시작해 주세요. 불러온 영단어장을 고쳐서 플레이하면 그 영단어장에 저장되고, 취소 버튼을 누르면 고친 내용은 저장되지 않아요.</p></details>
-  <details><summary>점수는 어떻게 계산되나요?</summary><p>직접 맞힌 단어 수가 점수예요. 틀린 뒤 정답 징검다리로 자동으로 올라간 칸은 점수에 들어가지 않아요.</p></details>
-  <p class="meta">다른 문제가 있으신가요? <a href="support.html">고객지원</a>에서 문의해 주세요.</p>
+  <details><summary>단어는 몇 개까지 넣을 수 있나요?</summary><p><span class="s">최소 2개, 최대 1,000개까지 넣을 수 있어요.</span><span class="s">AI나 인터넷에서 복사한 목록을 그대로 붙여 넣어도 번호, 발음 기호, 이모지를 알아서 정리해요.</span></p></details>
+  <details><summary>저장된 영단어장은 몇 개까지 되나요?</summary><p><span class="s">30개까지 저장돼요.</span><span class="s">가득 차면 안 쓰는 영단어장을 ✕로 지운 뒤 다시 시작해 주세요.</span><span class="s">불러온 영단어장을 고쳐서 플레이하면 그 영단어장에 저장되고, 취소 버튼을 누르면 고친 내용은 저장되지 않아요.</span></p></details>
+  <details><summary>점수는 어떻게 계산되나요?</summary><p><span class="s">직접 맞힌 단어 수가 점수예요.</span><span class="s">틀린 뒤 정답 징검다리로 자동으로 올라간 칸은 점수에 들어가지 않아요.</span></p></details>
+  <p class="meta"><span class="s">다른 문제가 있으신가요? <a href="support.html">고객지원</a>에서 문의해 주세요.</span></p>
 </article></div></main>
 <footer><div class="wrap">
   <span><b>MIR</b>© 2026 MIR Studio · Making Imagination Real</span>

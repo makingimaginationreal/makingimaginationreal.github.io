@@ -97,6 +97,8 @@ p { margin: 0; }
 .memo p { color: var(--muted); }
 /* 설명문: 한 줄에 한 문장, 문장 첫머리 들여쓰기 */
 .sents span { display: block; text-indent: 1em; overflow: hidden; }
+.s { display: block; text-indent: 1em; }
+.letters dd .s { color: inherit; }
 @media (min-width: 821px) {
   .sents span { white-space: nowrap; }
   .hero .lede.sents { font-size: .95rem; max-width: none; }
@@ -244,32 +246,32 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
 <main class="doc"><div class="wrap"><article>
   <p class="eyebrow">Support</p>
   <h1>고객지원</h1>
-  <p class="meta">MIR Studio의 게임과 서비스를 이용해 주셔서 감사합니다. 이용 중 궁금한 점이나 불편한 점이 있으시면 먼저 아래 도움말을 확인해 주세요. 원하시는 답변을 찾지 못하셨다면 이메일로 문의해 주시기 바랍니다.</p>
+  <p class="meta"><span class="s">MIR Studio의 게임과 서비스를 이용해 주셔서 감사합니다.</span><span class="s">이용 중 궁금한 점이나 불편한 점이 있으시면 먼저 아래 도움말을 확인해 주세요.</span><span class="s">원하시는 답변을 찾지 못하셨다면 이메일로 문의해 주시기 바랍니다.</span></p>
   <div class="mailbox"><code id="mail-support">makingimaginationreal@gmail.com</code><button class="copy" type="button" data-copy="makingimaginationreal@gmail.com" aria-controls="mail-support">주소 복사</button></div>
 
   <h2>게임별 도움말</h2>
-  <p>게임 방법, 조작법, 기능 안내는 각 게임 소개 페이지에서 확인하실 수 있습니다.</p>
+  <p><span class="s">게임 방법, 조작법, 기능 안내는 각 게임 소개 페이지에서 확인하실 수 있습니다.</span></p>
   <div class="gamelist">
     <a href="odysail.html"><strong>오디세일</strong><span>그리스 신화 항해 아케이드</span></a>
     <a href="jumpingvoca.html"><strong>점핑보카</strong><span>영단어 징검다리 학습 게임</span></a>
   </div>
 
   <h2>자주 묻는 질문</h2>
-  <details><summary>게임 기록이나 저장한 내용이 사라졌어요</summary><p>MIR Studio의 게임은 회원가입 없이 이용할 수 있도록, 모든 기록을 서버가 아닌 이용자의 기기(앱 또는 브라우저) 안에만 저장합니다. 앱을 삭제하거나 브라우저의 방문 기록·사이트 데이터를 지우는 경우, 또는 시크릿 모드로 이용하는 경우에는 기록이 남지 않으며, 삭제된 기록은 복구할 수 없습니다.</p></details>
-  <details><summary>다른 기기로 기록을 옮길 수 있나요?</summary><p>현재는 기기 간 기록 이동을 지원하지 않습니다. 개인정보와 기록이 기기 밖으로 전송되지 않도록 설계했기 때문입니다. 게임에 따라 직접 입력한 내용(예: 단어 목록)은 복사해서 다른 기기에 붙여 넣을 수 있습니다.</p></details>
-  <details><summary>게임 도중 다른 앱으로 이동하면 어떻게 되나요?</summary><ul><li>게임이 자동으로 일시정지되며, 12시간 안에 돌아오시면 멈춘 장면부터 이어서 하실 수 있습니다.</li><li>12시간이 지나면 처음 화면부터 시작됩니다.</li><li>앱을 완전히 종료한 뒤 다시 실행하면 처음 화면부터 시작됩니다.</li></ul></details>
-  <details><summary>게임이 느리거나 화면이 제대로 보이지 않아요</summary><ul><li>앱 또는 브라우저를 최신 버전으로 업데이트해 주세요.</li><li>다른 앱을 종료한 뒤 게임을 다시 실행해 주세요.</li><li>웹 버전은 Chrome, Safari, Samsung Internet 최신 버전에서 이용하시는 것을 권장합니다.</li></ul></details>
-  <details><summary>게임은 무료인가요?</summary><p>네. 현재 MIR Studio의 모든 게임은 무료로 이용하실 수 있으며, 결제 기능이 없습니다.</p></details>
+  <details><summary>게임 기록이나 저장한 내용이 사라졌어요</summary><p><span class="s">MIR Studio의 게임은 회원가입 없이 이용할 수 있도록, 모든 기록을 서버가 아닌 이용자의 기기(앱 또는 브라우저) 안에만 저장합니다.</span><span class="s">앱을 삭제하거나 브라우저의 방문 기록·사이트 데이터를 지우는 경우, 또는 시크릿 모드로 이용하는 경우에는 기록이 남지 않으며, 삭제된 기록은 복구할 수 없습니다.</span></p></details>
+  <details><summary>다른 기기로 기록을 옮길 수 있나요?</summary><p><span class="s">현재는 기기 간 기록 이동을 지원하지 않습니다.</span><span class="s">개인정보와 기록이 기기 밖으로 전송되지 않도록 설계했기 때문입니다.</span><span class="s">게임에 따라 직접 입력한 내용(예: 단어 목록)은 복사해서 다른 기기에 붙여 넣을 수 있습니다.</span></p></details>
+  <details><summary>게임 도중 다른 앱으로 이동하면 어떻게 되나요?</summary><ul><li><span class="s">게임이 자동으로 일시정지되며, 12시간 안에 돌아오시면 멈춘 장면부터 이어서 하실 수 있습니다.</span></li><li><span class="s">12시간이 지나면 처음 화면부터 시작됩니다.</span></li><li><span class="s">앱을 완전히 종료한 뒤 다시 실행하면 처음 화면부터 시작됩니다.</span></li></ul></details>
+  <details><summary>게임이 느리거나 화면이 제대로 보이지 않아요</summary><ul><li><span class="s">앱 또는 브라우저를 최신 버전으로 업데이트해 주세요.</span></li><li><span class="s">다른 앱을 종료한 뒤 게임을 다시 실행해 주세요.</span></li><li><span class="s">웹 버전은 Chrome, Safari, Samsung Internet 최신 버전에서 이용하시는 것을 권장합니다.</span></li></ul></details>
+  <details><summary>게임은 무료인가요?</summary><p><span class="s">네.</span><span class="s">현재 MIR Studio의 모든 게임은 무료로 이용하실 수 있으며, 결제 기능이 없습니다.</span></p></details>
 
   <h2>문의하기</h2>
-  <p>위 도움말로 해결되지 않는 문제가 있으시면 아래 이메일로 문의해 주세요. 더 빠르고 정확한 안내를 위해 다음 내용을 함께 적어 주시면 감사하겠습니다.</p>
+  <p><span class="s">위 도움말로 해결되지 않는 문제가 있으시면 아래 이메일로 문의해 주세요.</span><span class="s">더 빠르고 정확한 안내를 위해 다음 내용을 함께 적어 주시면 감사하겠습니다.</span></p>
   <ol>
-    <li>게임 이름</li>
-    <li>사용 중인 기기와 운영체제 (예: 갤럭시 / Android, 아이폰 / iOS)</li>
-    <li>앱 또는 브라우저 버전</li>
-    <li>문제가 발생한 화면과 상황 (가능하면 화면 캡처 첨부)</li>
+    <li><span class="s">게임 이름</span></li>
+    <li><span class="s">사용 중인 기기와 운영체제 (예: 갤럭시 / Android, 아이폰 / iOS)</span></li>
+    <li><span class="s">앱 또는 브라우저 버전</span></li>
+    <li><span class="s">문제가 발생한 화면과 상황 (가능하면 화면 캡처 첨부)</span></li>
   </ol>
-  <p>보내 주신 문의는 접수 순서대로 확인하며, 영업일 기준 3일 이내에 답변드리겠습니다. 버그 제보와 게임에 대한 의견, 제휴 문의도 언제든 환영합니다.</p>
+  <p><span class="s">보내 주신 문의는 접수 순서대로 확인하며, 영업일 기준 3일 이내에 답변드리겠습니다.</span><span class="s">버그 제보와 게임에 대한 의견, 제휴 문의도 언제든 환영합니다.</span></p>
   <p class="meta">MIR Studio 고객지원 · makingimaginationreal@gmail.com</p>
 </article></div></main>
 <footer><div class="wrap">

@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MIR Studio 고객지원</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="오디세일과 점핑보카 자주 묻는 질문, 조작법, 문의 방법">
+<meta name="description" content="MIR Studio 게임 도움말과 문의 방법">
 <meta property="og:title" content="MIR Studio 고객지원">
-<meta property="og:description" content="오디세일과 점핑보카 자주 묻는 질문, 조작법, 문의 방법">
+<meta property="og:description" content="MIR Studio 게임 도움말과 문의 방법">
 <meta property="og:image" content="img/og.jpg">
 <meta name="theme-color" content="#fbf7ee">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='10' fill='%23ffd23f'/%3E%3Ctext x='32' y='42' font-family='Georgia' font-size='22' font-weight='700' text-anchor='middle' fill='%232b2620'%3EMIR%3C/text%3E%3C/svg%3E">
@@ -169,6 +169,7 @@ section.band { padding-block: 56px; }
 .copy { font: 700 1rem/1 var(--title); padding: 10px 16px; border-radius: 999px; border: 2px solid var(--ink); background: var(--marker); color: var(--ink); cursor: pointer; }
 .links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .95rem; }
 
+.contact-eye { font: 700 1.1rem/1 var(--latin); letter-spacing: .14em; text-transform: uppercase; margin: 0; }
 /* 문서 페이지 */
 .doc .wrap { padding-block: 40px 72px; }
 .doc article { max-width: 46rem; display: grid; gap: 14px; background: var(--note); padding: clamp(20px, 4vw, 44px); border-radius: 8px; box-shadow: var(--shadow); }
@@ -186,6 +187,19 @@ details + details { margin-top: 8px; }
 summary { cursor: pointer; font: 700 1.1rem/1.4 var(--title); }
 details p, details ul, details .tablewrap { margin-top: 10px; color: var(--muted); }
 kbd { font: .85rem/1 ui-monospace, Menlo, monospace; padding: 3px 7px; border: 1px solid #d8cdb4; border-bottom-width: 2px; border-radius: 6px; background: var(--note); }
+
+/* 게임 소개 페이지 */
+.guide-shots { display: flex; gap: 18px; justify-content: center; align-items: flex-end; padding: 34px 0 10px; border-radius: 18px; }
+.guide-shots.od { background: var(--sea); }
+.guide-shots.jv { background: linear-gradient(160deg, #e8f5d8 0%, var(--river) 55%, #b9dcec 100%); }
+.guide-shots .phone:nth-child(2) { transform: translateY(-18px) rotate(3deg); }
+.doc .actions { margin-top: 6px; }
+.gamelist { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+.gamelist a { display: grid; gap: 4px; padding: 14px 16px; border: 2px solid var(--ink); border-radius: 12px; text-decoration: none; background: var(--paper); box-shadow: 0 4px 0 var(--ink); }
+.gamelist a strong { font: 700 1.15rem/1.2 var(--title); }
+.gamelist a span { font-size: .92rem; color: var(--muted); }
+.gamelist a:hover { background: var(--sticky); }
+.doc ol { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
 
 /* 바닥글 */
 footer { border-top: 2px dashed var(--grid); background: var(--paper); }
@@ -211,33 +225,33 @@ footer b { font: 700 1.6rem/1 var(--latin); color: var(--ink); margin-right: 8px
 <main class="doc"><div class="wrap"><article>
   <p class="eyebrow">Support</p>
   <h1>고객지원</h1>
-  <p class="meta">점핑보카와 오디세일을 쓰다가 막히면 여기부터 봐 주세요. 답이 없으면 아래 주소로 메일 주세요.</p>
+  <p class="meta">MIR Studio의 게임과 서비스를 이용해 주셔서 감사합니다. 이용 중 궁금한 점이나 불편한 점이 있으시면 먼저 아래 도움말을 확인해 주세요. 원하시는 답변을 찾지 못하셨다면 이메일로 문의해 주시기 바랍니다.</p>
   <div class="mailbox"><code id="mail-support">makingimaginationreal@gmail.com</code><button class="copy" type="button" data-copy="makingimaginationreal@gmail.com" aria-controls="mail-support">주소 복사</button></div>
 
-  <h2>공통</h2>
-  <details><summary>기록과 단어장이 사라졌어요</summary><p>모든 기록은 서버가 아니라 지금 쓰는 기기(브라우저 또는 앱) 안에만 저장돼요. 앱을 지우거나, 브라우저의 방문 기록과 사이트 데이터를 지우거나, 시크릿 창으로 하면 기록이 남지 않아요. 지운 기록은 되살릴 수 없어요.</p></details>
-  <details><summary>다른 기기로 기록을 옮길 수 있나요?</summary><p>아직은 안 돼요. 기록이 기기 밖으로 나가지 않도록 만들었기 때문이에요. 점핑보카 단어는 입력 칸의 글을 복사해서 다른 기기에 붙여 넣으면 옮길 수 있어요.</p></details>
-  <details><summary>게임 중에 다른 앱으로 넘어가면 어떻게 되나요?</summary><ul><li>바로 일시정지되고, 12시간 안에 돌아오면 멈춘 장면부터 이어서 할 수 있어요.</li><li>12시간이 지나면 처음 화면부터 시작해요.</li><li>안드로이드에서 뒤로 가기를 누르거나, 아이폰·아이패드에서 앱을 완전히 끄고 다시 켜면 처음 화면부터 시작해요.</li></ul></details>
+  <h2>게임별 도움말</h2>
+  <p>게임 방법, 조작법, 기능 안내는 각 게임 소개 페이지에서 확인하실 수 있습니다.</p>
+  <div class="gamelist">
+    <a href="odysail.html"><strong>오디세일</strong><span>그리스 신화 항해 아케이드</span></a>
+    <a href="jumpingvoca.html"><strong>점핑보카</strong><span>영단어 징검다리 학습 게임</span></a>
+  </div>
 
-  <h2 id="jumpingvoca">점핑보카</h2>
-  <details><summary>단어는 어떻게 넣나요?</summary><ul><li>한 줄에 영단어 하나와 그 뜻을 적어요. 예: <code>apple 사과</code></li><li>AI나 인터넷에서 복사한 목록을 그대로 붙여 넣어도 번호, 발음 기호, 이모지를 알아서 정리해요.</li><li>최소 2개, 최대 1,000개까지 넣을 수 있어요.</li></ul></details>
-  <details><summary>저장된 영단어장은 몇 개까지 되나요?</summary><p>30개까지 저장돼요. 가득 차면 안 쓰는 영단어장을 ✕로 지운 뒤 다시 시작해 주세요. 불러온 영단어장을 고쳐서 플레이하면 새로 만들지 않고 그 영단어장에 저장돼요. 취소 버튼을 누르면 고친 내용은 버려져요.</p></details>
-  <details><summary>문제 방식과 하트는 어떻게 되나요?</summary><ul><li>영어를 보고 뜻 고르기, 뜻을 보고 영어 고르기, 둘을 1:1로 섞기 중에 고를 수 있어요.</li><li>하트는 3개예요. 틀리거나 3초가 지나면 하나씩 줄고, 다 잃으면 산예에게 잡혀요.</li><li>결과의 점수는 직접 맞힌 개수예요. 틀린 단어는 오답 노트에 모여요.</li></ul></details>
-
-  <h2 id="odysail">오디세일</h2>
-  <details><summary>조작법을 알려 주세요</summary><div class="tablewrap"><table><thead><tr><th>할 일</th><th>컴퓨터</th><th>휴대폰·태블릿</th></tr></thead><tbody>
-    <tr><td>배 움직이기</td><td><kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd></td><td>왼쪽 조이스틱</td></tr>
-    <tr><td>부스터</td><td><kbd>Space</kbd></td><td>부스터 버튼</td></tr>
-    <tr><td>불화살</td><td><kbd>Z</kbd></td><td>불화살 버튼</td></tr>
-    <tr><td>일시정지</td><td><kbd>P</kbd></td><td>II 버튼</td></tr>
-    <tr><td>안내 건너뛰기</td><td><kbd>Enter</kbd></td><td>화면 누르기</td></tr>
-  </tbody></table></div></details>
-  <details><summary>쉬운 버전과 일반 버전은 뭐가 다른가요?</summary><p>쉬운 버전은 배가 부서져도 그 바다부터 다시 시작해요. 일반 버전은 처음 바다부터 다시 시작해요. 최고 점수는 버전마다 따로 기록돼요.</p></details>
-  <details><summary>세이렌의 바다에서 배가 이상하게 움직여요</summary><p>세이렌의 노래가 들리는 동안에는 방향키가 뒤섞여요. 노래가 끝나면 원래대로 돌아와요.</p></details>
+  <h2>자주 묻는 질문</h2>
+  <details><summary>게임 기록이나 저장한 내용이 사라졌어요</summary><p>MIR Studio의 게임은 회원가입 없이 이용할 수 있도록, 모든 기록을 서버가 아닌 이용자의 기기(앱 또는 브라우저) 안에만 저장합니다. 앱을 삭제하거나 브라우저의 방문 기록·사이트 데이터를 지우는 경우, 또는 시크릿 모드로 이용하는 경우에는 기록이 남지 않으며, 삭제된 기록은 복구할 수 없습니다.</p></details>
+  <details><summary>다른 기기로 기록을 옮길 수 있나요?</summary><p>현재는 기기 간 기록 이동을 지원하지 않습니다. 개인정보와 기록이 기기 밖으로 전송되지 않도록 설계했기 때문입니다. 게임에 따라 직접 입력한 내용(예: 단어 목록)은 복사해서 다른 기기에 붙여 넣을 수 있습니다.</p></details>
+  <details><summary>게임 도중 다른 앱으로 이동하면 어떻게 되나요?</summary><ul><li>게임이 자동으로 일시정지되며, 12시간 안에 돌아오시면 멈춘 장면부터 이어서 하실 수 있습니다.</li><li>12시간이 지나면 처음 화면부터 시작됩니다.</li><li>앱을 완전히 종료한 뒤 다시 실행하면 처음 화면부터 시작됩니다.</li></ul></details>
+  <details><summary>게임이 느리거나 화면이 제대로 보이지 않아요</summary><ul><li>앱 또는 브라우저를 최신 버전으로 업데이트해 주세요.</li><li>다른 앱을 종료한 뒤 게임을 다시 실행해 주세요.</li><li>웹 버전은 Chrome, Safari, Samsung Internet 최신 버전에서 이용하시는 것을 권장합니다.</li></ul></details>
+  <details><summary>게임은 무료인가요?</summary><p>네. 현재 MIR Studio의 모든 게임은 무료로 이용하실 수 있으며, 결제 기능이 없습니다.</p></details>
 
   <h2>문의하기</h2>
-  <p>버그를 알려 주실 때는 게임 이름, 기기 이름(예: 갤럭시 Z플립, 아이패드), 어떤 화면에서 무엇을 했는지 적어 주시면 빨리 고칠 수 있어요.</p>
-  <p class="meta">MIR Studio · makingimaginationreal@gmail.com</p>
+  <p>위 도움말로 해결되지 않는 문제가 있으시면 아래 이메일로 문의해 주세요. 더 빠르고 정확한 안내를 위해 다음 내용을 함께 적어 주시면 감사하겠습니다.</p>
+  <ol>
+    <li>게임 이름</li>
+    <li>사용 중인 기기와 운영체제 (예: 갤럭시 / Android, 아이폰 / iOS)</li>
+    <li>앱 또는 브라우저 버전</li>
+    <li>문제가 발생한 화면과 상황 (가능하면 화면 캡처 첨부)</li>
+  </ol>
+  <p>보내 주신 문의는 접수 순서대로 확인하며, 영업일 기준 3일 이내에 답변드리겠습니다. 버그 제보와 게임에 대한 의견, 제휴 문의도 언제든 환영합니다.</p>
+  <p class="meta">MIR Studio 고객지원 · makingimaginationreal@gmail.com</p>
 </article></div></main>
 <footer><div class="wrap">
   <span><b>MIR</b>© 2026 MIR Studio · Making Imagination Real</span>

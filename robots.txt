@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://makingimaginationreal.github.io/sitemap.xml

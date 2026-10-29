@@ -1,0 +1,3286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>오디세우스: 귀향의 항해</title>
+<!-- 글꼴: 영문 제목용 Cinzel(고대 비문 느낌), 한글용 Noto Sans KR -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== CSS: 화면 꾸미기 ===== */
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(ellipse at center, #0c2a3c 0%, #04101a 70%);
+  }
+  body {
+    flex-direction: column;
+    gap: 10px;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  /* ===== 고대 그리스 도자기 장식 (테라코타 주황 + 검정) =====
+     테두리: 메안드로스(그리스 키) 무늬 띠, 모서리는 아테네 적색상 도자기의 X자 사각형
+     조작판: 흑색상 도자기의 점 무늬 테두리 원반, 조이스틱 받침은 항아리 밑동의 '혀 무늬' */
+  #frame {
+    border: 18px solid #1b100b;
+    border-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22%3E%3Cg transform=%22translate(0 0)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Crect x=%223%22 y=%223%22 width=%2214%22 height=%2214%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222%22/%3E%3Cpath d=%22M3 3L17 17M17 3L3 17%22 stroke=%22%231b100b%22 stroke-width=%221.8%22/%3E%3C/g%3E%3Cg transform=%22translate(40 0)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Crect x=%223%22 y=%223%22 width=%2214%22 height=%2214%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222%22/%3E%3Cpath d=%22M3 3L17 17M17 3L3 17%22 stroke=%22%231b100b%22 stroke-width=%221.8%22/%3E%3C/g%3E%3Cg transform=%22translate(0 40)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Crect x=%223%22 y=%223%22 width=%2214%22 height=%2214%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222%22/%3E%3Cpath d=%22M3 3L17 17M17 3L3 17%22 stroke=%22%231b100b%22 stroke-width=%221.8%22/%3E%3C/g%3E%3Cg transform=%22translate(40 40)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Crect x=%223%22 y=%223%22 width=%2214%22 height=%2214%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222%22/%3E%3Cpath d=%22M3 3L17 17M17 3L3 17%22 stroke=%22%231b100b%22 stroke-width=%221.8%22/%3E%3C/g%3E%3Cg transform=%22translate(30 10) rotate(0) translate(-10 -10)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Cpath d=%22M0 17.5H20M3 17.5V3H17V13H8V8H12.5%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222.4%22 stroke-linecap=%22square%22/%3E%3C/g%3E%3Cg transform=%22translate(30 50) rotate(180) translate(-10 -10)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Cpath d=%22M0 17.5H20M3 17.5V3H17V13H8V8H12.5%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222.4%22 stroke-linecap=%22square%22/%3E%3C/g%3E%3Cg transform=%22translate(10 30) rotate(-90) translate(-10 -10)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Cpath d=%22M0 17.5H20M3 17.5V3H17V13H8V8H12.5%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222.4%22 stroke-linecap=%22square%22/%3E%3C/g%3E%3Cg transform=%22translate(50 30) rotate(90) translate(-10 -10)%22%3E%3Crect width=%2220%22 height=%2220%22 fill=%22%23c4693a%22/%3E%3Cpath d=%22M0 17.5H20M3 17.5V3H17V13H8V8H12.5%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%222.4%22 stroke-linecap=%22square%22/%3E%3C/g%3E%3C/svg%3E") 20 round;
+    background: #1b100b;
+    box-shadow: 0 0 0 2px #1b100b, 0 0 0 4px #c4693a, 0 0 0 6px #1b100b,
+                0 20px 60px rgba(0, 0, 0, 0.6);
+    line-height: 0;
+  }
+  canvas {
+    height: min(calc(94vh - 48px), 912px, calc((100vw - 64px) * 4 / 3));
+    touch-action: manipulation;
+    width: auto;
+    aspect-ratio: 3 / 4;
+    display: block;
+    background: #06233a;
+  }
+  /* ===== 터치 조작판 (휴대폰·태블릿에서만 보인다) ===== */
+  #pad { display: none; }
+  body.touch #frame { border-width: 12px; box-shadow: 0 0 0 2px #1b100b, 0 0 0 3px #c4693a, 0 10px 30px rgba(0, 0, 0, 0.5); }
+  body.touch canvas { height: min(calc(100vh - 150px), 912px, calc((100vw - 46px) * 4 / 3)); }
+  body.touch #pad {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: min(calc(100vw - 16px), 520px);
+    height: 90px;
+    touch-action: none;
+  }
+  #stick {
+    position: relative;
+    width: 84px; height: 84px;
+    border-radius: 50%;
+    background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2249%22 fill=%22%23c4693a%22 stroke=%22%231b100b%22 stroke-width=%222%22/%3E%3Cpath d=%22M80.00 50.00 L95.67 44.49 A46 46 0 0 1 95.67 55.51Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M78.98 57.76 L95.54 56.50 A46 46 0 0 1 92.69 67.14Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M75.98 65.00 L92.30 68.07 A46 46 0 0 1 86.80 77.60Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M71.21 71.21 L86.19 78.40 A46 46 0 0 1 78.40 86.19Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M65.00 75.98 L77.60 86.80 A46 46 0 0 1 68.07 92.30Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M57.76 78.98 L67.14 92.69 A46 46 0 0 1 56.50 95.54Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M50.00 80.00 L55.51 95.67 A46 46 0 0 1 44.49 95.67Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M42.24 78.98 L43.50 95.54 A46 46 0 0 1 32.86 92.69Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M35.00 75.98 L31.93 92.30 A46 46 0 0 1 22.40 86.80Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M28.79 71.21 L21.60 86.19 A46 46 0 0 1 13.81 78.40Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M24.02 65.00 L13.20 77.60 A46 46 0 0 1 7.70 68.07Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M21.02 57.76 L7.31 67.14 A46 46 0 0 1 4.46 56.50Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M20.00 50.00 L4.33 55.51 A46 46 0 0 1 4.33 44.49Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M21.02 42.24 L4.46 43.50 A46 46 0 0 1 7.31 32.86Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M24.02 35.00 L7.70 31.93 A46 46 0 0 1 13.20 22.40Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M28.79 28.79 L13.81 21.60 A46 46 0 0 1 21.60 13.81Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M35.00 24.02 L22.40 13.20 A46 46 0 0 1 31.93 7.70Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M42.24 21.02 L32.86 7.31 A46 46 0 0 1 43.50 4.46Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M50.00 20.00 L44.49 4.33 A46 46 0 0 1 55.51 4.33Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M57.76 21.02 L56.50 4.46 A46 46 0 0 1 67.14 7.31Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M65.00 24.02 L68.07 7.70 A46 46 0 0 1 77.60 13.20Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M71.21 28.79 L78.40 13.81 A46 46 0 0 1 86.19 21.60Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M75.98 35.00 L86.80 22.40 A46 46 0 0 1 92.30 31.93Z%22 fill=%22%231b100b%22/%3E%3Cpath d=%22M78.98 42.24 L92.69 32.86 A46 46 0 0 1 95.54 43.50Z%22 fill=%22%231b100b%22/%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2228%22 fill=%22%23c4693a%22 stroke=%22%231b100b%22 stroke-width=%221.5%22/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    touch-action: none;
+  }
+  #knob {
+    position: absolute; left: 50%; top: 50%;
+    width: 36px; height: 36px; margin: -18px 0 0 -18px;
+    box-sizing: border-box;                    /* 테두리까지 36px 안에 — 받침 정중앙에 오도록 */
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #f0c987, #b07a35 60%, #6e4618);   /* 청동 방패 손잡이 */
+    border: 2px solid #1b100b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+  }
+  .btns { display: flex; gap: 10px; align-items: center; }
+  .btns button {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    border: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2249%22 fill=%22%231b100b%22/%3E%3Ccircle cx=%2294.00%22 cy=%2250.00%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2290.65%22 cy=%2266.84%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2281.11%22 cy=%2281.11%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2266.84%22 cy=%2290.65%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2250.00%22 cy=%2294.00%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2233.16%22 cy=%2290.65%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2218.89%22 cy=%2281.11%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%229.35%22 cy=%2266.84%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%226.00%22 cy=%2250.00%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%229.35%22 cy=%2233.16%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2218.89%22 cy=%2218.89%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2233.16%22 cy=%229.35%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2250.00%22 cy=%226.00%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2266.84%22 cy=%229.35%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2281.11%22 cy=%2218.89%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2290.65%22 cy=%2233.16%22 r=%222.3%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2237%22 fill=%22%23c4693a%22/%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2233%22 fill=%22none%22 stroke=%22%231b100b%22 stroke-width=%221.5%22/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    color: #1b100b;
+    font: 900 10.5px "Noto Sans KR", sans-serif;
+    letter-spacing: -0.8px;
+    touch-action: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  }
+  .btns button.on { filter: brightness(1.25) drop-shadow(0 0 6px rgba(240, 160, 90, 0.8)); transform: scale(0.95); }
+  #bPause { width: 34px; height: 34px; font: 900 10px "Cinzel", serif; }
+</style>
+</head>
+<body>
+
+<div id="frame"><canvas id="game" width="480" height="640"></canvas></div>
+
+<!-- 터치 조작판: 왼쪽 조이스틱(항해), 오른쪽 버튼(일시정지·부스터·불화살) -->
+<div id="pad">
+  <div id="stick"><div id="knob"></div></div>
+  <div class="btns">
+    <button id="bPause">II</button>
+    <button id="bBoost">부스터</button>
+    <button id="bFire">불화살</button>
+  </div>
+</div>
+
+<script>
+// =====================================================
+//  ODYSSEUS — 오디세우스: 귀향의 항해  (마크 2)
+//  트로이 전쟁이 끝났다. 신들의 시련이 기다리는 아홉 바다를 건너
+//  고향 이타카로 돌아가라!
+//
+//  구성: ① 설정값 → ② 준비 → ③ 키보드 → ④ 게임 시작
+//        → ⑤ 계산(update) → ⑥ 그리기(draw) → ⑦ 반복
+// =====================================================
+
+
+// ① 설정값 — 여기 숫자만 바꿔도 게임이 달라집니다
+const SETTINGS = {
+  // ★ 난이도 한눈에 조절 — 숫자가 작을수록 쉬워진다
+  damageScale: 0.8,        // 모든 피해에 곱해지는 값 (0.8 = 원래 피해의 80%)
+  hazardScale: 0.85,        // 위험(바위·창·음식·망령선·촉수·벼락 등)이 나오는 빈도
+  invincibleTime: 80,     // 맞은 뒤 무적 시간 (60 = 1초)
+
+  sailSpeed: 1.3,          // 바다가 흘러가는 속도 (= 배가 앞으로 나아가는 속도)
+  introTime: 10,           // 해역마다 시작 전에 중요 규칙을 보여 주는 시간 (초) — 이 동안은 위험이 나오지 않는다
+  stageLength: 6240,       // 해역 하나의 길이 (약 80초 — 컴퓨터·휴대폰 모두) — 이타카의 섬은 길이 대신 도끼 12개로 끝난다
+  rampUp: 1.0,             // 다음 해역에 가까워질수록 어려워지는 정도 (1.0 = 끝에 가면 위험이 2배)
+  rampSpeed: 0.28,         // 다음 해역에 가까워질수록 날아오는 것들이 빨라지는 정도 (0.28 = 끝에 가면 1.28배)
+  giantHp: 3,              // 거인을 쓰러뜨리려면 맞혀야 하는 불화살 수
+  spearSpeed: 4.2,         // 거인이 던지는 창의 속도
+  spearDamage: 20,         // 창에 맞으면 줄어드는 선체
+  foodSpeed: 3.2,          // 키르케가 던지는 음식의 속도
+  ghostChargeSpeed: 5.2,   // 저승의 망령선이 돌진하는 속도
+  ghostChargeDamage: 24,   // 돌진에 부딪히면 줄어드는 선체
+  ghostChargeTurn: 0.02,   // 돌진하며 우리 배를 쫓아 방향을 트는 정도 (클수록 날쌔게 따라옴)
+  songLength: 600,         // 세이렌의 노래가 이어지는 시간 (60 = 1초, 600 = 10초) — 이 동안 방향키가 뒤섞인다
+  songPrelude: 60,         // 노래가 시작되기 전 예고(전주) 시간
+  songGapMin: 300,         // 노래와 노래 사이 쉬는 시간 (최소~최대)
+  songGapMax: 540,
+  tentacleReach: 150,      // 스킬라 촉수가 뻗을 수 있는 최대 길이 (이보다 멀리 있으면 닿지 않는다)
+  tentacleDamage: 22,      // 촉수에 내리찍히면 줄어드는 선체
+  whirlDrain: 0.11,        // 소용돌이 안에서 1/60초마다 줄어드는 선체 (한가운데에서는 2배)
+  whirlPull: 0.75,         // 소용돌이가 가운데로 빨아들이는 힘 — 노 젓는 힘(accel 0.6)보다 세서 부스터 없이는 못 빠져나온다
+  axeCount: 12,            // 이타카의 섬: 이만큼 도끼를 불화살로 맞혀야 이타카에 닿는다
+  suitorHp: 3,             // 청혼자의 배를 가라앉히려면 맞혀야 하는 불화살 수
+  suitorArrowSpeed: 5.2,   // 청혼자들이 쏘는 불화살 속도
+  suitorArrowDamage: 14,   // 청혼자의 불화살에 맞으면 줄어드는 선체
+  suitorFireDelay: 95,     // 청혼자가 불화살을 쏘는 간격 (60 = 1초)
+  typhoonSpeed: 3.4,       // 칼립소의 태풍이 날아오는 속도
+  typhoonTurn: 0.022,      // 태풍이 우리 배를 쫓아 방향을 트는 정도 (지나치기 전까지)
+  zapSpeed: 6.0,           // 태양신의 섬: 사방에서 날아오는 벼락의 속도
+  zapDamage: 18,
+  zapBounces: 4,           // 벼락이 암석·섬에 부딪혀 튕길 수 있는 최대 횟수 (그 뒤엔 그대로 지나간다)
+  zapBounciness: 1.0,      // 튕길 때 속도 유지 비율 (1 = 탱탱볼처럼 그대로, 작을수록 느려짐)           // 날아오는 벼락에 맞으면 줄어드는 선체
+  touchGameSpeed: 0.75,    // 터치 화면(휴대폰)에서 게임 전체 속도 — 배·바위·창·음식·벼락·태풍·촉수·불화살 모두 (컴퓨터의 0.75배)
+  touchSpeed: 1.0,         // 터치 화면에서 배만 따로 더 느리게 하고 싶을 때 (1 = 게임 전체 속도를 그대로 따름)
+  accel: 0.6,              // 노 젓는 힘
+  drag: 0.87,              // 물의 저항 (1에 가까울수록 미끄러지듯 오래 감)
+  arrowSpeed: 9,           // 불화살 속도
+  shootDelay: 260,         // 불화살 쏘는 간격 (1000 = 1초) — 불화살은 Z 키
+  turnSpeed: 0.13,         // 뱃머리가 도는 빠르기 (클수록 휙휙 돈다)
+  boostPower: 2.4,         // 부스터(스페이스)를 쓰면 노 젓는 힘이 몇 배가 되는지
+  boostDrain: 1.1,         // 부스터를 쓰는 동안 1/60초마다 줄어드는 게이지 (100이면 약 1.5초)
+  boostRecharge: 0.55,     // 부스터를 안 쓸 때 1/60초마다 차오르는 게이지
+  topLimit: 96,            // 배가 올라갈 수 있는 가장 위쪽 (계기판 바로 아래)
+  boulderMinSpeed: 4.0,    // 키클롭스의 바위 속도 범위 (바위마다 이 사이에서 제각각)
+  boulderMaxSpeed: 7.1,
+  hull: 100,               // 선체 내구도 (0이 되면 난파)
+  windStrength: 0.55,      // 바람에 밀리는 정도
+  repair: 25,              // 트로이 목마를 주우면 고쳐지는 양
+  poisonDrain: 0.05,       // 키르케의 저주: 1/60초마다 줄어드는 선체 (0.05 = 1초에 약 3)
+  poisonMaxStack: 5,       // 저주가 겹칠 수 있는 최대 횟수 (음식을 맞을 때마다 줄어드는 속도가 1배씩 늘어남)
+};
+
+// 아홉 해역 — 해역마다 독립된 사건(event)이 일어난다
+// rock/isle/horse: 암석, 작은 섬, 트로이 목마가 나타날 확률 · length: 해역 길이 배율
+const STAGES = [
+  { name: '키클롭스의 섬',             desc: '눈먼 거인이 바위를 던진다',                 event: 'cyclops',   rock: 0.008, isle: 0.003, horse: 0.0025 },
+  { name: '라이스트리고네스의 섬',     desc: '은빛 갑옷의 거인족이 창을 던진다',           event: 'giants',    rock: 0.002, isle: 0,     horse: 0.00375 },
+  { name: '키르케의 섬',               desc: '마법 음식에 맞으면 하늘색 물약으로 해독하라', event: 'circe',     rock: 0.008, isle: 0.003, horse: 0.0045 },
+  { name: '저승의 섬',                 desc: '불화살이 통하지 않는 망령의 배',              event: 'underworld', rock: 0.006, isle: 0.002, horse: 0.0025 },
+  { name: '세이렌의 섬',               desc: '노래가 들리면 방향키가 뒤섞인다!',           event: 'siren',     rock: 0.0085, isle: 0.0035, horse: 0.0025 },
+  { name: '스킬라와 카리브디스의 섬',  desc: '촉수가 정확히 내리찍고, 소용돌이는 배를 삼킨다',  event: 'scylla',    rock: 0.007, isle: 0.0025, horse: 0.003  },
+  { name: '태양신의 섬',               desc: '신성한 소를 먹은 죄, 제우스의 벼락',          event: 'lightning', rock: 0.007, isle: 0.003, horse: 0.003  },
+  { name: '칼립소의 섬',               desc: '배를 쫓아오는 칼립소의 태풍',               event: 'typhoon',   rock: 0.006, isle: 0.003, horse: 0.003  },
+  { name: '이타카의 섬',               desc: '불화살로 도끼 12개를 모두 꿰뚫어라!',        event: 'home',      rock: 0.007, isle: 0.004, horse: 0.003  },
+];
+
+const TAU = Math.PI * 2;
+const FONT_EN = (size, weight = 700) => weight + ' ' + size + 'px Cinzel, serif';
+const FONT_KR = (size, weight = 700) => weight + ' ' + size + 'px "Noto Sans KR", sans-serif';
+
+
+// ② 준비 — 선명한(레티나) 화면
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+const W = 480;
+const H = 640;
+let scale = 1;
+
+function resize() {
+  const dpr = window.devicePixelRatio || 1;
+  const shownHeight = canvas.clientHeight || H;
+  scale = (shownHeight / H) * dpr;
+  canvas.width = Math.round(W * scale);
+  canvas.height = Math.round(H * scale);
+}
+window.addEventListener('resize', resize);
+resize();
+
+if (document.fonts) {
+  document.fonts.load(FONT_EN(20)).catch(() => {});
+  document.fonts.load(FONT_KR(20)).catch(() => {});
+}
+
+// 작은 도우미들
+function rand(a, b) { return a + Math.random() * (b - a); }
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+function dist(ax, ay, bx, by) { return Math.hypot(ax - bx, ay - by); }
+function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+
+let state = 'start';   // 'start' 시작, 'playing' 항해, 'paused' 일시정지, 'blown' 태풍에 휩쓸림, 'gameover' 난파, 'victory' 귀환
+let player;
+let arrows = [], obstacles = [], missiles = [], tentacles = [], whirls = [], sirens = [];
+let horses = [], potions = [], ghosts = [], ghostFire = [], bolts = [], typhoons = [];
+let axes = [], suitors = [], suitorArrows = [];
+let axesHit = 0;        // 이타카의 섬에서 맞힌 도끼 수
+let particles = [], rings = [], popups = [];
+let score = 0, stage = 0, stageDist = 0;
+let lastShot = -999;     // 마지막으로 불화살을 쏜 때 (게임 시간, tick 기준)
+let invincible = 0;     // 맞은 뒤 잠깐 무적
+let bannerTimer = 0;    // 해역 이름·규칙 안내 시간
+let introLen = 300;     // 이번 안내의 전체 길이 (게임 시간)
+let bannerNote = '';    // 해역 안내 아래 덧붙이는 말
+let spawnDelay = 0;     // 해역 시작 직후 잠깐 쉬는 시간
+let giantTimer = 0;     // 라이스트리고네스: 다음 거대 장애물 줄까지 남은 시간
+let tick = 0;
+let shake = 0;          // 화면 흔들림
+let redFlash = 0;       // 맞았을 때 붉게
+let whiteFlash = 0;     // 벼락이 칠 때 하얗게
+let blownTimer = 0;     // 태풍에 휩쓸리는 연출 시간
+let poisoned = false;   // 키르케의 저주에 걸렸는지
+let poisonStack = 0;    // 저주가 몇 번 겹쳤는지 (음식을 맞은 횟수)
+let boost = 100;        // 부스터 게이지 (0~100)
+let boosting = false;   // 지금 부스터를 쓰는 중인지
+let windX = 0, windTarget = 0, windTimer = 0;
+let inSiren = false;     // 지금 세이렌의 노래가 들리는 중인지 (방향키가 뒤섞임)
+let song = { phase: 'quiet', t: 300, map: null };   // 'quiet' 조용함, 'prelude' 전주, 'singing' 노래 중
+let inWhirl = false;    // 배가 소용돌이 안에 있는지
+let inWhirlCenter = false;
+
+// 방향키 네 개를 무작위로 뒤섞는다 (원래 그대로인 경우는 빼고)
+const ARROWS = ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'];
+const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+function shuffleArrows() {
+  let order;
+  do {
+    order = [0, 1, 2, 3];
+    for (let i = 3; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+  } while (order.every((v, i) => v === i));
+  const map = {};
+  ARROWS.forEach((k, i) => { map[k] = DIRS[order[i]]; });
+  return map;
+}
+let arriving = false;   // 마지막 해역을 지나 이타카가 보이는 중
+let ithacaY = -320;
+// 버전: 'easy' 쉬운 버전(난파·태풍 → 그 해역 처음부터), 'normal' 일반 버전(처음부터)
+let mode = loadMode();
+let stageStartScore = 0;   // 지금 해역에 들어왔을 때의 점수 (쉬운 버전에서 이어 하기용)
+let highScore = loadHighScore();
+
+function loadHighScore() {
+  try { return Number(localStorage.getItem(highScoreKey())) || 0; } catch (e) { return 0; }
+}
+function saveHighScore() {
+  try { localStorage.setItem(highScoreKey(), highScore); } catch (e) {}
+}
+// 최고 점수는 버전마다 따로 기록한다
+function highScoreKey() {
+  return mode === 'easy' ? 'odysseusSeaHighScoreEasy' : 'odysseusSeaHighScore';
+}
+function loadMode() {
+  try { return localStorage.getItem('odysseusSeaMode') === 'easy' ? 'easy' : 'normal'; } catch (e) { return 'normal'; }
+}
+function setMode(m) {
+  mode = m;
+  try { localStorage.setItem('odysseusSeaMode', m); } catch (e) {}
+  highScore = loadHighScore();
+}
+
+function recordHighScore() {
+  if (Math.floor(score) > highScore) {
+    highScore = Math.floor(score);
+    saveHighScore();
+  }
+}
+
+// 바다 물결 무늬와 햇빛 반짝임
+const waves = [];
+for (let i = 0; i < 80; i++) waves.push({ x: rand(0, W), y: rand(0, H), len: rand(5, 13), a: rand(0.08, 0.22) });
+const glitters = [];
+for (let i = 0; i < 26; i++) glitters.push({ x: rand(0, W), y: rand(0, H), phase: rand(0, TAU) });
+
+
+// ③ 키보드
+const keys = {};
+
+document.addEventListener('keydown', function (e) {
+  keys[e.code] = true;
+  if (['Space', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.code)) e.preventDefault();
+
+  // 시작 화면: ← → (또는 ↑ ↓)로 버전 고르기, 1 = 쉬운 버전, 2 = 일반 버전
+  if (state === 'start' && !e.repeat) {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.code)) setMode(mode === 'easy' ? 'normal' : 'easy');
+    if (e.code === 'Digit1') setMode('easy');
+    if (e.code === 'Digit2') setMode('normal');
+  }
+  if ((e.code === 'Space' || e.code === 'Enter') && !e.repeat) {
+    if (state === 'start' || state === 'victory') startGame(0);
+    else if (state === 'gameover') startGame(mode === 'easy' ? stage : 0);   // 쉬운 버전은 난파한 해역부터 다시
+  }
+  if (e.code === 'KeyM' && (state === 'gameover' || state === 'victory')) state = 'start';   // 버전 다시 고르기
+  if (e.code === 'Enter' && !e.repeat && state === 'playing' && bannerTimer < introLen) skipIntro();   // 규칙 안내 건너뛰기
+  if (e.code === 'KeyP') {
+    if (state === 'playing') state = 'paused';
+    else if (state === 'paused') state = 'playing';
+  }
+});
+
+// 시작 화면에서 버전 상자를 클릭(터치)해서 고를 수도 있다
+// 화면 터치(클릭): 시작 화면에선 버전 고르기·출항, 난파·귀환 화면에선 다시 하기
+canvas.addEventListener('click', function (e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * W / rect.width, y = (e.clientY - rect.top) * H / rect.height;
+  if (state === 'start') {
+    if (y > MODE_BOX_Y && y < MODE_BOX_Y + MODE_BOX_H) {
+      if (x > W / 2 - 160 && x < W / 2 - 6) setMode('easy');
+      else if (x > W / 2 + 6 && x < W / 2 + 160) setMode('normal');
+    } else if (isTouch) {
+      startGame(0);
+    }
+  } else if (state === 'playing' && bannerTimer > 0) {
+    skipIntro();                                           // 규칙 안내 건너뛰기
+  } else if (!isTouch) {
+    return;                                                // 컴퓨터는 지금처럼 키보드로
+  } else if (state === 'gameover') {
+    if (y > H / 2 + 86 && y < H / 2 + 112) state = 'start';
+    else startGame(mode === 'easy' ? stage : 0);
+  } else if (state === 'victory') {
+    if (y > 606) state = 'start';
+    else startGame(0);
+  } else if (state === 'paused') {
+    state = 'playing';
+  }
+});
+
+// ---- 터치 조작판 ----
+let isTouch = false;
+function enableTouch() {
+  if (isTouch) return;
+  isTouch = true;
+  document.body.classList.add('touch');
+  setTimeout(resize, 0);
+}
+if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) enableTouch();
+window.addEventListener('touchstart', enableTouch, { once: true, passive: true });
+
+(function setupPad() {
+  const stick = document.getElementById('stick');
+  const knob = document.getElementById('knob');
+  let stickId = null;
+  function setDir(dx, dy) {
+    const R = 30, len = Math.hypot(dx, dy);
+    const k = len > R ? R / len : 1;
+    knob.style.transform = 'translate(' + dx * k + 'px,' + dy * k + 'px)';
+    const on = len > 9;                                   // 가운데 살짝 누른 건 무시
+    const nx = on ? dx / len : 0, ny = on ? dy / len : 0;  // 8방향: 기울인 방향의 성분으로 방향키를 누른다
+    keys['ArrowRight'] = nx > 0.38;
+    keys['ArrowLeft'] = nx < -0.38;
+    keys['ArrowDown'] = ny > 0.38;
+    keys['ArrowUp'] = ny < -0.38;
+  }
+  function moveStick(e) {
+    const r = stick.getBoundingClientRect();
+    setDir(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
+  }
+  stick.addEventListener('pointerdown', function (e) {
+    e.preventDefault();
+    stickId = e.pointerId;
+    try { stick.setPointerCapture(e.pointerId); } catch (err) {}
+    moveStick(e);
+  });
+  stick.addEventListener('pointermove', function (e) { if (e.pointerId === stickId) moveStick(e); });
+  function releaseStick(e) {
+    if (e.pointerId !== stickId) return;
+    stickId = null;
+    setDir(0, 0);
+  }
+  stick.addEventListener('pointerup', releaseStick);
+  stick.addEventListener('pointercancel', releaseStick);
+
+  function holdButton(id, code) {                          // 누르고 있는 동안 키를 누른 것처럼
+    const b = document.getElementById(id);
+    const down = function (e) { e.preventDefault(); keys[code] = true; b.classList.add('on'); try { b.setPointerCapture(e.pointerId); } catch (err) {} };
+    const up = function () { keys[code] = false; b.classList.remove('on'); };
+    b.addEventListener('pointerdown', down);
+    b.addEventListener('pointerup', up);
+    b.addEventListener('pointercancel', up);
+    b.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  }
+  holdButton('bBoost', 'Space');
+  holdButton('bFire', 'KeyZ');
+  document.getElementById('bPause').addEventListener('pointerdown', function (e) {
+    e.preventDefault();
+    if (state === 'playing') state = 'paused';
+    else if (state === 'paused') state = 'playing';
+  });
+})();
+
+document.addEventListener('keyup', function (e) {
+  keys[e.code] = false;
+});
+
+// 다른 창을 클릭하면 자동 일시정지 (몰래 하기 기능!)
+window.addEventListener('blur', function () {
+  if (state === 'playing') state = 'paused';
+  for (const k in keys) keys[k] = false;
+});
+
+
+// 일시정지한 채로 나가면 그 장면을 저장했다가, 다시 들어오면 그대로 이어 한다 (12시간이 지나면 처음 화면부터)
+const RESUME_KEY = 'odysseusSeaResume';
+const RESUME_LIMIT = 12 * 60 * 60 * 1000;   // 12시간
+function saveResume() {
+  try {
+    if (state === 'playing') state = 'paused';
+    if (state !== 'paused') { localStorage.removeItem(RESUME_KEY); return; }
+    const d = { savedAt: Date.now(), player, arrows, obstacles, missiles, tentacles, whirls, sirens, horses, potions, ghosts, ghostFire, bolts, typhoons, axes, suitors, suitorArrows, axesHit, particles, rings, popups, score, stage, stageDist, lastShot, invincible, bannerTimer, introLen, bannerNote, spawnDelay, giantTimer, tick, shake, redFlash, whiteFlash, blownTimer, poisoned, poisonStack, boost, boosting, windX, windTarget, windTimer, inSiren, song, inWhirl, inWhirlCenter, arriving, ithacaY, mode, stageStartScore };
+    localStorage.setItem(RESUME_KEY, JSON.stringify(d));
+  } catch (e) {}
+}
+function loadResume() {
+  try {
+    const raw = localStorage.getItem(RESUME_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    localStorage.removeItem(RESUME_KEY);
+    if (!d.savedAt || Date.now() - d.savedAt > RESUME_LIMIT) return;
+    if ('player' in d) player = d.player;
+    if ('arrows' in d) arrows = d.arrows;
+    if ('obstacles' in d) obstacles = d.obstacles;
+    if ('missiles' in d) missiles = d.missiles;
+    if ('tentacles' in d) tentacles = d.tentacles;
+    if ('whirls' in d) whirls = d.whirls;
+    if ('sirens' in d) sirens = d.sirens;
+    if ('horses' in d) horses = d.horses;
+    if ('potions' in d) potions = d.potions;
+    if ('ghosts' in d) ghosts = d.ghosts;
+    if ('ghostFire' in d) ghostFire = d.ghostFire;
+    if ('bolts' in d) bolts = d.bolts;
+    if ('typhoons' in d) typhoons = d.typhoons;
+    if ('axes' in d) axes = d.axes;
+    if ('suitors' in d) suitors = d.suitors;
+    if ('suitorArrows' in d) suitorArrows = d.suitorArrows;
+    if ('axesHit' in d) axesHit = d.axesHit;
+    if ('particles' in d) particles = d.particles;
+    if ('rings' in d) rings = d.rings;
+    if ('popups' in d) popups = d.popups;
+    if ('score' in d) score = d.score;
+    if ('stage' in d) stage = d.stage;
+    if ('stageDist' in d) stageDist = d.stageDist;
+    if ('lastShot' in d) lastShot = d.lastShot;
+    if ('invincible' in d) invincible = d.invincible;
+    if ('bannerTimer' in d) bannerTimer = d.bannerTimer;
+    if ('introLen' in d) introLen = d.introLen;
+    if ('bannerNote' in d) bannerNote = d.bannerNote;
+    if ('spawnDelay' in d) spawnDelay = d.spawnDelay;
+    if ('giantTimer' in d) giantTimer = d.giantTimer;
+    if ('tick' in d) tick = d.tick;
+    if ('shake' in d) shake = d.shake;
+    if ('redFlash' in d) redFlash = d.redFlash;
+    if ('whiteFlash' in d) whiteFlash = d.whiteFlash;
+    if ('blownTimer' in d) blownTimer = d.blownTimer;
+    if ('poisoned' in d) poisoned = d.poisoned;
+    if ('poisonStack' in d) poisonStack = d.poisonStack;
+    if ('boost' in d) boost = d.boost;
+    if ('boosting' in d) boosting = d.boosting;
+    if ('windX' in d) windX = d.windX;
+    if ('windTarget' in d) windTarget = d.windTarget;
+    if ('windTimer' in d) windTimer = d.windTimer;
+    if ('inSiren' in d) inSiren = d.inSiren;
+    if ('song' in d) song = d.song;
+    if ('inWhirl' in d) inWhirl = d.inWhirl;
+    if ('inWhirlCenter' in d) inWhirlCenter = d.inWhirlCenter;
+    if ('arriving' in d) arriving = d.arriving;
+    if ('ithacaY' in d) ithacaY = d.ithacaY;
+    if ('mode' in d) mode = d.mode;
+    if ('stageStartScore' in d) stageStartScore = d.stageStartScore;
+    highScore = loadHighScore();
+    state = 'paused';
+  } catch (e) {
+    try { localStorage.removeItem(RESUME_KEY); } catch (err) {}
+  }
+}
+// · 플레이 중 다른 앱으로 넘어가면 → 바로 일시정지 + 장면 저장 (일시정지를 먼저 누르고 넘어가도 같음)
+// · 12시간 안에 돌아오면 → 멈춘 장면부터 이어 하기 (휴대폰이 앱을 알아서 닫았더라도)
+// · 12시간이 지나서 돌아오면 → 저장된 장면을 지우고 시작 페이지부터
+// · 앱을 아예 닫았다가 다시 열면 → 시작 페이지부터
+let hiddenAt = 0;
+let closing = false;      // 앱(창)을 아예 닫는 중
+function clearResume() { try { localStorage.removeItem(RESUME_KEY); } catch (e) {} }
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'hidden') {
+    hiddenAt = Date.now();
+    if (closing) clearResume(); else saveResume();
+  } else {
+    if (hiddenAt && Date.now() - hiddenAt > RESUME_LIMIT && (state === 'paused' || state === 'playing')) state = 'start';   // 12시간이 지났으면 시작 페이지로
+    clearResume();                                       // 앱이 살아 있으면 멈춘 장면 그대로 (화면을 누르면 계속)
+    hiddenAt = 0;
+  }
+});
+window.addEventListener('pagehide', function (e) { if (!e.persisted) { closing = true; clearResume(); } });
+// 휴대폰의 뒤로 가기(오른쪽 아래 ◁) 버튼 = 종료: 저장된 장면을 지우고 나간다 → 다음에 열면 시작 페이지부터
+try { history.pushState({ odysseus: 1 }, ''); } catch (e) {}
+window.addEventListener('popstate', function () {
+  closing = true;
+  clearResume();
+  state = 'start';
+  try { window.close(); } catch (e) {}
+  history.back();                                        // 이 게임 페이지에서 나간다
+});
+
+// ④ 게임 시작
+function startGame(fromStage) {
+  fromStage = fromStage || 0;
+  player = { x: W / 2, y: H - 110, vx: 0, vy: 0, hull: SETTINGS.hull, tilt: 0, oar: 0, heading: 0 };
+  arrows = []; obstacles = []; missiles = []; tentacles = []; whirls = []; sirens = [];
+  horses = []; potions = []; ghosts = []; ghostFire = []; bolts = []; typhoons = [];
+  axes = []; suitors = []; suitorArrows = []; axesHit = 0;
+  particles = []; rings = []; popups = [];
+  stage = fromStage;
+  if (fromStage === 0) stageStartScore = 0;
+  score = stageStartScore;                                // 쉬운 버전에서 이어 하면 그 해역에 들어올 때의 점수로
+  stageDist = 0;
+  invincible = 0;
+  poisoned = false;
+  poisonStack = 0;
+  boost = 100;
+  boosting = false;
+  startIntro();
+  bannerNote = '';
+  giantTimer = 0;
+  windX = 0; windTarget = 0; windTimer = 240;
+  song = { phase: 'quiet', t: SETTINGS.songGapMin, map: null };
+  inSiren = false;
+  arriving = false;
+  ithacaY = -320;
+  state = 'playing';
+}
+
+function endGame(newState) {
+  state = newState;
+  recordHighScore();
+}
+
+function stageLength(i) {
+  // 휴대폰은 게임이 느리게 흐르는 만큼 해역을 짧게 잡아서, 실제 시간은 컴퓨터와 같은 약 65초가 되게 한다
+  return SETTINGS.stageLength * (STAGES[i].length || 1) * (isTouch ? SETTINGS.touchGameSpeed : 1);
+}
+
+// 이타카까지 얼마나 왔나 (0 = 출발, 1 = 이타카)
+function progress() {
+  let total = 0, done = 0;
+  for (let i = 0; i < STAGES.length; i++) {
+    const len = stageLength(i);
+    total += len;
+    if (i < stage) done += len;
+  }
+  return Math.min(1, (done + stageFrac() * stageLength(stage)) / total);
+}
+
+// 배가 다쳤을 때
+function hurt(amount) {
+  if (invincible > 0) return false;
+  player.hull -= Math.round(amount * SETTINGS.damageScale);
+  invincible = SETTINGS.invincibleTime;
+  shake = 10;
+  redFlash = 18;
+  woodBurst(player.x, player.y, 1.4);
+  if (player.hull <= 0) shipwreck();
+  return true;
+}
+
+function shipwreck() {
+  player.hull = 0;
+  woodBurst(player.x, player.y, 3);
+  splash(player.x, player.y, 40);
+  endGame('gameover');
+}
+
+// 태풍에 휩쓸림 → 점수도 잃고 첫 해역으로
+function blowBack() {
+  recordHighScore();
+  state = 'blown';
+  blownTimer = 150;
+  shake = 16;
+  splash(player.x, player.y, 50);
+}
+
+// --- 효과 만들기 ---
+function particle(x, y, vx, vy, size, life, color, kind) {
+  particles.push({ x, y, vx, vy, size, t: 0, life, color, kind });
+}
+
+function splash(x, y, size) {
+  rings.push({ x, y, t: 0, life: 32, r: size, color: 'rgba(220, 245, 255, 0.8)' });
+  rings.push({ x, y, t: -6, life: 32, r: size * 0.6, color: 'rgba(220, 245, 255, 0.6)' });
+  for (let i = 0; i < 14; i++) {
+    const a = rand(0, TAU), s = rand(0.8, 3.2);
+    particle(x, y, Math.cos(a) * s, Math.sin(a) * s + SETTINGS.sailSpeed * 0.5, rand(1.2, 2.8), 30, pick(['#e8f7ff', '#9fd8ef', '#ffffff']), 'drop');
+  }
+}
+
+function woodBurst(x, y, power) {
+  for (let i = 0; i < 8 * power; i++) {
+    const a = rand(0, TAU), s = rand(0.6, 2.6);
+    particle(x, y, Math.cos(a) * s, Math.sin(a) * s, rand(1.5, 3.5), 40, pick(['#8b5a2b', '#a8743f', '#5a3a22']), 'chip');
+  }
+  for (let i = 0; i < 10 * power; i++) {
+    const a = rand(0, TAU), s = rand(2, 4.5);
+    particle(x, y, Math.cos(a) * s, Math.sin(a) * s, rand(0.8, 1.8), 22, '#ffcf70', 'spark');
+  }
+  rings.push({ x, y, t: 0, life: 20, r: 22 * power, color: 'rgba(255, 190, 110, 0.8)', fire: true });
+}
+
+function popup(x, y, text, color) {
+  popups.push({ x, y, text, color: color || '#ffe7a3', t: 0 });
+}
+
+
+// --- 장애물과 위험 만들기 ---
+function makeShape(n, lo, hi) {
+  const s = [];
+  for (let i = 0; i < n; i++) s.push(rand(lo, hi));
+  return s;
+}
+
+function makeRock(x, y, r) {
+  return { kind: 'rock', x, y, r, shape: makeShape(10, 0.75, 1.05), phase: rand(0, TAU),
+           algae: [{ x: rand(-0.4, 0.4), y: rand(-0.4, 0.4) }, { x: rand(-0.4, 0.4), y: rand(-0.4, 0.4) }] };
+}
+
+function makeIsle(x, y, r) {
+  const trees = [];
+  const n = Math.max(2, Math.floor(r / 12));
+  for (let i = 0; i < n; i++) {
+    const a = rand(0, TAU), d = rand(0, r * 0.45);
+    trees.push({ x: Math.cos(a) * d, y: Math.sin(a) * d, s: rand(0.8, 1.2) });
+  }
+  return { kind: 'isle', x, y, r, shape: makeShape(12, 0.85, 1.0), phase: rand(0, TAU), trees,
+           hill: { x: rand(-0.2, 0.2), y: rand(-0.2, 0.2) }, cliff: r > 60 };
+}
+
+// 날아오는 것들 (바위·창·음식): 던지는 순간 배가 있던 곳을 향해 "일직선"으로 날아간다.
+// 날아가는 도중에 배를 따라 방향을 바꾸지 않는다.
+function launch(type, x, y, speed, extra) {
+  const dx = player.x - x, dy = player.y - y;
+  const d = Math.hypot(dx, dy) || 1;
+  const m = Object.assign({ type, x, y, vx: dx / d * speed, vy: dy / d * speed, spin: rand(0, TAU) }, extra || {});
+  missiles.push(m);
+  return m;
+}
+
+// 지금 해역에서 얼마나 왔나 (0 = 해역 시작, 1 = 다음 해역 직전)
+function stageFrac() {
+  if (STAGES[stage].event === 'home') return Math.min(1, axesHit / SETTINGS.axeCount);   // 이타카의 섬: 맞힌 도끼만큼
+  return Math.min(1, stageDist / stageLength(stage));
+}
+
+// 키클롭스의 바위: 크기도 속도도 바위마다 제각각 (크기와 속도는 서로 상관없음), 큰 바위일수록 더 아프다
+function throwBoulder() {
+  const r = rand(9, 26);
+  // 던지기 직전, 배가 지금 있는 곳을 겨냥해서 빠르게 던진다 (날아가는 중엔 방향을 바꾸지 않음)
+  const speed = rand(SETTINGS.boulderMinSpeed, SETTINGS.boulderMaxSpeed) * (1 + SETTINGS.rampSpeed * stageFrac());
+  launch('boulder', rand(-20, W + 20), -30, speed, { r, damage: Math.round(10 + (r - 9) * 1.5), shape: makeShape(9, 0.8, 1.05) });
+}
+
+// 태양신의 벼락: 화면 사방(위·아래·왼쪽·오른쪽) 가장자리에서 번쩍 모였다가, 그 순간 배가 있는 곳으로 일직선으로 날아간다
+function throwZap() {
+  const side = Math.floor(Math.random() * 4);
+  let x, y;
+  if (side === 0) { x = rand(20, W - 20); y = SETTINGS.topLimit - 10; }
+  else if (side === 1) { x = rand(20, W - 20); y = H - 6; }
+  else if (side === 2) { x = 6; y = rand(SETTINGS.topLimit, H - 20); }
+  else { x = W - 6; y = rand(SETTINGS.topLimit, H - 20); }
+  if (dist(x, y, player.x, player.y) < 130) return;      // 배 바로 옆에서는 생기지 않는다
+  const speed = SETTINGS.zapSpeed * (1 + SETTINGS.rampSpeed * stageFrac());
+  missiles.push({ type: 'zap', x, y, vx: 0, vy: 0, spin: 0, wait: 40, speed, seed: rand(0, 100) });
+}
+
+// 키르케의 마법 음식: 맞으면 저주에 걸린다
+const FOODS = ['bread', 'meat', 'grapes', 'cheese', 'wine'];
+function throwFood() {
+  const speed = SETTINGS.foodSpeed * (1 + SETTINGS.rampSpeed * stageFrac());
+  launch('food', rand(0, W), -20, speed, { food: pick(FOODS) });
+}
+
+// 장애물(암석·섬) 위에 겹치는지 확인 — 목마와 물약은 바다 위에만 있어야 한다
+function onObstacle(x, y, pad) {
+  return obstacles.some(o => dist(x, y, o.x, o.y) < o.r + pad);
+}
+
+// 바다 위 빈자리를 찾아 떠다니는 아이템을 놓는다
+function placeFloating(list, extra) {
+  for (let i = 0; i < 8; i++) {
+    const x = rand(30, W - 30), y = -24;
+    if (!onObstacle(x, y, 30)) {
+      list.push(Object.assign({ x, y, bob: rand(0, TAU) }, extra || {}));
+      return;
+    }
+  }
+}
+
+// 새 장애물을 놓을 때, 그 자리에 떠 있던 목마와 물약은 치운다
+function addObstacle(o) {
+  if (whirls.some(w => dist(o.x, o.y, w.x, w.y) < w.R + o.r + 6)) return;   // 소용돌이 자리에는 장애물을 놓지 않는다
+  obstacles.push(o);
+  horses = horses.filter(h => dist(h.x, h.y, o.x, o.y) > o.r + 30);
+  potions = potions.filter(p => dist(p.x, p.y, o.x, o.y) > o.r + 30);
+}
+
+// 스킬라의 촉수: 바다에서 솟아올라 배를 겨눈 뒤 그 방향으로 내리찍는다 (길이는 tentacleReach까지)
+function makeTentacle(x, y, fromWhirl) {
+  if (x === undefined) {
+    const a = rand(0, TAU), d = rand(95, 135);
+    x = clamp(player.x + Math.cos(a) * d, 24, W - 24);
+    y = clamp(player.y + Math.sin(a) * d, SETTINGS.topLimit, H - 24);
+  }
+  return { x, y, ang: Math.atan2(player.y - y, player.x - x), t: 0, phase: 'warn', hp: 3,
+           sway: rand(0, TAU), flash: 0, whirl: !!fromWhirl };
+}
+
+function makeWhirl() {
+  const debris = [];
+  for (let i = 0; i < 7; i++) debris.push({ r: rand(40, 145), a: rand(0, TAU), kind: i % 3 });
+  const streaks = [];                                     // 수면 위 거품 줄기들 (안쪽일수록 빨리 돈다)
+  for (let i = 0; i < 70; i++) streaks.push({ r: rand(24, 150), a: rand(0, TAU), len: rand(0.5, 1.4), w: rand(0.8, 2.6), al: rand(0.25, 0.75) });
+  // 암석·섬과 겹치지 않는 자리를 찾는다 (못 찾으면 이번엔 생기지 않음)
+  for (let i = 0; i < 12; i++) {
+    const x = rand(110, W - 110), y = -160;
+    if (!obstacles.some(o => dist(x, y, o.x, o.y) < 150 + o.r + 6)) {
+      return { x, y, R: 150, core: 20, rot: 0, tT: 50, debris, streaks };
+    }
+  }
+  return null;
+}
+
+function makeGhost() {
+  return { x: rand(50, W - 50), y: -60, vx: 0, mode: 'enter', targetY: rand(110, 230),
+           timer: rand(480, 660), fireT: rand(35, 55), chargeT: rand(150, 260), oar: rand(0, TAU), phase: rand(0, TAU), face: 0 };
+}
+
+function makeBolt() {
+  const aimed = Math.random() < 0.5;          // 절반은 배를 노린다
+  const x = aimed ? clamp(player.x + rand(-30, 30), 20, W - 20) : rand(30, W - 30);
+  const y = aimed ? player.y - 70 : rand(110, H - 60);
+  const path = [];
+  for (let i = 0; i <= 8; i++) path.push(rand(-14, 14));
+  return { x, y, t: 0, warn: 62, path };
+}
+
+// 칼립소의 태풍: 배의 2배 크기. 위쪽이나 옆쪽 가장자리에서 나타나 배를 향해 날아온다
+// 망령선의 돌진처럼, 배를 지나치기 전까지는 배의 위치를 실시간으로 계산해 방향을 튼다
+function makeTyphoon() {
+  const side = Math.floor(Math.random() * 3);
+  let x, y;
+  if (side === 0) { x = rand(40, W - 40); y = -60; }
+  else if (side === 1) { x = -60; y = rand(SETTINGS.topLimit, H * 0.55); }
+  else { x = W + 60; y = rand(SETTINGS.topLimit, H * 0.55); }
+  const speed = SETTINGS.typhoonSpeed * (1 + SETTINGS.rampSpeed * stageFrac());
+  const dx = player.x - x, dy = player.y - y, d = Math.hypot(dx, dy) || 1;
+  return { x, y, vx: dx / d * speed, vy: dy / d * speed, speed, rot: 0, R: 54, pull: 72, core: 22, age: 0, passed: false };
+}
+
+// 청혼자들의 배: 위에서 나타나 자리를 잡고, 뱃머리를 우리 배 쪽으로 돌려 불화살을 쏜다
+function makeSuitor() {
+  return { x: rand(50, W - 50), y: -50, mode: 'enter', targetY: rand(110, 260), offset: rand(-140, 140),
+           timer: rand(600, 840), fireT: rand(50, 80), oar: rand(0, TAU), hp: SETTINGS.suitorHp, flash: 0, face: Math.PI };
+}
+
+// 이타카의 섬: 도끼 12개를 모두 꿰뚫었다 → 이타카가 보인다
+function allAxesHit() {
+  arriving = true;
+  popup(W / 2, H / 2 - 40, '열두 개의 도끼를 모두 꿰뚫었다!', '#ffe08a');
+  score += 500;
+  for (const sd of suitors) sd.mode = 'leave';
+  axes = [];
+}
+
+// 해역 시작 안내: 실제 시간으로 introTime초 (휴대폰은 게임이 느리게 흐르니 그만큼 줄여 맞춘다)
+function startIntro() {
+  introLen = Math.round(SETTINGS.introTime * 60 * (isTouch ? SETTINGS.touchGameSpeed : 1));
+  bannerTimer = introLen;
+  spawnDelay = introLen;
+}
+function skipIntro() {
+  if (state === 'playing' && bannerTimer > 0) { bannerTimer = Math.min(bannerTimer, 15); spawnDelay = 0; }
+}
+
+// 해역마다 꼭 알아야 할 규칙 (해역 시작 전에 보여 준다)
+const RULES = {
+  cyclops:    ['바위는 던지는 순간 배가 있는 곳을 겨눈다', '바위마다 크기·속도가 다르고, 클수록 아프다', '트로이 목마를 주우면 선체가 고쳐진다'],
+  giants:     ['섬 위의 거인이 창을 던진다', '불화살(Z) 3발이면 거인을 쓰러뜨릴 수 있다', '양쪽 섬 사이의 좁은 틈으로 지나가라'],
+  circe:      ['마법 음식에 맞으면 저주 — 선체가 계속 깎인다', '또 맞으면 저주가 겹쳐 더 빨리 깎인다 (최대 ×5)', '하늘색 물약을 마시면 저주가 풀린다'],
+  underworld: ['망령선에는 불화살이 통하지 않는다', '푸른 불꽃을 피하라', '돌진은 배를 쫓아온다 — 바짝 왔을 때 비켜라'],
+  siren:      ['노래가 들리면 10초 동안 방향키가 뒤섞인다', '노래 직전에 예고가 뜬다', '부스터와 불화살은 뒤섞이지 않는다'],
+  scylla:     ['촉수는 배를 정확히 내리찍는다 — 촉수 길이 밖으로 피하라', '소용돌이에 들어가면 빨려들며 선체가 깎인다 (가운데는 2배)', '소용돌이는 부스터로만 빠져나올 수 있다'],
+  lightning:  ['그림자가 진 곳에 하늘에서 벼락이 떨어진다', '가장자리에서 번쩍이면 벼락이 배를 향해 날아온다', '날아오는 벼락은 암석·섬에 튕긴다'],
+  typhoon:    ['태풍은 배를 지나치기 전까지 쫓아온다', '바짝 다가왔을 때 부스터로 비켜라', '휩쓸리면 '],   // 마지막 줄은 버전에 따라 채운다
+  home:       ['불화살로 도끼 12개를 모두 맞혀야 이타카에 닿는다', '청혼자들의 배는 불화살 3발이면 가라앉는다', '청혼자들의 불화살을 피하라'],
+};
+function stageRules() {
+  const ev = STAGES[stage].event;
+  const r = RULES[ev].slice();
+  if (ev === 'typhoon') r[2] = mode === 'easy' ? '휩쓸리면 칼립소의 섬 처음으로 되돌아간다' : '휩쓸리면 모든 것을 잃고 처음 바다로 되돌아간다';
+  return r;
+}
+
+// 라이스트리고네스: 가운데 좁은 틈만 남기고 양쪽을 거대한 섬과 바위가 막는다
+function spawnGiantRow() {
+  const gap = rand(100, W - 100);
+  const half = 73;
+  const R1 = rand(80, 120), R2 = rand(80, 120);
+  const left = Math.random() < 0.6 ? makeIsle(gap - half - R1 * 0.95, -R1, R1) : makeRock(gap - half - R1, -R1, R1);
+  const right = Math.random() < 0.6 ? makeIsle(gap + half + R2 * 0.95, -R2, R2) : makeRock(gap + half + R2, -R2, R2);
+  // 섬 위에는 거인이 서서 틈을 지나가는 배를 노린다
+  if (left.kind === 'isle') left.giant = makeGiant(1);
+  if (right.kind === 'isle') right.giant = makeGiant(-1);
+  addObstacle(left);
+  addObstacle(right);
+}
+
+// 거인: dir = 1이면 오른쪽(틈 쪽)을 보고, -1이면 왼쪽을 본다
+function makeGiant(dir) {
+  return { dir, hp: SETTINGS.giantHp, mode: 'idle', t: 0, cd: rand(30, 90), aim: dir > 0 ? 0.6 : Math.PI - 0.6, flash: 0 };
+}
+
+// 거인이 서 있는 자리 (섬 가운데에서 틈 쪽으로 조금)
+function giantPos(o) {
+  return { x: o.x + o.giant.dir * o.r * 0.55, y: o.y };
+}
+
+// 점과 선분 사이의 거리 (창에 맞았는지 확인할 때 쓴다)
+function segDist(px, py, ax, ay, bx, by) {
+  const dx = bx - ax, dy = by - ay;
+  const len2 = dx * dx + dy * dy || 1;
+  const k = clamp(((px - ax) * dx + (py - ay) * dy) / len2, 0, 1);
+  return dist(px, py, ax + dx * k, ay + dy * k);
+}
+
+function updateGiant(o) {
+  const g = o.giant;
+  const p = giantPos(o);
+  if (g.flash > 0) g.flash--;
+  if (g.cd > 0) g.cd--;
+  const target = Math.atan2(player.y - p.y, player.x - p.x);
+  if (g.mode === 'idle') {
+    const diff = ((target - g.aim + Math.PI * 3) % TAU) - Math.PI;   // 가장 가까운 쪽으로 도는 각도
+    g.aim += diff * 0.05;                                // 배 쪽을 노려본다
+    if (g.cd <= 0 && p.y > -10 && p.y < H * 0.75) { g.mode = 'windup'; g.t = 0; }
+  } else if (g.mode === 'windup') {                      // 창을 뒤로 젖혀 겨눈다
+    g.t++;
+    g.aim = target;
+    if (g.t >= 34) {                                     // 휙! 지금 배가 있는 곳으로 던진다
+      const speed = SETTINGS.spearSpeed * (1 + SETTINGS.rampSpeed * stageFrac());
+      launch('spear', p.x + Math.cos(target) * 18, p.y + Math.sin(target) * 18, speed);
+      g.mode = 'idle';
+      g.cd = rand(130, 195) / (1 + SETTINGS.rampUp * stageFrac());
+    }
+  }
+}
+
+
+// ⑤ update: 1초에 약 60번 계산
+function update() {
+  const st = STAGES[stage];
+  const ev = st.event;
+  const sail = SETTINGS.sailSpeed;
+  const now = performance.now();
+
+  // --- 바람 (칼립소의 섬에서는 태풍 때문에 훨씬 거세다) ---
+  windTimer--;
+  if (windTimer <= 0) {
+    windTarget = rand(-1, 1) * (0.45 + stage * 0.06) * (ev === 'typhoon' ? 1.8 : 1);
+    windTimer = rand(300, 540);
+  }
+  windX += (windTarget - windX) * 0.01;
+
+  // --- 항해 거리와 해역 ---
+  if (!arriving) {
+    if (spawnDelay === 0) {                               // 규칙 안내 중에는 해역 시간이 흐르지 않는다
+      stageDist += sail;
+      score += sail * 0.1;                                // 나아간 만큼 점수
+    }
+    if (STAGES[stage].event !== 'home' && stageDist >= stageLength(stage)) {   // 이타카의 섬은 거리 대신 도끼로 끝난다
+      score += 300;
+      popup(W / 2, H / 2 - 70, '+300  해역 돌파!');
+      if (stage >= STAGES.length - 1) {
+        arriving = true;                                  // 이타카가 보인다!
+        for (const g of ghosts) g.mode = 'leave';
+        for (const t of typhoons) t.leaving = true;
+      } else {
+        stage++;
+        stageStartScore = score;                          // 쉬운 버전: 여기서부터 다시 시작할 수 있다
+        stageDist = 0;
+        startIntro();
+        bannerNote = '';
+        giantTimer = 0;
+        for (const g of ghosts) g.mode = 'leave';         // 해역이 바뀌면 지난 해역의 위험은 물러난다
+        for (const t of typhoons) t.leaving = true;
+      }
+    }
+  } else {
+    ithacaY += sail * 1.2;
+    if (ithacaY >= 170) {
+      score += player.hull * 5;                           // 남은 선체만큼 보너스
+      endGame('victory');
+      return;
+    }
+  }
+  if (bannerTimer > 0) bannerTimer--;
+  if (spawnDelay > 0) spawnDelay--;
+
+  // --- 키르케의 저주: 하늘색 물약을 마시기 전까지 선체가 계속 줄어든다 ---
+  if (poisoned) {
+    player.hull -= SETTINGS.poisonDrain * poisonStack;   // 겹친 만큼 더 빨리 줄어든다
+    if (tick % 6 === 0) particle(player.x + rand(-10, 10), player.y + rand(-15, 15), rand(-0.3, 0.3), -0.6, rand(1.5, 2.5), 30, '#c58cff', 'spark');
+    if (player.hull <= 0) { shipwreck(); return; }
+  }
+
+  // --- 배 조종 ---
+  // 세이렌의 노래: 바다 어디에 있든 들리고, 노래마다 방향키가 무작위로 뒤섞인다
+  if (ev === 'siren' && !arriving && spawnDelay === 0) {
+    song.t--;
+    if (song.phase === 'quiet' && song.t <= 0) {
+      song.phase = 'prelude';
+      song.t = SETTINGS.songPrelude;
+    } else if (song.phase === 'prelude' && song.t <= 0) {
+      song.phase = 'singing';
+      song.t = SETTINGS.songLength;
+      song.map = shuffleArrows();
+      shake = Math.max(shake, 4);
+    } else if (song.phase === 'singing' && song.t <= 0) {
+      song.phase = 'quiet';
+      song.t = rand(SETTINGS.songGapMin, SETTINGS.songGapMax) / (1 + SETTINGS.rampUp * stageFrac());
+      song.map = null;
+    }
+  } else if (song.phase !== 'quiet') {
+    song = { phase: 'quiet', t: SETTINGS.songGapMin, map: null };   // 세이렌의 섬을 벗어나면 노래가 그친다
+  }
+  inSiren = song.phase === 'singing';
+  let ix = 0, iy = 0;
+  for (let i = 0; i < 4; i++) {
+    if (!keys[ARROWS[i]]) continue;
+    const d = inSiren ? song.map[ARROWS[i]] : DIRS[i];
+    ix += d[0];
+    iy += d[1];
+  }
+  if (inSiren && tick % 4 === 0) {                        // 바다 전체에 퍼지는 음표
+    particle(rand(0, W), rand(90, H), rand(-0.4, 0.4), -rand(0.3, 0.8), rand(10, 16), 70, pick(['#ff9ad5', '#ffc4e6', '#e892bf']), 'note');
+  }
+  // --- 부스터 (스페이스): 게이지가 남아 있는 동안 노를 힘껏 저어 빠르게 움직인다 ---
+  const wantBoost = keys['Space'] && (boosting ? boost > 0 : boost > 15);
+  boosting = !!wantBoost;
+  if (boosting) boost = Math.max(0, boost - SETTINGS.boostDrain);
+  else boost = Math.min(100, boost + SETTINGS.boostRecharge);
+  const mv = isTouch ? SETTINGS.touchSpeed : 1;            // 터치 화면이면 배가 천천히 움직인다
+  const power = SETTINGS.accel * mv * (boosting ? SETTINGS.boostPower : 1);
+  player.vx += ix * power;
+  player.vy += iy * power;
+
+
+  inWhirl = false;
+  inWhirlCenter = false;
+  for (const w of whirls) {                               // 소용돌이: 한가운데로 빨아들인다
+    const dx = w.x - player.x, dy = w.y - player.y;
+    const d = Math.hypot(dx, dy);
+    if (d < w.R * 0.88) {
+      inWhirl = true;
+      const nx = d > 0.5 ? dx / d : 0, ny = d > 0.5 ? dy / d : 0;
+      const k = Math.min(1, d / 18);                      // 한가운데에 닿으면 끌림이 잦아들고 그 자리에서 맴돈다
+      player.vx += (nx * SETTINGS.whirlPull * k - ny * 0.32) * mv;   // 배가 느린 만큼 끌림도 같은 비율로 (부스터로 탈출 가능)
+      player.vy += (ny * SETTINGS.whirlPull * k + nx * 0.32) * mv;
+      const center = d < w.core + 8;
+      player.hull -= SETTINGS.whirlDrain * (center ? 2 : 1) * SETTINGS.damageScale;   // 한가운데에서는 피해 2배
+      inWhirlCenter = center;
+      if (tick % (center ? 9 : 18) === 0) redFlash = Math.max(redFlash, center ? 8 : 5);
+      if (tick % 4 === 0) particle(player.x + rand(-12, 12), player.y + rand(-14, 14), rand(-0.6, 0.6), rand(-0.6, 0.6), rand(0.8, 1.8), 22, pick(['#8b5a2b', '#e8f7ff']), 'chip');
+      if (player.hull <= 0) { shipwreck(); return; }
+    }
+  }
+
+  for (const t of typhoons) {                             // 태풍: 바깥쪽 바람이 배를 휘감는다
+    if (t.leaving) continue;
+    const dx = t.x - player.x, dy = t.y - player.y;
+    const d = Math.hypot(dx, dy);
+    if (d < t.pull && d > 1) {
+      const s = 1 - d / t.pull;
+      player.vx += ((dx / d) * s * 0.18 + (dy / d) * s * 0.35) * mv;
+      player.vy += ((dy / d) * s * 0.18 + (-dx / d) * s * 0.35) * mv;
+    }
+    if (d < t.core) { blowBack(); return; }                // 태풍 한가운데에 휩쓸렸다!
+  }
+
+  const drag = boosting ? 0.9 : SETTINGS.drag;
+  player.vx *= drag;
+  player.vy *= drag;
+  const sp = Math.hypot(player.vx, player.vy);
+  if (sp > 9) { player.vx *= 9 / sp; player.vy *= 9 / sp; }
+  player.x += player.vx + windX * SETTINGS.windStrength * mv;
+  player.y += player.vy;
+  if (player.x < 16 || player.x > W - 16) { player.x = clamp(player.x, 16, W - 16); player.vx = 0; }
+  if (player.y < SETTINGS.topLimit || player.y > H - 34) { player.y = clamp(player.y, SETTINGS.topLimit, H - 34); player.vy = 0; }
+  // 뱃머리 회전: 가려는 방향으로 뱃머리를 부드럽게 돌린다 (0 = 위쪽, 손을 떼면 그 방향을 유지)
+  if (ix || iy) {
+    const want = Math.atan2(ix, -iy);
+    let diff = want - player.heading;
+    while (diff > Math.PI) diff -= TAU;
+    while (diff < -Math.PI) diff += TAU;
+    player.heading += clamp(diff, -SETTINGS.turnSpeed, SETTINGS.turnSpeed);
+    if (player.heading > Math.PI) player.heading -= TAU;
+    if (player.heading < -Math.PI) player.heading += TAU;
+  }
+  const hx = Math.sin(player.heading), hy = -Math.cos(player.heading);   // 뱃머리가 가리키는 방향
+  const side = player.vx * -hy + player.vy * hx;                          // 옆으로 미끄러지는 정도 → 살짝 기울기
+  player.tilt += (side * 0.04 - player.tilt) * 0.2;
+  player.oar += 0.12 + (ix || iy ? 0.12 : 0) + (boosting ? 0.35 : 0);   // 부스터 중엔 노를 미친 듯이 젓는다
+  if (boosting && tick % 2 === 0) {                       // 부스터 물보라
+    for (const sd of [-1, 1]) {
+      const along = rand(-10, 16);
+      particle(player.x - hy * sd * 14 - hx * along, player.y + hx * sd * 14 - hy * along,
+               -hy * sd * rand(0.8, 1.6) - hx, hx * sd * rand(0.8, 1.6) - hy + sail, rand(1.5, 2.5), 25, '#e8f7ff', 'drop');
+    }
+  }
+
+  if (tick % 2 === 0) {
+    for (const sd of [-1, 1]) {                           // 고물(배 뒤쪽)에서 하얀 물결이 갈라진다
+      particle(player.x - hx * 24 - hy * sd * 6, player.y - hy * 24 + hx * sd * 6,
+               -hx * 0.5 - hy * sd * 0.6, -hy * 0.5 + hx * sd * 0.6 + sail + 0.3, rand(2, 3), 45, '#ffffff', 'foam');
+    }
+  }
+
+  // --- 불화살 ---
+  if (keys['KeyZ'] && tick - lastShot > SETTINGS.shootDelay * 60 / 1000) {   // 게임 시간 기준이라 느려지면 쏘는 간격도 같이 느려진다
+    // 불화살은 뱃머리가 향한 쪽으로 날아간다
+    arrows.push({ x: player.x + hx * 36, y: player.y + hy * 36, vx: hx * SETTINGS.arrowSpeed, vy: hy * SETTINGS.arrowSpeed, ang: player.heading });
+    lastShot = tick;
+  }
+  for (const a of arrows) { a.x += a.vx; a.y += a.vy; }
+  arrows = arrows.filter(a => a.y > -20 && a.y < H + 20 && a.x > -20 && a.x < W + 20);
+
+  // --- 새로운 장애물과 위험 등장 ---
+  if (spawnDelay === 0 && !arriving) {
+    const more = (1 + SETTINGS.rampUp * stageFrac()) * SETTINGS.hazardScale;   // 다음 해역에 가까워질수록 위험이 늘어난다
+    const moreObs = 1 + SETTINGS.rampUp * 0.5 * stageFrac(); // 암석과 섬도 조금씩 늘어난다
+    if (Math.random() < st.rock * moreObs) addObstacle(makeRock(rand(30, W - 30), -40, rand(14, 28)));
+    if (Math.random() < st.isle * moreObs) {
+      const r = rand(28, 46);
+      addObstacle(makeIsle(rand(r, W - r), -r - 10, r));
+    }
+    if (Math.random() < st.horse * 1.25) placeFloating(horses);
+    // 하늘색 해독 물약: 키르케의 섬에서 자주, 저주에 걸려 있으면 다른 해역에서도 가끔
+    if ((ev === 'circe' && Math.random() < 0.0075) || (poisoned && ev !== 'circe' && Math.random() < 0.004)) {
+      placeFloating(potions);
+    }
+
+    if (ev === 'cyclops' && Math.random() < 0.016 * more && missiles.filter(m => m.type === 'boulder').length < 5) throwBoulder();
+    if (ev === 'circe' && Math.random() < 0.036 * more) throwFood();   // 음식 2배
+    if (ev === 'giants') {
+      giantTimer--;
+      if (giantTimer <= 0) { spawnGiantRow(); giantTimer = Math.round(260 / more); }
+    }
+    if (ev === 'underworld' && Math.random() < 0.012 * more && ghosts.length < 3) ghosts.push(makeGhost());   // 망령선 1.5배
+    if (ev === 'siren' && Math.random() < 0.0075 * more && sirens.length === 0) {
+      sirens.push({ x: Math.random() < 0.5 ? 70 : W - 70, y: -140, R: 125, noteT: 0 });
+    }
+    if (ev === 'scylla') {
+      if (Math.random() < 0.013 * more && tentacles.length < 3) tentacles.push(makeTentacle());
+      if (Math.random() < 0.0065 * more && whirls.length === 0) { const w = makeWhirl(); if (w) whirls.push(w); }
+      for (const w of whirls) {                           // 소용돌이 속에서도 촉수가 솟구친다
+        w.tT--;
+        if (w.tT <= 0 && w.y > 40 && tentacles.length < 4 && dist(w.x, w.y, player.x, player.y) < w.R * 0.55 + SETTINGS.tentacleReach) {
+          const a = Math.atan2(player.y - w.y, player.x - w.x) + rand(-0.5, 0.5);
+          tentacles.push(makeTentacle(w.x + Math.cos(a) * w.R * 0.55, w.y + Math.sin(a) * w.R * 0.55, true));
+          w.tT = rand(80, 120) / more;
+        }
+      }
+    }
+    if (ev === 'lightning' && Math.random() < 0.022 * more) bolts.push(makeBolt());
+    if (ev === 'lightning' && Math.random() < 0.0135 * more) throwZap();   // 사방 벼락 1.5배
+    if (ev === 'home') {
+      // 도끼는 트로이 목마처럼 바다 위에 떠내려온다 (화면에 없으면 더 자주)
+      if (Math.random() < (axes.length === 0 ? 0.02 : 0.006) && axes.length < 3) placeFloating(axes, { spin: rand(-0.3, 0.3) });
+      if (Math.random() < 0.008 * more && suitors.filter(sd => sd.mode !== 'leave').length < 2 + Math.round(stageFrac() * 2)) suitors.push(makeSuitor());
+    }
+    if (ev === 'typhoon' && Math.random() < 0.0035 * more && typhoons.filter(t => !t.leaving).length < 1) typhoons.push(makeTyphoon());
+  }
+
+  // --- 암석과 섬: 부딪히면 다친다. 불화살로 못 부숨 ---
+  for (const o of obstacles) {
+    o.y += sail;
+    hitObstacle(o.x, o.y, o.kind === 'isle' ? o.r * 0.92 : o.r);
+    if (state !== 'playing') return;
+    if (o.giant) {
+      updateGiant(o);
+      if (state !== 'playing') return;
+    }
+  }
+  obstacles = obstacles.filter(o => o.y - o.r < H + 20);
+
+  // --- 세이렌 ---
+  for (const s of sirens) {
+    s.y += sail;
+    hitObstacle(s.x, s.y, 18);
+    if (state !== 'playing') return;
+    s.noteT--;
+    if (s.noteT <= 0) {
+      const a = rand(0, TAU);
+      particle(s.x, s.y - 14, Math.cos(a) * 0.8, Math.sin(a) * 0.8 - 0.3, 12, 70, '#ff9ad5', 'note');
+      s.noteT = 10;
+    }
+  }
+  sirens = sirens.filter(s => s.y < H + 160);
+
+  // --- 소용돌이 ---
+  for (const w of whirls) {
+    w.y += sail;                                          // 암석·섬과 같은 빠르기로 떠내려온다 (겹치지 않게)
+    w.rot += 0.05;
+    for (const st of w.streaks) {                         // 물살: 바깥은 느리게, 안쪽은 빠르게 휘감기며 빨려든다
+      st.a += 3.2 / (st.r + 10);
+      st.r -= 0.12 + 6 / (st.r + 10);
+      if (st.r < w.core + 2) { st.r = w.R * rand(0.9, 1); st.a = rand(0, TAU); }
+    }
+    for (const b of w.debris) {                           // 잔해가 빙글빙글 돌며 가운데로 빨려든다
+      b.a += 2.2 / (b.r + 15);
+      b.r -= 0.22;
+      if (b.r < w.core) { b.r = w.R * rand(0.85, 0.98); b.a = rand(0, TAU); }
+    }
+    if (tick % 4 === 0) {                                 // 가장자리 물보라
+      const a = rand(0, TAU), r = w.R * rand(0.8, 0.98);
+      particle(w.x + Math.cos(a) * r, w.y + Math.sin(a) * r, -Math.sin(a) * 1.2, Math.cos(a) * 1.2, rand(1, 2), 26, pick(['#e8f7ff', '#bfe6f5']), 'drop');
+    }
+  }
+  whirls = whirls.filter(w => w.y < H + 170);
+
+  // --- 태풍: 배를 향해 날아온다 (지나치기 전까지 실시간으로 방향을 틀며 쫓아온다) ---
+  for (const t of typhoons) {
+    t.age++;
+    if (!t.passed && !t.leaving) {
+      const toX = player.x - t.x, toY = player.y - t.y;
+      if (toX * t.vx + toY * t.vy < 0) {
+        t.passed = true;                                  // 배를 지나쳤다! 이제부터는 그대로 직진
+      } else {
+        const want = Math.atan2(toY, toX);
+        const cur = Math.atan2(t.vy, t.vx);
+        const diff = ((want - cur + Math.PI * 3) % TAU) - Math.PI;
+        const turned = cur + clamp(diff, -SETTINGS.typhoonTurn, SETTINGS.typhoonTurn);
+        t.vx = Math.cos(turned) * t.speed;
+        t.vy = Math.sin(turned) * t.speed;
+      }
+    }
+    t.x += t.vx;
+    t.y += t.vy;
+    t.rot += 0.09;
+    if (tick % 3 === 0) particle(t.x - t.vx * 8 + rand(-15, 15), t.y - t.vy * 8 + rand(-15, 15), -t.vx * 0.2, -t.vy * 0.2, rand(2, 3.5), 30, 'rgba(220, 230, 240, 0.7)', 'foam');
+    if (t.age > 90 && (t.x < -110 || t.x > W + 110 || t.y < -110 || t.y > H + 110)) t.gone = true;
+  }
+  typhoons = typhoons.filter(t => !t.gone && t.age < 900);
+
+  // --- 저승의 망령선: 불화살이 통하지 않는다 ---
+  for (const g of ghosts) {
+    g.oar += 0.15;
+    if (g.mode === 'enter') {
+      g.y += 2.2;
+      if (g.y >= g.targetY) g.mode = 'fight';
+    } else if (g.mode === 'fight') {
+      const want = clamp((player.x - g.x) * 0.03, -1.6, 1.6);
+      g.vx += (want - g.vx) * 0.05;
+      g.x = clamp(g.x + g.vx, 30, W - 30);
+      g.y = g.targetY + Math.sin(tick * 0.03 + g.targetY) * 6;
+      g.fireT--;
+      if (g.fireT <= 0) {
+        const dx = player.x - g.x, dy = player.y - (g.y + 20);
+        const d = Math.hypot(dx, dy) || 1;
+        const v = 3.0;
+        ghostFire.push({ x: g.x, y: g.y + 22, vx: dx / d * v, vy: dy / d * v });
+        g.fireT = 37 + rand(0, 20);                     // 불꽃 2배로 자주
+      }
+      g.timer--;
+      if (g.timer <= 0) g.mode = 'leave';
+      g.chargeT--;
+      if (g.chargeT <= 0) { g.mode = 'windup'; g.t = 0; }  // 돌진 준비!
+    } else if (g.mode === 'windup') {                     // 뱃머리를 우리 배 쪽으로 돌리며 귀기를 끌어모은다
+      g.t++;
+      const want = Math.atan2(player.y - g.y, player.x - g.x) - Math.PI / 2;
+      const diff = ((want - g.face + Math.PI * 3) % TAU) - Math.PI;
+      g.face += diff * 0.15;
+      if (g.t >= 45) {                                    // 출발하는 순간 우리 배가 있는 곳으로 일직선 돌진
+        const dx = player.x - g.x, dy = player.y - g.y;
+        const d = Math.hypot(dx, dy) || 1;
+        g.cvx = dx / d * SETTINGS.ghostChargeSpeed;
+        g.cvy = dy / d * SETTINGS.ghostChargeSpeed;
+        g.face = Math.atan2(g.cvy, g.cvx) - Math.PI / 2;
+        g.mode = 'charge';
+      }
+    } else if (g.mode === 'charge') {
+      // 우리 배를 지나치기 전까지는 배가 움직이는 대로 방향을 틀며 쫓아온다
+      if (!g.passed) {
+        const toX = player.x - g.x, toY = player.y - g.y;
+        if (toX * g.cvx + toY * g.cvy < 0) {
+          g.passed = true;                                // 배를 지나쳤다! 이제부터는 그대로 직진
+        } else {
+          const want = Math.atan2(toY, toX);
+          const cur = Math.atan2(g.cvy, g.cvx);
+          const diff = ((want - cur + Math.PI * 3) % TAU) - Math.PI;
+          const turned = cur + clamp(diff, -SETTINGS.ghostChargeTurn, SETTINGS.ghostChargeTurn);
+          g.cvx = Math.cos(turned) * SETTINGS.ghostChargeSpeed;
+          g.cvy = Math.sin(turned) * SETTINGS.ghostChargeSpeed;
+          g.face = turned - Math.PI / 2;
+        }
+      }
+      g.x += g.cvx;
+      g.y += g.cvy;
+      if (tick % 2 === 0) particle(g.x + rand(-6, 6), g.y + rand(-6, 6), -g.cvx * 0.2, -g.cvy * 0.2, rand(2, 3.5), 30, '#7dffb0', 'spark');
+      if (g.x < -60 || g.x > W + 60 || g.y < -80 || g.y > H + 60) g.gone = true;   // 지나쳐서 화면 밖으로 나가면 저승으로 사라진다
+    } else {
+      g.y += sail + 1.6;
+    }
+    const charging = g.mode === 'charge';
+    const hitW = charging ? 22 : 20, hitH = charging ? 30 : 42;
+    if (Math.abs(g.x - player.x) < hitW && Math.abs(g.y - player.y) < hitH) {   // 들이받기
+      if (hurt(charging ? SETTINGS.ghostChargeDamage : 20)) {
+        player.vx += (player.x - g.x) > 0 ? 5 : -5;
+        if (state !== 'playing') return;
+      }
+    }
+  }
+  ghosts = ghosts.filter(g => !g.gone && g.y < H + 70);
+
+  for (const f of ghostFire) {                            // 망령의 푸른 불꽃
+    f.x += f.vx;
+    f.y += f.vy;
+    if (tick % 2 === 0) particle(f.x, f.y, rand(-0.2, 0.2), rand(-0.2, 0.2), rand(1.5, 2.5), 20, '#7dffb0', 'spark');
+    if (dist(f.x, f.y, player.x, player.y) < 14) {
+      f.dead = true;
+      if (hurt(12) && state !== 'playing') return;
+    }
+  }
+  ghostFire = ghostFire.filter(f => !f.dead && f.x > -20 && f.x < W + 20 && f.y > -20 && f.y < H + 20);
+
+  // --- 날아오는 바위·창·음식: 정해진 방향으로 일직선 ---
+  for (const m of missiles) {
+    if (m.wait > 0) {                                     // 벼락이 모이는 중 (제자리에서 번쩍번쩍)
+      m.wait--;
+      if (m.wait === 0) {                                 // 이 순간 배가 있는 곳을 겨눠 발사!
+        const dx = player.x - m.x, dy = player.y - m.y;
+        const d = Math.hypot(dx, dy) || 1;
+        m.vx = dx / d * m.speed;
+        m.vy = dy / d * m.speed;
+      }
+      continue;
+    }
+    m.x += m.vx;
+    m.y += m.vy;
+    m.spin += m.type === 'boulder' ? 0.06 : m.type === 'food' ? 0.12 : 0;
+    if (m.type === 'boulder') {
+      if (dist(m.x, m.y, player.x, player.y) < m.r + 10) {
+        m.dead = true;
+        splash(m.x, m.y, m.r + 14);
+        shake = Math.max(shake, 4 + m.r * 0.2);
+        if (hurt(m.damage) && state !== 'playing') return;
+      }
+    } else if (m.type === 'spear') {
+      const len = Math.hypot(m.vx, m.vy) || 1;
+      const tx = m.x - m.vx / len * 34, ty = m.y - m.vy / len * 34;   // 창 꼬리
+      if (segDist(player.x, player.y, m.x, m.y, tx, ty) < 12) {
+        m.dead = true;
+        if (hurt(SETTINGS.spearDamage) && state !== 'playing') return;
+      }
+    } else if (m.type === 'zap') {
+      // 암석·섬에 부딪히면 탱탱볼처럼 튕겨 나간다 (부딪힌 면을 기준으로 반사)
+      if ((m.bounces || 0) < SETTINGS.zapBounces) {
+        for (const o of obstacles) {
+          const rr = (o.kind === 'isle' ? o.r * 0.92 : o.r) + 4;
+          const dx = m.x - o.x, dy = m.y - o.y, d = Math.hypot(dx, dy);
+          if (d < rr && d > 0.01) {
+            const nx = dx / d, ny = dy / d;
+            const rvy = m.vy - SETTINGS.sailSpeed;         // 장애물도 함께 떠내려오니 상대 속도로 계산
+            const dot = m.vx * nx + rvy * ny;
+            if (dot < 0) {
+              const k = SETTINGS.zapBounciness;
+              m.vx = (m.vx - 2 * dot * nx) * k;
+              m.vy = (rvy - 2 * dot * ny) * k + SETTINGS.sailSpeed;
+              m.bounces = (m.bounces || 0) + 1;
+              m.x = o.x + nx * (rr + 1);
+              m.y = o.y + ny * (rr + 1);
+              for (let i = 0; i < 8; i++) {               // 부딪힌 자리에 번쩍 불꽃
+                const a = rand(0, TAU), sp = rand(1, 3);
+                particle(m.x, m.y, Math.cos(a) * sp, Math.sin(a) * sp, rand(0.8, 1.6), 16, '#e6f2ff', 'spark');
+              }
+              rings.push({ x: m.x, y: m.y, t: 0, life: 14, r: 14, color: 'rgba(200, 225, 255, 0.8)' });
+            }
+            break;
+          }
+        }
+      }
+      if (tick % 2 === 0) particle(m.x, m.y, rand(-0.5, 0.5), rand(-0.5, 0.5), rand(0.8, 1.6), 14, '#cfe9ff', 'spark');
+      if (dist(m.x, m.y, player.x, player.y) < 14) {
+        m.dead = true;
+        whiteFlash = Math.max(whiteFlash, 4);
+        burstColor(m.x, m.y, '#cfe9ff');
+        if (hurt(SETTINGS.zapDamage) && state !== 'playing') return;
+      }
+    } else if (m.type === 'food') {
+      if (dist(m.x, m.y, player.x, player.y) < 15) {
+        m.dead = true;
+        burstColor(m.x, m.y, '#c58cff');
+        if (!poisoned) {
+          poisoned = true;                                // 저주에 걸렸다!
+          poisonStack = 1;
+          popup(player.x, player.y - 30, '키르케의 저주!', '#d6a6ff');
+        } else if (poisonStack < SETTINGS.poisonMaxStack) {
+          poisonStack++;                                  // 또 맞으면 저주가 겹친다
+          popup(player.x, player.y - 30, '저주 ×' + poisonStack + '!', '#e0a6ff');
+        }
+        shake = Math.max(shake, 4 + poisonStack);
+      }
+    }
+  }
+  missiles = missiles.filter(m => !m.dead && m.x > -60 && m.x < W + 60 && m.y > -60 && m.y < H + 60);
+
+  // --- 제우스의 벼락 ---
+  for (const b of bolts) {
+    b.y += sail;
+    b.t++;
+    if (b.t === b.warn) {                                 // 쾅!
+      whiteFlash = 8;
+      shake = Math.max(shake, 8);
+      splash(b.x, b.y, 30);
+      for (let i = 0; i < 12; i++) {
+        const a = rand(0, TAU), s = rand(1.5, 4);
+        particle(b.x, b.y, Math.cos(a) * s, Math.sin(a) * s, rand(0.8, 1.6), 20, '#cfe9ff', 'spark');
+      }
+      if (dist(b.x, b.y, player.x, player.y) < 34) {
+        hurt(25);
+        if (state !== 'playing') return;
+      }
+    }
+  }
+  bolts = bolts.filter(b => b.t < b.warn + 12);
+
+  // --- 촉수 괴물 ---
+  for (const t of tentacles) {
+    t.y += sail;
+    t.t++;
+    if (t.flash > 0) t.flash--;
+    if (t.phase === 'warn' && t.t >= 40) { t.phase = 'rise'; t.t = 0; splash(t.x, t.y, 20); }
+    else if (t.phase === 'rise') {
+      aimTentacle(t, (56 - t.t) + 8);
+      if (t.t >= 56) { t.phase = 'slam'; t.t = 0; }
+    }
+    else if (t.phase === 'slam' && t.t < 8) aimTentacle(t, 8 - t.t);   // 내리찍는 중에도 끝까지 배를 쫓는다
+    else if (t.phase === 'slam' && t.t >= 8) {            // 쾅! 내리찍는다
+      t.phase = 'lie'; t.t = 0;
+      const L = SETTINGS.tentacleReach;
+      const ex = t.x + Math.cos(t.ang) * L, ey = t.y + Math.sin(t.ang) * L;
+      for (let i = 1; i <= 4; i++) splash(t.x + (ex - t.x) * i / 4, t.y + (ey - t.y) * i / 4, 14 + i * 3);
+      shake = Math.max(shake, 7);
+      if (segDist(player.x, player.y, t.x, t.y, ex, ey) < 14 + 11) {
+        if (hurt(SETTINGS.tentacleDamage)) {
+          player.vx += -Math.sin(t.ang) * 3; player.vy += Math.cos(t.ang) * 3;
+          if (state !== 'playing') return;
+        }
+      }
+    }
+    else if (t.phase === 'lie') {                         // 물 위에 잠깐 늘어져 있다 — 닿아도 아프다
+      const sh = tentacleShape(t);
+      if (segDist(player.x, player.y, t.x, t.y, t.x + Math.cos(t.ang) * sh.len, t.y + Math.sin(t.ang) * sh.len) < 9 + 11) {
+        if (hurt(10) && state !== 'playing') return;
+      }
+      if (t.t >= 38) { t.phase = 'sink'; t.t = 0; }
+    }
+    else if (t.phase === 'sink' && t.t >= 20) { t.dead = true; }
+  }
+
+  // --- 불화살 맞히기 (망령선은 그냥 통과한다) ---
+  for (const a of arrows) {
+    for (const o of obstacles) {                          // 섬 위의 거인을 먼저 확인 (거인은 쓰러뜨릴 수 있다)
+      if (!o.giant) continue;
+      const p = giantPos(o);
+      if (dist(a.x, a.y, p.x, p.y) < 18) {
+        a.dead = true;
+        o.giant.hp--;
+        o.giant.flash = 6;
+        burstColor(a.x, a.y, '#e8eef4');
+        if (o.giant.hp <= 0) {                            // 거인을 쓰러뜨렸다!
+          score += 150;
+          popup(p.x, p.y - 24, '+150 거인 격파!');
+          for (let i = 0; i < 18; i++) {
+            const an = rand(0, TAU), s = rand(1, 3.5);
+            particle(p.x, p.y, Math.cos(an) * s, Math.sin(an) * s, rand(1.5, 3.5), 40, pick(['#cfd8e0', '#8f9aa5', '#a8704f']), 'chip');
+          }
+          rings.push({ x: p.x, y: p.y, t: 0, life: 22, r: 40, color: '', fire: true });
+          shake = Math.max(shake, 6);
+          o.giant = null;
+        }
+        break;
+      }
+    }
+    if (a.dead) continue;
+    for (const o of obstacles) {                          // 불화살은 섬 위로는 날아가지만 암석에는 막힌다
+      if (o.kind === 'rock' && dist(a.x, a.y, o.x, o.y) < o.r) {
+        a.dead = true;
+        particle(a.x, a.y, rand(-1, 1), rand(0, 1), 1.2, 15, '#ffcf70', 'spark');
+        break;
+      }
+    }
+    if (a.dead) continue;
+    for (const sd of suitors) {                           // 청혼자의 배
+      if (dist(a.x, a.y, sd.x, sd.y) < 20) {
+        a.dead = true;
+        sd.hp--;
+        sd.flash = 6;
+        burstColor(a.x, a.y, '#ffcf70');
+        if (sd.hp <= 0 && !sd.dead) {
+          sd.dead = true;
+          score += 120;
+          popup(sd.x, sd.y - 24, '+120 청혼자 격침!');
+          woodBurst(sd.x, sd.y, 2);
+          splash(sd.x, sd.y, 36);
+          shake = Math.max(shake, 6);
+        }
+        break;
+      }
+    }
+    if (a.dead) continue;
+    for (const ax of axes) {                              // 도끼 (자루 위 도끼날 고리를 꿰뚫는다)
+      if (dist(a.x, a.y, ax.x, ax.y - 8) < 17) {
+        a.dead = true;
+        ax.dead = true;
+        axesHit++;
+        score += 100;
+        popup(ax.x, ax.y - 26, '도끼 ' + axesHit + ' / ' + SETTINGS.axeCount, '#ffe08a');
+        burstColor(ax.x, ax.y - 8, '#ffe08a');
+        rings.push({ x: ax.x, y: ax.y - 8, t: 0, life: 24, r: 30, color: 'rgba(255, 224, 138, 0.8)' });
+        if (axesHit >= SETTINGS.axeCount && !arriving) allAxesHit();
+        break;
+      }
+    }
+    if (a.dead) continue;
+    for (const t of tentacles) {
+      if (t.phase === 'warn' || t.phase === 'sink') continue;
+      const sh = tentacleShape(t);
+      const tx = t.x + Math.cos(t.ang) * sh.len, ty = t.y + Math.sin(t.ang) * sh.len - sh.lift;
+      if (segDist(a.x, a.y, t.x, t.y, tx, ty) < 15) {
+        a.dead = true;
+        t.hp--;
+        t.flash = 6;
+        break;
+      }
+    }
+  }
+  arrows = arrows.filter(a => !a.dead);
+
+  for (const t of tentacles) {
+    if (t.hp <= 0 && !t.dead) {
+      t.dead = true;
+      score += 80;
+      popup(t.x, t.y - 20, '+80 촉수 격파!');
+      for (let i = 0; i < 14; i++) {
+        const a = rand(0, TAU), s = rand(0.8, 3);
+        particle(t.x, t.y - 15, Math.cos(a) * s, Math.sin(a) * s, rand(1.5, 3), 35, pick(['#b04a8a', '#6b2d5c', '#f3c6d8']), 'chip');
+      }
+      splash(t.x, t.y, 24);
+    }
+  }
+  tentacles = tentacles.filter(t => !t.dead);
+
+  // --- 청혼자들의 배 ---
+  for (const sd of suitors) {
+    sd.oar += 0.15;
+    if (sd.flash > 0) sd.flash--;
+    if (sd.mode === 'enter') {
+      sd.y += 2;
+      if (sd.y >= sd.targetY) sd.mode = 'fight';
+    } else if (sd.mode === 'fight') {
+      const tx = clamp(player.x + sd.offset, 40, W - 40);
+      sd.x += clamp((tx - sd.x) * 0.02, -1.4, 1.4);
+      sd.y = sd.targetY + Math.sin(tick * 0.03 + sd.targetY) * 8;
+      sd.fireT--;
+      if (sd.fireT <= 0) {                                // 이 순간 우리 배가 있는 곳을 겨눠 불화살!
+        const bx = sd.x + Math.sin(sd.face) * 30, by = sd.y - Math.cos(sd.face) * 30;
+        const dx = player.x - bx, dy = player.y - by, d = Math.hypot(dx, dy) || 1;
+        const v = SETTINGS.suitorArrowSpeed * (1 + SETTINGS.rampSpeed * stageFrac());
+        suitorArrows.push({ x: bx, y: by, vx: dx / d * v, vy: dy / d * v, ang: Math.atan2(dx, -dy) });
+        sd.fireT = SETTINGS.suitorFireDelay * rand(0.85, 1.2) / (1 + 0.5 * SETTINGS.rampUp * stageFrac());
+      }
+      sd.timer--;
+      if (sd.timer <= 0) sd.mode = 'leave';
+    } else {
+      sd.y += sail + 1.6;
+    }
+    // 뱃머리는 우리 배 쪽으로 (물러날 때는 아래로)
+    const want = sd.mode === 'leave' ? Math.PI : Math.atan2(player.x - sd.x, -(player.y - sd.y));
+    const diff = ((want - sd.face + Math.PI * 3) % TAU) - Math.PI;
+    sd.face += diff * 0.08;
+    if (dist(sd.x, sd.y, player.x, player.y) < 28) {      // 들이받기
+      if (hurt(15)) {
+        player.vx += (player.x - sd.x) > 0 ? 5 : -5;
+        if (state !== 'playing') return;
+      }
+    }
+  }
+  suitors = suitors.filter(sd => !sd.dead && sd.y < H + 70);
+
+  for (const f of suitorArrows) {                         // 청혼자들의 불화살 (암석에 막힌다)
+    f.x += f.vx;
+    f.y += f.vy;
+    if (obstacles.some(o => o.kind === 'rock' && dist(f.x, f.y, o.x, o.y) < o.r)) {
+      f.dead = true;
+      particle(f.x, f.y, rand(-1, 1), rand(-1, 1), 1.2, 15, '#ffcf70', 'spark');
+      continue;
+    }
+    if (dist(f.x, f.y, player.x, player.y) < 13) {
+      f.dead = true;
+      if (hurt(SETTINGS.suitorArrowDamage) && state !== 'playing') return;
+    }
+  }
+  suitorArrows = suitorArrows.filter(f => !f.dead && f.x > -20 && f.x < W + 20 && f.y > -20 && f.y < H + 20);
+
+  for (const ax of axes) { ax.y += sail; ax.bob += 0.05; }
+  axes = axes.filter(ax => !ax.dead && ax.y < H + 40);
+
+  // --- 트로이 목마 줍기 ---
+  for (const h of horses) {
+    h.y += sail;
+    h.bob += 0.06;
+    if (dist(h.x, h.y, player.x, player.y) < 24) {        // 선체 수리
+      h.dead = true;
+      player.hull = Math.min(SETTINGS.hull, player.hull + SETTINGS.repair);
+      score += 50;
+      popup(h.x, h.y - 10, '선체 수리 +' + SETTINGS.repair, '#9ff0b4');
+      burstColor(h.x, h.y, '#ffe08a');
+    }
+  }
+  horses = horses.filter(h => !h.dead && h.y < H + 30);
+
+  // --- 하늘색 해독 물약 줍기 ---
+  for (const p of potions) {
+    p.y += sail;
+    p.bob += 0.06;
+    if (dist(p.x, p.y, player.x, player.y) < 22) {
+      p.dead = true;
+      if (poisoned) {
+        poisoned = false;
+        poisonStack = 0;
+        score += 100;
+        popup(p.x, p.y - 10, '저주가 풀렸다! +100', '#9fe8ff');
+      } else {
+        score += 30;
+        popup(p.x, p.y - 10, '+30', '#9fe8ff');
+      }
+      burstColor(p.x, p.y, '#8fe3ff');
+    }
+  }
+  potions = potions.filter(p => !p.dead && p.y < H + 30);
+
+  if (invincible > 0) invincible--;
+}
+
+function burstColor(x, y, color) {
+  for (let i = 0; i < 12; i++) {
+    const a = rand(0, TAU), s = rand(1, 2.5);
+    particle(x, y, Math.cos(a) * s, Math.sin(a) * s, rand(1, 2), 30, color, 'spark');
+  }
+}
+
+// 암석·섬·세이렌 바위에 부딪혔는지 확인하고 튕겨내기
+function hitObstacle(x, y, r) {
+  const d = dist(x, y, player.x, player.y);
+  const minD = r + 11;
+  if (d < minD && d > 0.01) {
+    const nx = (player.x - x) / d, ny = (player.y - y) / d;
+    player.x = x + nx * minD;
+    player.y = y + ny * minD;
+    player.vx = nx * 4;
+    player.vy = ny * 4;
+    if (hurt(15)) splash(player.x - nx * 10, player.y - ny * 10, 18);
+  }
+}
+
+// 촉수 조준: 배가 움직이는 방향과 속도로 '바다에 닿는 순간' 배가 있을 곳을 계산해 그쪽을 정확히 겨눈다
+// (닿을 수 있는 길이는 tentacleReach까지 — 그보다 멀리 도망치면 피할 수 있다)
+function aimTentacle(t, framesLeft) {
+  const lead = Math.min(framesLeft, 30);
+  const px = player.x + player.vx * lead, py = player.y + player.vy * lead;
+  t.ang = Math.atan2(py - t.y, px - t.x);
+}
+
+// 촉수의 모양: len = 물 위로 뻗은 길이, lift = 공중에 치켜든 높이
+function tentacleShape(t) {
+  const L = SETTINGS.tentacleReach;
+  if (t.phase === 'rise') { const k = Math.min(1, t.t / 14); return { len: L * 0.3 * k, lift: 55 * k + Math.sin(t.t * 0.2) * 3 }; }
+  if (t.phase === 'slam') { const p = Math.min(1, t.t / 8); const e = p * p; return { len: L * (0.3 + 0.7 * e), lift: 55 * (1 - e) }; }
+  if (t.phase === 'lie')  return { len: L, lift: 0 };
+  if (t.phase === 'sink') return { len: L * Math.max(0, 1 - t.t / 20), lift: 0 };
+  return { len: 0, lift: 0 };
+}
+
+function updateEffects() {
+  for (const p of particles) {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.kind === 'chip' || p.kind === 'spark' || p.kind === 'drop') {
+      p.vx *= 0.95;
+      p.vy = p.vy * 0.95 + SETTINGS.sailSpeed * 0.05;
+    }
+    p.t++;
+  }
+  particles = particles.filter(p => p.t < p.life);
+  for (const r of rings) { r.t++; r.y += SETTINGS.sailSpeed; }
+  rings = rings.filter(r => r.t < r.life);
+  for (const p of popups) { p.t++; p.y -= 0.6; }
+  popups = popups.filter(p => p.t < 55);
+}
+
+
+// ⑥ draw: 화면 그리기
+function draw() {
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
+
+  ctx.save();
+  if (shake > 0.3) ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
+
+  drawSea();
+
+  if (state === 'start') {
+    drawStartScreen();
+    ctx.restore();
+    drawVignette();
+    return;
+  }
+  if (state === 'victory') {
+    drawVictoryScreen();
+    ctx.restore();
+    drawVignette();
+    return;
+  }
+
+  const ev = STAGES[stage].event;
+  drawMood(ev);
+  if (arriving) drawIthaca(W / 2, ithacaY, 1);
+
+  for (const w of whirls) drawWhirl(w);
+  for (const s of sirens) drawSirenArea(s);
+  for (const t of tentacles) drawTentacleWarn(t);
+  for (const b of bolts) if (b.t < b.warn) drawBoltWarn(b);
+  drawParticles('below');
+  for (const o of obstacles) { if (o.kind === 'isle') drawIsle(o); else drawRock(o); }
+  for (const s of sirens) drawSiren(s);
+  for (const h of horses) drawHorse(h);
+  for (const ax of axes) drawAxe(ax);
+  for (const p of potions) drawPotion(p);
+  for (const t of tentacles) if (t.phase !== 'warn') drawTentacle(t);
+  for (const g of ghosts) drawGhostShip(g);
+  for (const sd of suitors) drawSuitor(sd);
+
+  if (state === 'playing' || state === 'paused') {
+    if (!(invincible > 0 && Math.floor(invincible / 5) % 2 === 0)) {
+      drawShip(player.x, player.y, { tilt: player.heading + player.tilt, oar: player.oar, poisoned: poisoned ? poisonStack : 0 });
+    }
+  }
+
+  drawArrows();
+  drawGhostFire();
+  drawSuitorArrows();
+  drawMissiles();
+  for (const t of typhoons) drawTyphoon(t);
+  for (const b of bolts) if (b.t >= b.warn) drawBoltStrike(b);
+  if (ev === 'lightning' || ev === 'typhoon') drawRain();
+  drawParticles('above');
+  drawRings();
+  drawPopups();
+  ctx.restore();
+
+  drawVignette();
+  if (redFlash > 0) {
+    const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.25, W / 2, H / 2, H * 0.7);
+    g.addColorStop(0, 'rgba(255, 0, 0, 0)');
+    g.addColorStop(1, 'rgba(200, 20, 20, ' + (redFlash / 18 * 0.5) + ')');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+  if (whiteFlash > 0) {
+    ctx.fillStyle = 'rgba(230, 240, 255, ' + (whiteFlash / 8 * 0.45) + ')';
+    ctx.fillRect(0, 0, W, H);
+  }
+  drawHUD();
+
+  if (state === 'playing') {
+    let warnY = STAGES[stage].event === 'home' && !arriving ? 126 : 104;
+    if (inWhirl) drawText(inWhirlCenter ? '소용돌이 한가운데! 피해 2배 — 부스터로 탈출하라!' : '소용돌이에 빨려든다! 부스터(스페이스)로 탈출하라!', W / 2, warnY + 22, FONT_KR(12, 700), '#ff8a8a', 'center', 8);
+    if (song.phase === 'prelude') {
+      ctx.globalAlpha = 0.5 + Math.sin(tick * 0.3) * 0.5;
+      drawText('♪ 어디선가 세이렌의 노래가 들려온다… ♪', W / 2, warnY, FONT_KR(13, 700), '#ffc4e6', 'center', 8);
+      ctx.globalAlpha = 1;
+      warnY += 22;
+    }
+    if (inSiren) {
+      drawText('♪ 세이렌의 노래 — 방향키가 뒤섞였다! ' + Math.ceil(song.t / 60) + '초 ♪', W / 2, warnY, FONT_KR(13, 700), '#ff9ad5', 'center', 10);
+      warnY += 22;
+    }
+    if (poisoned) {
+      ctx.globalAlpha = 0.7 + Math.sin(tick * 0.15) * 0.3;
+      drawText('키르케의 저주 ×' + poisonStack + '! 하늘색 물약을 마셔야 풀린다', W / 2, warnY, FONT_KR(12, 700), '#d6a6ff', 'center', 8);
+      ctx.globalAlpha = 1;
+      warnY += 22;
+    }
+    if (typhoons.some(t => !t.leaving && t.age < 70)) drawText('⚠ 태풍 접근!', W / 2, warnY, FONT_KR(14, 700), '#ffd07a', 'center', 10);
+  }
+
+  if (state === 'playing' && bannerTimer > 0) drawIntro();
+  if (arriving && state === 'playing') {
+    drawText('이타카가 보인다!', W / 2, H / 2 + 120, FONT_KR(20, 700), '#ffe7a3', 'center', 12);
+  }
+
+  if (state === 'blown') drawBlown();
+
+  if (state === 'paused') {
+    dimScreen();
+    panel(W / 2 - 120, H / 2 - 55, 240, 110);
+    drawText('PAUSED', W / 2, H / 2 - 8, FONT_EN(28, 900), '#f3e6c4', 'center', 10);
+    drawText(isTouch ? '화면을 터치해 계속' : 'P를 눌러 계속', W / 2, H / 2 + 28, FONT_KR(14, 500), '#a9c3d1');
+  }
+
+  if (state === 'gameover') {
+    dimScreen();
+    panel(W / 2 - 160, H / 2 - 110, 320, 220);
+    drawText('SHIPWRECKED', W / 2, H / 2 - 58, FONT_EN(28, 900), '#ef6f6c', 'center', 14);
+    drawText('오디세우스호가 난파했습니다', W / 2, H / 2 - 24, FONT_KR(14, 500), '#d6e4ec');
+    drawText('SCORE  ' + Math.floor(score), W / 2, H / 2 + 14, FONT_EN(20, 700), '#ffffff');
+    drawText(STAGES[stage].name + '에서 · 이타카까지 ' + leagueText() + ' 남음', W / 2, H / 2 + 42, FONT_KR(12, 400), '#a9d3e6');
+    if (mode === 'easy') {
+      blinkText((isTouch ? '터치  ' : 'SPACE  ') + (stage + 1) + '단계 ' + STAGES[stage].name + '부터 다시', H / 2 + 74);
+    } else {
+      blinkText(isTouch ? '화면을 터치해 다시 출항' : 'PRESS SPACE TO SAIL AGAIN', H / 2 + 74);
+    }
+    drawText(isTouch ? '[ 여기를 터치: 버전 다시 고르기 ]' : 'M  버전 다시 고르기', W / 2, H / 2 + 98, FONT_KR(11, 500), '#8fb6c9');
+  }
+}
+
+function leagueText() {
+  return Math.round(1200 * (1 - progress())).toLocaleString('ko-KR') + ' 해리';
+}
+
+// --- 바다 ---
+function drawSea() {
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, '#0f4c70');
+  g.addColorStop(0.5, '#0a3756');
+  g.addColorStop(1, '#06233a');
+  ctx.fillStyle = g;
+  ctx.fillRect(-20, -20, W + 40, H + 40);
+
+  const flow = tick * SETTINGS.sailSpeed * 0.5;
+  glow(120 + Math.sin(tick * 0.004) * 40, (flow % (H + 400)) - 200, 230, 'rgba(70, 180, 210, 0.10)');
+  glow(360 - Math.sin(tick * 0.003) * 50, ((flow + 450) % (H + 400)) - 200, 260, 'rgba(40, 150, 200, 0.09)');
+
+  ctx.lineWidth = 1.2;
+  for (const w of waves) {
+    ctx.strokeStyle = 'rgba(210, 240, 255, ' + w.a + ')';
+    ctx.beginPath();
+    ctx.arc(w.x, w.y, w.len, Math.PI * 1.15, Math.PI * 1.85);
+    ctx.stroke();
+  }
+  for (const s of glitters) {
+    const a = Math.max(0, Math.sin(tick * 0.06 + s.phase));
+    ctx.fillStyle = 'rgba(255, 255, 240, ' + (a * 0.7) + ')';
+    ctx.fillRect(s.x, s.y, 1.6, 1.6);
+  }
+}
+
+// 해역마다 다른 분위기 (저승은 어둡게, 폭풍 해역은 흐리게)
+function drawMood(ev) {
+  if (ev === 'underworld') {
+    ctx.fillStyle = 'rgba(4, 10, 12, 0.6)';
+    ctx.fillRect(-20, -20, W + 40, H + 40);
+    const drift = Math.sin(tick * 0.01) * 30;
+    glow(100 + drift, 220, 200, 'rgba(90, 200, 140, 0.10)');
+    glow(380 - drift, 480, 220, 'rgba(90, 200, 160, 0.08)');
+    if (tick % 8 === 0) particle(rand(0, W), H + 5, rand(-0.2, 0.2), -rand(0.6, 1.2), rand(1, 2), 160, '#9fffc8', 'soul');
+  } else if (ev === 'lightning' || ev === 'typhoon') {
+    ctx.fillStyle = 'rgba(14, 20, 30, 0.38)';
+    ctx.fillRect(-20, -20, W + 40, H + 40);
+  } else if (ev === 'siren' && song.phase !== 'quiet') {   // 노래가 들리면 바다 전체가 분홍빛으로 물든다
+    const k = song.phase === 'singing' ? 1 : 0.4;
+    ctx.fillStyle = 'rgba(255, 120, 200, ' + ((0.07 + Math.sin(tick * 0.08) * 0.03) * k) + ')';
+    ctx.fillRect(-20, -20, W + 40, H + 40);
+  } else if (ev === 'circe') {
+    glow(W / 2, 120, 300, 'rgba(160, 90, 220, 0.08)');
+  } else if (ev === 'home') {
+    glow(W / 2, -40, 340, 'rgba(255, 210, 140, 0.16)');
+  }
+}
+
+function drawRain() {
+  ctx.strokeStyle = 'rgba(200, 220, 255, 0.25)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let i = 0; i < 70; i++) {
+    const x = (i * 73 + tick * (3 + windX * 3)) % (W + 40) - 20;
+    const y = (i * 131 + tick * 12) % (H + 20) - 10;
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 3 - windX * 4, y + 12);
+  }
+  ctx.stroke();
+}
+
+function glow(x, y, r, color) {
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, color);
+  g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(x - r, y - r, r * 2, r * 2);
+}
+
+function drawVignette() {
+  const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.75);
+  g.addColorStop(0, 'rgba(0, 0, 0, 0)');
+  g.addColorStop(1, 'rgba(0, 8, 16, 0.5)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+}
+
+// --- 배 (위에서 내려다본 고대 그리스 갤리선) ---
+// o.ghost: 저승의 망령선 / o.poisoned: 저주에 걸린 상태
+function drawShip(x, y, o) {
+  const ghost = !!o.ghost;
+  const suitor = !!o.suitor;                               // 청혼자의 배: 검붉은 선체, 자줏빛 돛, 금빛 장식
+  ctx.save();
+  ctx.translate(x, y);
+  if (ghost) ctx.rotate(Math.PI);                         // 망령선은 마주 보고 온다
+  ctx.rotate(o.tilt || 0);
+  if (o.scale) ctx.scale(o.scale, o.scale);
+
+  ctx.strokeStyle = ghost ? '#2a3a33' : suitor ? '#8a6a4a' : '#c9a36b';         // 노
+  ctx.lineWidth = 1.3;
+  for (let i = 0; i < 6; i++) {
+    const oy = -12 + i * 5;
+    const swing = Math.sin((o.oar || 0) + i * 0.5) * 4;
+    for (const side of [-1, 1]) {
+      ctx.beginPath();
+      ctx.moveTo(side * 10, oy);
+      ctx.lineTo(side * 20, oy + swing);
+      ctx.stroke();
+    }
+  }
+
+  const hull = ghost ? ['#07090a', '#1a1f1e', '#050606'] : suitor ? ['#2e0f17', '#6e2433', '#22090f'] : ['#5a3a22', '#a8743f', '#4a2e1a'];
+  ctx.beginPath();
+  ctx.moveTo(0, -30);
+  ctx.quadraticCurveTo(13, -14, 12, 6);
+  ctx.lineTo(10, 22);
+  ctx.quadraticCurveTo(0, 28, -10, 22);
+  ctx.lineTo(-12, 6);
+  ctx.quadraticCurveTo(-13, -14, 0, -30);
+  ctx.closePath();
+  const hg = ctx.createLinearGradient(-13, 0, 13, 0);
+  hg.addColorStop(0, hull[0]);
+  hg.addColorStop(0.5, hull[1]);
+  hg.addColorStop(1, hull[2]);
+  ctx.fillStyle = hg;
+  ctx.fill();
+  ctx.strokeStyle = ghost ? 'rgba(120, 255, 180, 0.45)' : 'rgba(20, 10, 0, 0.6)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  ctx.save();                                              // 갑판과 판자
+  ctx.beginPath();
+  ctx.moveTo(0, -24);
+  ctx.quadraticCurveTo(9, -12, 8.5, 6);
+  ctx.lineTo(7, 19);
+  ctx.quadraticCurveTo(0, 23, -7, 19);
+  ctx.lineTo(-8.5, 6);
+  ctx.quadraticCurveTo(-9, -12, 0, -24);
+  ctx.closePath();
+  ctx.fillStyle = ghost ? '#111614' : suitor ? '#8c5a46' : '#c39563';
+  ctx.fill();
+  ctx.clip();
+  ctx.strokeStyle = ghost ? 'rgba(80, 160, 120, 0.25)' : 'rgba(60, 35, 15, 0.35)';
+  ctx.lineWidth = 0.6;
+  ctx.beginPath();
+  for (let py = -22; py < 24; py += 4) {
+    ctx.moveTo(-10, py);
+    ctx.lineTo(10, py);
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.fillStyle = ghost ? '#3a4a42' : '#d4a24c';           // 청동 충각
+  ctx.beginPath();
+  ctx.moveTo(-2, -29);
+  ctx.lineTo(2, -29);
+  ctx.lineTo(0, -35);
+  ctx.closePath();
+  ctx.fill();
+  for (const side of [-1, 1]) {                            // 뱃머리에 그린 눈
+    ctx.fillStyle = ghost ? '#7dffb0' : '#ffffff';
+    ctx.beginPath();
+    ctx.ellipse(side * 6.5, -19, 2.2, 1.4, side * 0.5, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = ghost ? '#0a1a12' : '#111';
+    ctx.beginPath();
+    ctx.arc(side * 6.5, -19, 0.8, 0, TAU);
+    ctx.fill();
+  }
+
+  const sail = ghost ? ['#141816', '#050606'] : suitor ? ['#6a2c78', '#3c1446'] : ['#f6eedb', '#d8caa8'];
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(-17, -6);
+  ctx.quadraticCurveTo(0, -13, 17, -6);
+  if (ghost) {                                             // 망령선의 돛은 너덜너덜
+    ctx.lineTo(15, 0);
+    ctx.lineTo(11, -2);
+    ctx.lineTo(7, 2);
+    ctx.lineTo(1, -1);
+    ctx.lineTo(-5, 2);
+    ctx.lineTo(-10, -2);
+    ctx.lineTo(-15, 1);
+  } else {
+    ctx.lineTo(17, 2);
+    ctx.quadraticCurveTo(0, -5, -17, 2);
+  }
+  ctx.closePath();
+  const sg = ctx.createLinearGradient(0, -12, 0, 2);
+  sg.addColorStop(0, sail[0]);
+  sg.addColorStop(1, sail[1]);
+  ctx.fillStyle = sg;
+  ctx.fill();
+  ctx.clip();
+  if (!ghost) {
+    ctx.fillStyle = suitor ? '#e9c46a' : '#b23a2e';
+    ctx.fillRect(-11, -14, 4, 18);
+    ctx.fillRect(7, -14, 4, 18);
+  }
+  ctx.restore();
+  ctx.strokeStyle = ghost ? '#26302b' : '#6b4a2a';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(-18, -6);
+  ctx.quadraticCurveTo(0, -13, 18, -6);
+  ctx.stroke();
+  ctx.fillStyle = ghost ? '#0a0d0c' : '#3d2a17';
+  ctx.beginPath();
+  ctx.arc(0, -4, 1.6, 0, TAU);
+  ctx.fill();
+
+  if (o.poisoned) {                                        // 저주에 걸리면 보랏빛이 감돈다
+    ctx.globalCompositeOperation = 'lighter';
+    glow(0, 0, 24 + o.poisoned * 3, 'rgba(170, 90, 255, ' + (0.15 + o.poisoned * 0.07 + Math.sin(tick * 0.15) * 0.1) + ')');   // 겹칠수록 진해진다
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  ctx.restore();
+}
+
+// 저승의 망령선: 검은 배가 깜빡이듯 흐려지고 초록 귀기가 감돈다
+function drawGhostShip(g) {
+  ctx.globalCompositeOperation = 'lighter';
+  const power = g.mode === 'windup' ? Math.min(1, g.t / 45) : g.mode === 'charge' ? 1 : 0;
+  glow(g.x, g.y, 40 + power * 25, 'rgba(90, 255, 160, ' + (0.12 + power * 0.35) + ')');   // 돌진할 때 귀기가 강해진다
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = power > 0 ? 0.95 : 0.65 + Math.sin(tick * 0.08 + g.phase) * 0.25;
+  const jitter = g.mode === 'windup' ? (Math.random() - 0.5) * 3 * power : 0;   // 부르르 떤다
+  drawShip(g.x + jitter, g.y + jitter, { ghost: true, oar: g.oar, tilt: g.face });
+  ctx.globalAlpha = 1;
+}
+
+// --- 해역 시작 안내: 해역 이름 + 중요 규칙 + 남은 시간 막대 ---
+function drawIntro() {
+  const a = Math.min(1, bannerTimer / 15, (introLen - bannerTimer) / 15);
+  ctx.globalAlpha = a;
+  const rules = stageRules();
+  const pw = 420, ph = 126 + rules.length * 24 + 38 + (bannerNote ? 22 : 0), px = W / 2 - pw / 2, py = H / 2 - 130;
+  panel(px, py, pw, ph);
+  drawText('SEA ' + (stage + 1) + ' / ' + STAGES.length, W / 2, py + 30, FONT_EN(15, 700), '#e9c46a', 'center', 8);
+  drawText(STAGES[stage].name, W / 2, py + 62, FONT_KR(24, 700), '#ffffff', 'center', 12);
+  drawText(STAGES[stage].desc, W / 2, py + 86, FONT_KR(12, 500), '#bfe3f2');
+  ctx.fillStyle = 'rgba(233, 196, 106, 0.3)';
+  ctx.fillRect(px + 30, py + 100, pw - 60, 1);
+  rules.forEach((r, i) => {
+    const y = py + 126 + i * 24;
+    ctx.fillStyle = '#e9c46a';
+    ctx.beginPath(); ctx.arc(px + 32, y - 4, 2.5, 0, TAU); ctx.fill();
+    drawText(r, px + 44, y, FONT_KR(r.length > 26 ? 11.5 : 13, 500), '#f3e6c4', 'left');
+  });
+  let y = py + 126 + rules.length * 24;
+  if (bannerNote) { drawText(bannerNote, W / 2, y + 2, FONT_KR(12, 700), '#ffd07a'); y += 22; }
+  // 남은 시간 막대 + 건너뛰기 안내
+  const k = bannerTimer / introLen;
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.fillRect(px + 30, y + 4, pw - 60, 3);
+  ctx.fillStyle = '#e9c46a';
+  ctx.fillRect(px + 30, y + 4, (pw - 60) * k, 3);
+  drawText(isTouch ? '화면을 터치하면 바로 출항' : 'ENTER  바로 출항', W / 2, y + 24, FONT_KR(10, 500), '#8fb6c9');
+  ctx.globalAlpha = 1;
+}
+
+// --- 청혼자들의 배 ---
+function drawSuitor(sd) {
+  drawShip(sd.x, sd.y, { suitor: true, oar: sd.oar, tilt: sd.face });
+  if (sd.flash > 0) {
+    ctx.globalCompositeOperation = 'lighter';
+    glow(sd.x, sd.y, 30, 'rgba(255, 200, 120, 0.55)');
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  if (sd.mode === 'fight' && sd.fireT < 18) {              // 활시위를 당기는 중: 뱃머리에 불씨가 켜진다
+    ctx.globalCompositeOperation = 'lighter';
+    glow(sd.x + Math.sin(sd.face) * 30, sd.y - Math.cos(sd.face) * 30, 10 + (18 - sd.fireT) * 0.5, 'rgba(255, 120, 60, 0.6)');
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  // 남은 내구도 (작은 점)
+  for (let i = 0; i < sd.hp; i++) {
+    ctx.fillStyle = '#ffcf70';
+    ctx.beginPath();
+    ctx.arc(sd.x - (sd.hp - 1) * 4 + i * 8, sd.y - 42, 2, 0, TAU);
+    ctx.fill();
+  }
+}
+
+function drawSuitorArrows() {
+  for (const f of suitorArrows) {
+    ctx.save();
+    ctx.translate(f.x, f.y);
+    ctx.rotate(f.ang);
+    ctx.strokeStyle = '#6b3a2a';                             // 검붉은 화살대
+    ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 15); ctx.stroke();
+    ctx.fillStyle = '#ff6a3d';
+    ctx.beginPath(); ctx.moveTo(0, -5); ctx.lineTo(-2.5, 1); ctx.lineTo(2.5, 1); ctx.closePath(); ctx.fill();
+    ctx.globalCompositeOperation = 'lighter';
+    glow(0, -1, 10, 'rgba(255, 80, 40, 0.7)');
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.restore();
+  }
+}
+
+// --- 이타카의 도끼: 물 위에 떠 있는 받침대에 꽂힌 도끼. 도끼날의 고리를 꿰뚫어라 ---
+function drawAxeShape(scale, lit) {
+  ctx.save();
+  ctx.scale(scale, scale);
+  ctx.strokeStyle = '#7a4a22';                              // 자루
+  ctx.lineWidth = 2.6;
+  ctx.beginPath(); ctx.moveTo(0, 10); ctx.lineTo(0, -12); ctx.stroke();
+  const g = ctx.createLinearGradient(-12, -16, 12, -4);     // 양날 도끼날
+  g.addColorStop(0, lit ? '#fff1b8' : '#8c96a0');
+  g.addColorStop(0.5, lit ? '#e9c46a' : '#d7dee4');
+  g.addColorStop(1, lit ? '#b8862e' : '#6f7880');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.moveTo(-2, -15);
+  ctx.quadraticCurveTo(-8, -18, -13, -21);
+  ctx.quadraticCurveTo(-10, -12, -13, -3);
+  ctx.quadraticCurveTo(-8, -6, -2, -9);
+  ctx.lineTo(2, -9);
+  ctx.quadraticCurveTo(8, -6, 13, -3);
+  ctx.quadraticCurveTo(10, -12, 13, -21);
+  ctx.quadraticCurveTo(8, -18, 2, -15);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#1b2a33';                                // 화살이 지나갈 고리 구멍
+  ctx.beginPath(); ctx.arc(0, -12, 2.6, 0, TAU); ctx.fill();
+  ctx.restore();
+}
+
+function drawAxe(ax) {
+  const x = ax.x, y = ax.y + Math.sin(ax.bob) * 2;
+  ctx.globalCompositeOperation = 'lighter';
+  glow(x, y - 8, 26, 'rgba(255, 220, 130, ' + (0.22 + Math.sin(tick * 0.1 + ax.bob) * 0.08) + ')');
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = 'rgba(0, 20, 30, 0.25)';                  // 물그림자
+  ctx.beginPath(); ctx.ellipse(x + 2, y + 11, 13, 4, 0, 0, TAU); ctx.fill();
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = '#6b4526';                                // 떠 있는 나무 받침
+  ctx.fillRect(-10, 7, 20, 5);
+  ctx.fillStyle = '#8b5a2b';
+  ctx.fillRect(-10, 7, 20, 2);
+  ctx.rotate(ax.spin * Math.sin(ax.bob * 0.5));
+  drawAxeShape(1, false);
+  ctx.restore();
+}
+
+// 화면 위: 맞힌 도끼 표시 (12칸)
+function drawAxeTally() {
+  const n = SETTINGS.axeCount, gap = 22, x0 = W / 2 - (n - 1) * gap / 2, y = 104;
+  ctx.fillStyle = 'rgba(3, 15, 26, 0.55)';
+  ctx.fillRect(x0 - 16, y - 16, (n - 1) * gap + 32, 26);
+  for (let i = 0; i < n; i++) {
+    ctx.save();
+    ctx.translate(x0 + i * gap, y + 6);
+    ctx.globalAlpha = i < axesHit ? 1 : 0.35;
+    drawAxeShape(0.55, i < axesHit);
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+}
+
+// --- 불화살 ---
+function drawArrows() {
+  for (const a0 of arrows) {
+    ctx.save();
+    ctx.translate(a0.x, a0.y);
+    ctx.rotate(a0.ang || 0);
+    const a = { x: 0, y: 0 };
+    ctx.strokeStyle = '#d9c08c';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(a.x, a.y + 15);
+    ctx.stroke();
+    ctx.strokeStyle = '#f3ead2';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y + 12);
+    ctx.lineTo(a.x - 2.5, a.y + 16);
+    ctx.moveTo(a.x, a.y + 12);
+    ctx.lineTo(a.x + 2.5, a.y + 16);
+    ctx.stroke();
+    ctx.fillStyle = '#e0b04f';
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y - 5);
+    ctx.lineTo(a.x - 2.5, a.y + 1);
+    ctx.lineTo(a.x + 2.5, a.y + 1);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalCompositeOperation = 'lighter';
+    glow(a.x, a.y - 1, 9, 'rgba(255, 150, 50, 0.65)');
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.restore();
+  }
+}
+
+// --- 망령의 푸른 불꽃 ---
+function drawGhostFire() {
+  for (const f of ghostFire) {
+    ctx.globalCompositeOperation = 'lighter';
+    glow(f.x, f.y, 15, 'rgba(90, 255, 160, 0.55)');
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#d8ffe8';
+    ctx.beginPath();
+    ctx.arc(f.x, f.y, 3 + Math.random(), 0, TAU);
+    ctx.fill();
+  }
+}
+
+// --- 암석 ---
+function rockPath(shape, r) {
+  ctx.beginPath();
+  for (let i = 0; i < shape.length; i++) {
+    const a = (i / shape.length) * TAU;
+    const rr = r * shape[i];
+    if (i === 0) ctx.moveTo(Math.cos(a) * rr, Math.sin(a) * rr);
+    else ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+  }
+  ctx.closePath();
+}
+
+function drawRock(r) {
+  ctx.save();
+  ctx.translate(r.x, r.y);
+  ctx.fillStyle = 'rgba(0, 15, 25, 0.25)';                  // 물에 비친 그림자 (흰 테두리 대신)
+  rockPath(r.shape, r.r * 1.08 + 2);
+  ctx.fill();
+  rockPath(r.shape, r.r);
+  const g = ctx.createRadialGradient(-r.r * 0.35, -r.r * 0.35, r.r * 0.1, 0, 0, r.r * 1.1);
+  g.addColorStop(0, '#9aa3a8');
+  g.addColorStop(1, '#2f3539');
+  ctx.fillStyle = g;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(70, 120, 80, 0.6)';
+  for (const a of r.algae) {
+    ctx.beginPath();
+    ctx.arc(a.x * r.r, a.y * r.r, r.r * 0.22, 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// --- 작은 섬 (거인족의 섬은 바위 절벽이 둘러싼다) ---
+function drawIsle(o) {
+  ctx.save();
+  ctx.translate(o.x, o.y);
+  const r = o.r;
+  ctx.fillStyle = 'rgba(0, 15, 25, 0.25)';                  // 물에 비친 그림자 (흰 테두리 대신)
+  rockPath(o.shape, r * 1.05 + 2);
+  ctx.fill();
+  rockPath(o.shape, r);
+  ctx.fillStyle = o.cliff ? '#6b6258' : '#dcc690';         // 모래사장 또는 바위 절벽
+  ctx.fill();
+  if (o.cliff) {
+    ctx.strokeStyle = 'rgba(30, 25, 20, 0.5)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+  rockPath(o.shape, r * (o.cliff ? 0.8 : 0.78));
+  const g = ctx.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.1, 0, 0, r);
+  g.addColorStop(0, o.cliff ? '#6f8f52' : '#86b567');
+  g.addColorStop(1, o.cliff ? '#3e5a33' : '#4b7a3f');
+  ctx.fillStyle = g;
+  ctx.fill();
+  ctx.fillStyle = 'rgba(40, 70, 35, 0.5)';                 // 언덕
+  ctx.beginPath();
+  ctx.ellipse(o.hill.x * r, o.hill.y * r, r * 0.35, r * 0.25, 0.4, 0, TAU);
+  ctx.fill();
+  for (const t of o.trees) {                               // 올리브 나무
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.beginPath();
+    ctx.arc(t.x + 1.5, t.y + 1.5, 4.5 * t.s, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#3f6e35';
+    ctx.beginPath();
+    ctx.arc(t.x, t.y, 4.5 * t.s, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(160, 200, 120, 0.5)';
+    ctx.beginPath();
+    ctx.arc(t.x - 1.2, t.y - 1.2, 1.8 * t.s, 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+  if (o.giant) drawGiant(o);
+}
+
+// --- 라이스트리고네스의 거인 (위에서 내려다본 모습, 은빛 갑옷) + 창 ---
+function drawGiant(o) {
+  const g = o.giant;
+  const p = giantPos(o);
+  ctx.save();
+  ctx.translate(p.x, p.y);
+
+  // 그림자
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+  ctx.beginPath();
+  ctx.ellipse(3, 4, 22, 14, 0, 0, TAU);
+  ctx.fill();
+
+  // 창 (겨눌 때는 뒤로 젖혔다가 던진다)
+  const pull = g.mode === 'windup' ? Math.min(1, g.t / 20) * 10 : 0;
+  ctx.save();
+  ctx.rotate(g.aim);
+  ctx.translate(-pull, 0);
+  drawSpearShape(0, 0, 0, 1);
+  ctx.restore();
+
+  // 팔 (갑옷 팔뚝)
+  ctx.strokeStyle = '#8d98a3';
+  ctx.lineWidth = 6;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(Math.cos(g.aim + 1.2) * 12, Math.sin(g.aim + 1.2) * 12);
+  ctx.lineTo(Math.cos(g.aim) * (10 - pull), Math.sin(g.aim) * (10 - pull));
+  ctx.stroke();
+  ctx.lineCap = 'butt';
+
+  // 은빛 갑옷 몸통과 어깨 보호대
+  const body = ctx.createRadialGradient(-6, -5, 2, 0, 0, 22);
+  body.addColorStop(0, '#f2f5f8');
+  body.addColorStop(0.45, '#aeb8c2');
+  body.addColorStop(1, '#5a6570');
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 20, 12, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(30, 40, 50, 0.6)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  for (const side of [-1, 1]) {                            // 어깨 보호대
+    ctx.fillStyle = '#c9d2da';
+    ctx.beginPath();
+    ctx.ellipse(side * 14, 0, 6.5, 8.5, 0, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(30, 40, 50, 0.5)';
+    ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(60, 70, 80, 0.45)';              // 갑옷 판 이음새
+  ctx.beginPath();
+  ctx.moveTo(-8, -10); ctx.lineTo(-8, 10);
+  ctx.moveTo(8, -10); ctx.lineTo(8, 10);
+  ctx.stroke();
+
+  // 투구 (붉은 깃털 장식)
+  const hg = ctx.createRadialGradient(-2, -2, 1, 0, 0, 9);
+  hg.addColorStop(0, '#ffffff');
+  hg.addColorStop(0.5, '#b9c3cc');
+  hg.addColorStop(1, '#66717c');
+  ctx.fillStyle = hg;
+  ctx.beginPath();
+  ctx.arc(0, 0, 8.5, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = '#b0302a';
+  ctx.beginPath();
+  ctx.ellipse(-g.dir * 1, 0, 2.2, 8.5, 0, 0, TAU);
+  ctx.fill();
+  if (g.mode === 'windup') {                                // 던지기 직전 눈이 붉게 번쩍
+    ctx.fillStyle = '#ff5a3a';
+    ctx.beginPath(); ctx.arc(Math.cos(g.aim) * 6 - 1.5, Math.sin(g.aim) * 6, 1.2, 0, TAU); ctx.fill();
+    ctx.beginPath(); ctx.arc(Math.cos(g.aim) * 6 + 1.5, Math.sin(g.aim) * 6, 1.2, 0, TAU); ctx.fill();
+  }
+  if (g.flash > 0) {                                        // 불화살에 맞았을 때
+    ctx.globalCompositeOperation = 'lighter';
+    glow(0, 0, 26, 'rgba(255, 200, 140, 0.6)');
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  ctx.restore();
+
+  // 체력 표시 (작은 칸)
+  for (let i = 0; i < SETTINGS.giantHp; i++) {
+    ctx.fillStyle = i < g.hp ? '#e9eef2' : 'rgba(255, 255, 255, 0.15)';
+    ctx.fillRect(p.x - 10 + i * 7, p.y - 22, 5, 3);
+  }
+}
+
+// 창 모양: (x, y)에서 오른쪽(+x)을 향해 그린다
+function drawSpearShape(x, y, angle, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.scale(s, s);
+  ctx.strokeStyle = '#8a6440';                              // 나무 자루
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(-14, 0);
+  ctx.lineTo(24, 0);
+  ctx.stroke();
+  const tg = ctx.createLinearGradient(24, -3, 24, 3);       // 은빛 창날
+  tg.addColorStop(0, '#ffffff');
+  tg.addColorStop(1, '#8e99a4');
+  ctx.fillStyle = tg;
+  ctx.beginPath();
+  ctx.moveTo(22, -3);
+  ctx.lineTo(34, 0);
+  ctx.lineTo(22, 3);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+// --- 날아오는 것들 그리기 ---
+function drawMissiles() {
+  for (const m of missiles) {
+    if (m.type === 'boulder') drawFlyingBoulder(m);
+    else if (m.type === 'spear') {
+      const a = Math.atan2(m.vy, m.vx);
+      ctx.strokeStyle = 'rgba(220, 235, 245, 0.25)';        // 공기를 가르는 잔상
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(m.x - Math.cos(a) * 30, m.y - Math.sin(a) * 30);
+      ctx.lineTo(m.x - Math.cos(a) * 60, m.y - Math.sin(a) * 60);
+      ctx.stroke();
+      drawSpearShape(m.x - Math.cos(a) * 34, m.y - Math.sin(a) * 34, a, 1);
+    } else if (m.type === 'food') drawFood(m);
+    else if (m.type === 'zap') drawZap(m);
+  }
+}
+
+// --- 사방에서 날아오는 벼락 ---
+function drawZap(m) {
+  ctx.globalCompositeOperation = 'lighter';
+  if (m.wait > 0) {                                        // 모이는 중: 번쩍이는 전기 덩어리
+    const k = 1 - m.wait / 40;
+    glow(m.x, m.y, 14 + k * 14, 'rgba(160, 200, 255, ' + (0.35 + 0.4 * k) + ')');
+    ctx.strokeStyle = 'rgba(230, 240, 255, ' + (0.5 + 0.5 * k) + ')';
+    ctx.lineWidth = 1.5;
+    for (let i = 0; i < 4; i++) {
+      const a = Math.random() * TAU, r = 6 + k * 12;
+      ctx.beginPath();
+      ctx.moveTo(m.x, m.y);
+      ctx.lineTo(m.x + Math.cos(a) * r * 0.5 + rand(-3, 3), m.y + Math.sin(a) * r * 0.5 + rand(-3, 3));
+      ctx.lineTo(m.x + Math.cos(a) * r, m.y + Math.sin(a) * r);
+      ctx.stroke();
+    }
+  } else {                                                 // 날아가는 중: 지그재그 번개 꼬리
+    const a = Math.atan2(m.vy, m.vx);
+    const ca = Math.cos(a), sa = Math.sin(a);
+    const pts = [];
+    for (let i = 0; i <= 6; i++) {
+      const back = i * 7, off = i === 0 ? 0 : rand(-5, 5);
+      pts.push({ x: m.x - ca * back - sa * off, y: m.y - sa * back + ca * off });
+    }
+    for (const [w, c] of [[7, 'rgba(120, 170, 255, 0.35)'], [2.5, 'rgba(235, 245, 255, 0.95)']]) {
+      ctx.strokeStyle = c;
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      pts.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
+      ctx.stroke();
+    }
+    glow(m.x, m.y, 16, 'rgba(190, 215, 255, 0.6)');
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+function drawFlyingBoulder(m) {
+  ctx.fillStyle = 'rgba(0, 10, 20, 0.25)';                  // 바다 위 그림자
+  ctx.beginPath();
+  ctx.ellipse(m.x + m.r * 0.5, m.y + m.r * 0.9, m.r, m.r * 0.6, 0, 0, TAU);
+  ctx.fill();
+  ctx.save();
+  ctx.translate(m.x, m.y);
+  ctx.rotate(m.spin);
+  rockPath(m.shape, m.r);
+  const g = ctx.createRadialGradient(-m.r * 0.3, -m.r * 0.3, 1, 0, 0, m.r * 1.1);
+  g.addColorStop(0, '#b6aea3');
+  g.addColorStop(1, '#4a443d');
+  ctx.fillStyle = g;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';                    // 패인 자국
+  ctx.beginPath();
+  ctx.arc(m.r * 0.25, m.r * 0.15, m.r * 0.2, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+}
+
+// --- 키르케의 마법 음식 (보랏빛 마력이 감돈다) ---
+function drawFood(m) {
+  ctx.globalCompositeOperation = 'lighter';
+  glow(m.x, m.y, 16, 'rgba(180, 100, 255, 0.35)');
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.save();
+  ctx.translate(m.x, m.y);
+  ctx.rotate(m.spin);
+  if (m.food === 'bread') {                                 // 빵
+    ctx.fillStyle = '#c98a45';
+    ctx.beginPath(); ctx.ellipse(0, 0, 10, 6.5, 0, 0, TAU); ctx.fill();
+    ctx.strokeStyle = '#8a5524';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    for (const cx of [-4, 0, 4]) { ctx.moveTo(cx - 1.5, -3); ctx.lineTo(cx + 1.5, 3); }
+    ctx.stroke();
+  } else if (m.food === 'meat') {                           // 고기
+    ctx.fillStyle = '#f1e6d2';
+    ctx.fillRect(4, -1.5, 7, 3);
+    ctx.beginPath(); ctx.arc(11, -2, 2, 0, TAU); ctx.arc(11, 2, 2, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#9c3f2a';
+    ctx.beginPath(); ctx.ellipse(-2, 0, 8, 6, 0, 0, TAU); ctx.fill();
+    ctx.fillStyle = 'rgba(255, 200, 150, 0.35)';
+    ctx.beginPath(); ctx.ellipse(-4, -2, 3, 2, 0, 0, TAU); ctx.fill();
+  } else if (m.food === 'grapes') {                         // 포도
+    ctx.fillStyle = '#6a3a8f';
+    for (const [gx, gy] of [[-4, -3], [0, -3], [4, -3], [-2, 1], [2, 1], [0, 5]]) {
+      ctx.beginPath(); ctx.arc(gx, gy, 2.8, 0, TAU); ctx.fill();
+    }
+    ctx.fillStyle = '#4f8a3a';
+    ctx.fillRect(-1, -9, 2, 4);
+  } else if (m.food === 'cheese') {                         // 치즈
+    ctx.fillStyle = '#f2c94c';
+    ctx.beginPath(); ctx.moveTo(-9, 6); ctx.lineTo(9, 6); ctx.lineTo(4, -6); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#d9a92e';
+    ctx.beginPath(); ctx.arc(1, 2, 1.6, 0, TAU); ctx.arc(-3, 4, 1.2, 0, TAU); ctx.fill();
+  } else {                                                   // 포도주 잔
+    ctx.fillStyle = '#c9a24c';
+    ctx.beginPath(); ctx.moveTo(-7, -6); ctx.lineTo(7, -6); ctx.lineTo(3, 1); ctx.lineTo(-3, 1); ctx.closePath(); ctx.fill();
+    ctx.fillRect(-1, 1, 2, 5);
+    ctx.fillRect(-4, 6, 8, 1.6);
+    ctx.fillStyle = '#7a1f3a';
+    ctx.beginPath(); ctx.ellipse(0, -5.5, 6, 1.6, 0, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+}
+
+// --- 하늘색 해독 물약 (게임에서 흔히 보는 둥근 물약병) ---
+function drawPotion(p) {
+  const x = p.x, y = p.y + Math.sin(p.bob) * 2;
+  ctx.globalCompositeOperation = 'lighter';
+  glow(x, y, 22, 'rgba(110, 210, 255, 0.3)');
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = 'rgba(0, 20, 30, 0.25)';                  // 물에 비친 그림자
+  ctx.beginPath();
+  ctx.ellipse(2, 10, 10, 3.5, 0, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = '#9a6a3a';                                // 코르크 마개
+  ctx.fillRect(-3, -15, 6, 4);
+  ctx.fillStyle = 'rgba(220, 240, 255, 0.85)';              // 유리 목
+  ctx.fillRect(-2.5, -11, 5, 5);
+  const g = ctx.createRadialGradient(-3, -1, 1, 0, 2, 10);  // 둥근 유리병 속 하늘색 물약
+  g.addColorStop(0, '#e6f9ff');
+  g.addColorStop(0.35, '#7fd8ff');
+  g.addColorStop(1, '#2a8fc4');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(0, 2, 8.5, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(230, 248, 255, 0.9)';             // 유리 테두리
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';              // 반짝이는 하이라이트
+  ctx.beginPath();
+  ctx.ellipse(-3.5, -1.5, 1.6, 3, -0.5, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+}
+
+// --- 제우스의 벼락 ---
+function drawBoltWarn(b) {
+  const k = b.t / b.warn;
+  ctx.fillStyle = 'rgba(10, 15, 30, ' + (0.15 + k * 0.3) + ')';   // 먹구름 그림자
+  ctx.beginPath();
+  ctx.ellipse(b.x, b.y, 36, 24, 0, 0, TAU);
+  ctx.fill();
+  if (k > 0.6 && Math.floor(b.t / 3) % 2 === 0) {          // 떨어지기 직전 그림자가 짙어지며 번쩍인다 (점선 없음)
+    ctx.fillStyle = 'rgba(10, 15, 30, 0.2)';
+    ctx.beginPath();
+    ctx.ellipse(b.x, b.y, 30, 20, 0, 0, TAU);
+    ctx.fill();
+  }
+}
+
+function drawBoltStrike(b) {
+  const a = 1 - (b.t - b.warn) / 12;
+  const pts = [];
+  for (let i = 0; i <= 8; i++) pts.push({ x: b.x + b.path[i] * (i < 8 ? 1 : 0), y: -10 + (b.y + 10) * i / 8 });
+  ctx.globalCompositeOperation = 'lighter';
+  for (const [w, c] of [[8, 'rgba(120, 170, 255, ' + (0.35 * a) + ')'], [3, 'rgba(230, 240, 255, ' + a + ')']]) {
+    ctx.strokeStyle = c;
+    ctx.lineWidth = w;
+    ctx.beginPath();
+    pts.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
+    ctx.stroke();
+  }
+  glow(b.x, b.y, 40, 'rgba(200, 220, 255, ' + (0.6 * a) + ')');
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+// --- 칼립소의 태풍 ---
+function drawTyphoon(t) {
+  // 원래 크기로 그린 뒤 줄여서 배의 2배 크기로 맞춘다
+  ctx.save();
+  ctx.translate(t.x, t.y);
+  ctx.scale(0.42, 0.42);
+  const c = { x: 0, y: 0, pull: 168, core: 47, rot: t.rot };
+  const g = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.pull);
+  g.addColorStop(0, 'rgba(40, 50, 65, 0.0)');
+  g.addColorStop(0.25, 'rgba(200, 210, 225, 0.55)');
+  g.addColorStop(0.55, 'rgba(150, 165, 185, 0.35)');
+  g.addColorStop(1, 'rgba(120, 140, 160, 0)');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(c.x, c.y, c.pull, 0, TAU);
+  ctx.fill();
+  ctx.lineCap = 'round';
+  for (let i = 0; i < 8; i++) {                            // 소용돌이치는 구름 띠
+    const r = c.core * 0.7 + i * 14;
+    const start = -c.rot * (1.5 - i * 0.1) + i * 0.9;
+    ctx.strokeStyle = 'rgba(240, 245, 255, ' + (0.55 - i * 0.05) + ')';
+    ctx.lineWidth = 7 - i * 0.6;
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, r, start, start + Math.PI * 0.9);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, r, start + Math.PI, start + Math.PI * 1.7);
+    ctx.stroke();
+  }
+  ctx.lineCap = 'butt';
+  ctx.fillStyle = 'rgba(20, 40, 70, 0.85)';                // 태풍의 눈
+  ctx.beginPath();
+  ctx.arc(c.x, c.y, 14, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 120, 90, 0.5)';             // 휩쓸리는 경계
+  ctx.setLineDash([6, 6]);
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(c.x, c.y, c.core, 0, TAU);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+}
+
+// --- 촉수 괴물 ---
+function drawTentacleWarn(t) {
+  // 솟아오르기 전: 물 밑에서 어두운 그림자가 꿈틀거린다
+  if (t.phase === 'warn') {
+    const k = Math.min(1, t.t / 20);
+    ctx.fillStyle = 'rgba(25, 5, 40, ' + (0.4 * k) + ')';
+    ctx.beginPath();
+    ctx.ellipse(t.x, t.y, 22, 16, 0, 0, TAU);
+    ctx.fill();
+    for (let i = 0; i < 3; i++) {
+      const r = 8 + ((t.t * 0.7 + i * 8) % 26);
+      ctx.strokeStyle = 'rgba(60, 20, 80, ' + (0.5 * (1 - r / 34)) + ')';
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.arc(t.x, t.y, r, 0, TAU);
+      ctx.stroke();
+    }
+  }
+}
+
+function drawTentacle(t) {
+  const sh = tentacleShape(t);
+  if (sh.len <= 0.5) return;
+  const ca = Math.cos(t.ang), sa = Math.sin(t.ang);
+  const fade = t.phase === 'sink' ? Math.max(0, 1 - t.t / 20) : 1;
+  const N = 16;
+  const pts = [];
+  for (let j = 0; j <= N; j++) {
+    const s = j / N;
+    const wig = Math.sin(s * 5 + tick * 0.12 + t.sway) * 7 * s * (t.phase === 'lie' ? 0.35 : 1);
+    const curl = t.phase === 'rise' ? Math.pow(s, 3) * 16 : 0;       // 치켜든 끝이 말려 있다
+    const bx = t.x + ca * sh.len * s - sa * (wig + curl);
+    const by = t.y + sa * sh.len * s + ca * (wig + curl);
+    const lift = sh.lift * Math.sin(Math.min(1, s * 1.15) * Math.PI / 2);
+    pts.push({ x: bx, y: by - lift, gx: bx, gy: by, w: (1 - s) * 11 + 2.5, s });
+  }
+  ctx.globalAlpha = fade;
+  // 물 위에 드리운 그림자
+  ctx.fillStyle = 'rgba(10, 5, 25, 0.28)';
+  for (const p of pts) { ctx.beginPath(); ctx.arc(p.gx + 4, p.gy + 4, p.w, 0, TAU); ctx.fill(); }
+  // 솟은 자리의 물거품
+  ctx.fillStyle = 'rgba(25, 5, 40, 0.35)';
+  ctx.beginPath(); ctx.ellipse(t.x, t.y + 2, 18, 9, 0, 0, TAU); ctx.fill();
+  ctx.strokeStyle = 'rgba(220, 245, 255, ' + (0.35 + 0.15 * Math.sin(tick * 0.2)) + ')';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.ellipse(t.x, t.y + 2, 20 + Math.sin(tick * 0.15) * 2, 10, 0, 0, TAU); ctx.stroke();
+  // 촉수 몸통 (아랫부분은 짙은 자주, 끝으로 갈수록 분홍)
+  for (const p of pts) {
+    const c = Math.round(91 + p.s * 103), c2 = Math.round(31 + p.s * 59), c3 = Math.round(79 + p.s * 75);
+    ctx.fillStyle = 'rgb(' + c + ',' + c2 + ',' + c3 + ')';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.w, 0, TAU);
+    ctx.fill();
+  }
+  // 등쪽 하이라이트
+  ctx.fillStyle = 'rgba(255, 210, 235, 0.25)';
+  for (let j = 0; j < pts.length; j += 2) {
+    const p = pts[j];
+    ctx.beginPath(); ctx.arc(p.x - p.w * 0.3, p.y - p.w * 0.3, p.w * 0.45, 0, TAU); ctx.fill();
+  }
+  // 빨판
+  ctx.fillStyle = '#f3c6d8';
+  for (let j = 1; j < pts.length - 1; j += 2) {
+    const p = pts[j];
+    ctx.beginPath();
+    ctx.arc(p.x + sa * p.w * 0.5, p.y - ca * p.w * 0.5, p.w * 0.28, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#b8678f';
+    ctx.beginPath();
+    ctx.arc(p.x + sa * p.w * 0.5, p.y - ca * p.w * 0.5, p.w * 0.12, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#f3c6d8';
+  }
+  ctx.globalAlpha = 1;
+  if (t.flash > 0) {
+    const m = pts[Math.floor(N / 2)];
+    ctx.globalCompositeOperation = 'lighter';
+    glow(m.x, m.y, 30, 'rgba(255, 220, 240, 0.6)');
+    ctx.globalCompositeOperation = 'source-over';
+  }
+}
+
+// --- 소용돌이 (카리브디스) ---
+// 위에서 내려다본 깔때기: 바깥에서 안쪽으로 갈수록 수면이 깊게 꺼지고(가운데가 살짝 아래로 치우쳐 보이게),
+// 거품 줄기가 나선을 그리며 점점 빨라지다 시커먼 구멍으로 사라진다
+function whirlOff(w, r) {                                  // 깊이감: 안쪽 고리일수록 아래쪽으로 조금 밀려 보인다
+  const depth = 1 - r / w.R;
+  return { x: w.x + depth * 4, y: w.y + depth * 10 };
+}
+
+function drawWhirl(w) {
+  // 1) 바깥에서 안쪽으로 점점 짙어지는 물의 고리 (깔때기 벽)
+  const RINGS = 14;
+  for (let i = 0; i < RINGS; i++) {
+    const r = w.R * (1 - i / RINGS) + 2;
+    const o = whirlOff(w, r);
+    const t = i / RINGS;
+    const cr = Math.round(18 - t * 16), cg = Math.round(78 - t * 68), cb = Math.round(108 - t * 88);
+    ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (i === 0 ? 0.25 : 0.55 + t * 0.4) + ')';
+    ctx.beginPath();
+    ctx.ellipse(o.x, o.y, r, r * 0.96, 0, 0, TAU);
+    ctx.fill();
+  }
+  // 2) 깔때기 벽의 빛과 그림자 (위쪽 벽은 햇빛을 받아 밝고, 아래쪽 벽은 어둡다)
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(w.x, w.y, w.R * 0.75, 0, TAU);
+  ctx.clip();
+  const lg = ctx.createLinearGradient(w.x, w.y - w.R * 0.75, w.x, w.y + w.R * 0.75);
+  lg.addColorStop(0, 'rgba(120, 200, 220, 0)');
+  lg.addColorStop(0.35, 'rgba(110, 190, 215, 0.22)');
+  lg.addColorStop(0.55, 'rgba(0, 0, 0, 0)');
+  lg.addColorStop(1, 'rgba(0, 5, 15, 0.35)');
+  ctx.fillStyle = lg;
+  ctx.fillRect(w.x - w.R, w.y - w.R, w.R * 2, w.R * 2);
+  ctx.restore();
+
+  // 3) 소용돌이치는 물살 줄기 (나선으로 휘어지며 안쪽으로)
+  ctx.lineCap = 'round';
+  for (const st of w.streaks) {
+    const fadeIn = Math.min(1, (w.R - st.r) / 25), fadeOut = Math.min(1, (st.r - w.core) / 25);
+    const al = st.al * fadeIn * fadeOut;
+    if (al <= 0.02) continue;
+    const span = st.len * (0.5 + 30 / (st.r + 20));
+    ctx.strokeStyle = 'rgba(225, 248, 255, ' + al + ')';
+    ctx.lineWidth = st.w * (0.5 + st.r / w.R);
+    ctx.beginPath();
+    for (let j = 0; j <= 8; j++) {
+      const f = j / 8;
+      const a = st.a - span * f;                           // 꼬리 쪽은 조금 더 바깥 → 나선
+      const r = st.r * (1 + 0.12 * f);
+      const o = whirlOff(w, r);
+      const x = o.x + Math.cos(a) * r, y = o.y + Math.sin(a) * r * 0.96;
+      if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  // 4) 굵은 나선 물마루 4줄기
+  for (let i = 0; i < 4; i++) {
+    const base = i * TAU / 4 + w.rot * 1.6;
+    let prev = null;
+    for (let j = 0; j <= 30; j++) {
+      const f = j / 30;
+      const r = w.R * (0.9 - f * 0.78);
+      const a = base + Math.log(w.R / r) * 2.6;
+      const o = whirlOff(w, r);
+      const pt = { x: o.x + Math.cos(a) * r, y: o.y + Math.sin(a) * r * 0.96 };
+      if (prev) {
+        ctx.strokeStyle = 'rgba(200, 240, 250, ' + (0.5 * Math.sin(f * Math.PI)) + ')';
+        ctx.lineWidth = 1 + 4 * (1 - f);
+        ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(pt.x, pt.y); ctx.stroke();
+      }
+      prev = pt;
+    }
+  }
+  // 5) 가장자리의 하얀 거품 띠 (일렁이며 돈다)
+  for (let i = 0; i < 56; i++) {
+    const a = i * TAU / 56 + w.rot * 0.5;
+    const r = w.R * (0.86 + 0.06 * Math.sin(i * 1.9 + tick * 0.08));
+    ctx.fillStyle = 'rgba(240, 252, 255, ' + (0.35 + 0.3 * Math.sin(i * 3.1 + tick * 0.1)) + ')';
+    ctx.beginPath();
+    ctx.arc(w.x + Math.cos(a) * r, w.y + Math.sin(a) * r * 0.96, 1 + (i % 3) * 0.8, 0, TAU);
+    ctx.fill();
+  }
+  ctx.lineCap = 'butt';
+  // 6) 빨려 들어가는 난파선 잔해 (안쪽으로 갈수록 작아지며 깊이 가라앉는다)
+  for (const b of w.debris) {
+    const o = whirlOff(w, b.r);
+    const x = o.x + Math.cos(b.a) * b.r, y = o.y + Math.sin(b.a) * b.r * 0.96;
+    const sc = Math.max(0.2, Math.min(1, (b.r - w.core) / 50));
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(b.a + Math.PI / 2);
+    ctx.globalAlpha = 0.3 + 0.65 * sc;
+    if (b.kind === 0) { ctx.fillStyle = '#7a4f2a'; ctx.fillRect(-8 * sc, -2 * sc, 16 * sc, 4 * sc); }
+    else if (b.kind === 1) { ctx.fillStyle = '#5c3b20'; ctx.beginPath(); ctx.arc(0, 0, 4.5 * sc, 0, TAU); ctx.fill(); }
+    else { ctx.strokeStyle = '#a8743f'; ctx.lineWidth = 2 * sc; ctx.beginPath(); ctx.moveTo(0, -8 * sc); ctx.lineTo(0, 8 * sc); ctx.stroke(); }
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+  // 7) 바닥 모를 구멍과, 그 둘레에 피어오르는 물안개
+  const o = whirlOff(w, w.core);
+  const hg = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, w.core + 12);
+  hg.addColorStop(0, 'rgba(0, 0, 0, 1)');
+  hg.addColorStop(0.6, 'rgba(0, 4, 10, 0.95)');
+  hg.addColorStop(1, 'rgba(0, 10, 20, 0)');
+  ctx.fillStyle = hg;
+  ctx.beginPath(); ctx.arc(o.x, o.y, w.core + 12, 0, TAU); ctx.fill();
+  ctx.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < 6; i++) {
+    const a = -w.rot * 3 + i * TAU / 6;
+    glow(o.x + Math.cos(a) * (w.core + 5), o.y + Math.sin(a) * (w.core + 5), 7, 'rgba(120, 200, 220, 0.25)');
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+// --- 세이렌 ---
+function drawSirenArea(s) {
+  // 영역 표시는 없다. 노래가 들릴 때만 세이렌 주변이 분홍빛으로 빛난다
+  if (song.phase === 'quiet') return;
+  const k = song.phase === 'singing' ? 1 : 0.4;
+  ctx.globalCompositeOperation = 'lighter';
+  glow(s.x, s.y, 90 + Math.sin(tick * 0.1) * 10, 'rgba(255, 110, 190, ' + (0.22 * k) + ')');
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+const SIREN_ROCK = [1, 0.9, 1.05, 0.95, 0.85, 1, 0.92, 1.04, 0.9, 0.97];
+function drawSiren(s) {
+  drawRock({ x: s.x, y: s.y, r: 18, shape: SIREN_ROCK, phase: 0, algae: [] });
+  const bx = s.x, by = s.y - 4;
+  ctx.globalCompositeOperation = 'lighter';
+  glow(bx, by - 8, 18, 'rgba(255, 150, 210, 0.45)');
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = '#3fb6a0';
+  ctx.beginPath();
+  ctx.ellipse(bx + 5, by + 2, 7, 3.5, 0.4, 0, TAU);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(bx + 11, by + 5);
+  ctx.lineTo(bx + 16, by + 2);
+  ctx.lineTo(bx + 15, by + 9);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#f2c9b0';
+  ctx.beginPath();
+  ctx.ellipse(bx - 2, by - 5, 3.2, 5.5, -0.2, 0, TAU);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(bx - 3, by - 13, 3.4, 0, TAU);
+  ctx.fill();
+  const sway = Math.sin(tick * 0.05) * 2;
+  ctx.fillStyle = '#e892bf';
+  ctx.beginPath();
+  ctx.moveTo(bx - 6, by - 15);
+  ctx.quadraticCurveTo(bx - 3, by - 19, bx + 1, by - 15);
+  ctx.quadraticCurveTo(bx + 6 + sway, by - 8, bx + 3 + sway, by - 1);
+  ctx.quadraticCurveTo(bx, by - 8, bx - 1, by - 12);
+  ctx.closePath();
+  ctx.fill();
+}
+
+// --- 트로이 목마 (선체 수리 아이템) ---
+function drawHorse(h) {
+  const x = h.x, y = h.y + Math.sin(h.bob) * 2;
+  ctx.globalCompositeOperation = 'lighter';
+  glow(x, y, 24, 'rgba(255, 210, 120, 0.25)');
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = 'rgba(0, 20, 30, 0.25)';                  // 물에 비친 그림자 (흰 원 대신)
+  ctx.beginPath();
+  ctx.ellipse(x + 2, y + 11, 13, 4, 0, 0, TAU);
+  ctx.fill();
+
+  ctx.save();
+  ctx.translate(x, y);
+  const wood = ['#c98a4b', '#7a4a22'];
+  ctx.fillStyle = '#5a3a22';                                // 바퀴 달린 받침대
+  ctx.fillRect(-11, 6, 22, 3);
+  ctx.fillStyle = '#3b2716';
+  for (const wx of [-8, 8]) {
+    ctx.beginPath();
+    ctx.arc(wx, 10, 2.4, 0, TAU);
+    ctx.fill();
+  }
+  ctx.strokeStyle = wood[1];                                // 다리 네 개
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (const lx of [-7, -4, 4, 7]) {
+    ctx.moveTo(lx, 1);
+    ctx.lineTo(lx, 6);
+  }
+  ctx.stroke();
+  const g = ctx.createLinearGradient(0, -12, 0, 2);
+  g.addColorStop(0, wood[0]);
+  g.addColorStop(1, wood[1]);
+  ctx.fillStyle = g;
+  ctx.beginPath();                                          // 몸통
+  ctx.ellipse(0, -1, 9, 4.5, 0, 0, TAU);
+  ctx.fill();
+  ctx.beginPath();                                          // 목과 머리
+  ctx.moveTo(5, -3);
+  ctx.lineTo(8, -12);
+  ctx.lineTo(13, -11);
+  ctx.lineTo(13, -8);
+  ctx.lineTo(10, -8);
+  ctx.lineTo(9, -2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = wood[1];                                  // 갈기
+  ctx.beginPath();
+  ctx.moveTo(7, -4);
+  ctx.lineTo(8, -12);
+  ctx.lineTo(6, -11);
+  ctx.lineTo(5, -4);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = wood[1];                                // 꼬리
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(-9, -2);
+  ctx.quadraticCurveTo(-13, 0, -12, 4);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(40, 20, 5, 0.35)';                // 나무 판자 결
+  ctx.lineWidth = 0.6;
+  ctx.beginPath();
+  ctx.moveTo(-7, -2);
+  ctx.lineTo(7, -2);
+  ctx.moveTo(-6, 1);
+  ctx.lineTo(6, 1);
+  ctx.stroke();
+  ctx.fillStyle = '#111';                                   // 눈
+  ctx.beginPath();
+  ctx.arc(11, -10, 0.7, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+}
+
+// --- 이타카 섬 ---
+function drawIthaca(x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(s, s);
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 200, 128, 0, 0, TAU);
+  ctx.stroke();
+  ctx.fillStyle = '#dcc690';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 190, 120, 0, 0, TAU);
+  ctx.fill();
+  const g = ctx.createRadialGradient(-40, -30, 10, 0, 0, 180);
+  g.addColorStop(0, '#7fae62');
+  g.addColorStop(1, '#4b7a3f');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.ellipse(0, -6, 172, 104, 0, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(40, 80, 35, 0.55)';
+  ctx.beginPath(); ctx.ellipse(-60, -30, 60, 36, -0.3, 0, TAU); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(70, -45, 50, 30, 0.2, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#4f7d3a';
+  for (const [tx, ty] of [[-120, 10], [-100, 30], [110, 10], [130, -10], [-20, -70], [20, -78]]) {
+    ctx.beginPath(); ctx.arc(tx, ty, 6, 0, TAU); ctx.fill();
+  }
+  for (const [hx, hy] of [[-30, 40], [-10, 46], [12, 38], [30, 50], [0, 20]]) {
+    ctx.fillStyle = '#f4efe4';
+    ctx.fillRect(hx - 6, hy - 5, 12, 10);
+    ctx.fillStyle = '#c0583e';
+    ctx.fillRect(hx - 6, hy - 5, 12, 3);
+  }
+  ctx.strokeStyle = '#8a6a44';
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.moveTo(0, 100);
+  ctx.lineTo(0, 132);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// --- 효과 그리기 ---
+function drawParticles(layer) {
+  for (const p of particles) {
+    const below = p.kind === 'foam' || p.kind === 'soul';
+    if ((layer === 'below') !== below) continue;
+    const k = p.t / p.life;
+    if (p.kind === 'foam') {
+      ctx.fillStyle = 'rgba(255, 255, 255, ' + (0.45 * (1 - k)) + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size + p.t * 0.12, 0, TAU);
+      ctx.fill();
+    } else if (p.kind === 'soul') {                          // 저승에서 떠오르는 넋
+      ctx.globalCompositeOperation = 'lighter';
+      glow(p.x + Math.sin(p.t * 0.05) * 6, p.y, 6, 'rgba(150, 255, 200, ' + (0.4 * Math.sin(k * Math.PI)) + ')');
+      ctx.globalCompositeOperation = 'source-over';
+    } else if (p.kind === 'note') {
+      ctx.globalAlpha = 1 - k;
+      ctx.fillStyle = p.color;
+      ctx.font = '700 ' + p.size + 'px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('♪', p.x, p.y);
+      ctx.globalAlpha = 1;
+    } else if (p.kind === 'spark') {
+      ctx.globalAlpha = 1 - k;
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, TAU);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = 1;
+    } else {
+      ctx.globalAlpha = 1 - k;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+      ctx.globalAlpha = 1;
+    }
+  }
+}
+
+function drawRings() {
+  for (const r of rings) {
+    if (r.t < 0) continue;
+    const k = r.t / r.life;
+    if (r.fire) {
+      ctx.globalCompositeOperation = 'lighter';
+      glow(r.x, r.y, r.r * (0.5 + k), 'rgba(255, 170, 80, ' + (0.7 * (1 - k)) + ')');
+      ctx.globalCompositeOperation = 'source-over';
+    } else {
+      ctx.globalAlpha = 1 - k;
+      ctx.strokeStyle = r.color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(r.x, r.y, r.r * (0.3 + k), r.r * (0.3 + k) * 0.7, 0, 0, TAU);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+  }
+}
+
+function drawPopups() {
+  for (const p of popups) {
+    ctx.globalAlpha = Math.min(1, (55 - p.t) / 20);
+    drawText(p.text, p.x, p.y, FONT_KR(14, 700), p.color, 'center', 6);
+    ctx.globalAlpha = 1;
+  }
+}
+
+// --- 태풍에 휩쓸리는 연출 ---
+function drawBlown() {
+  const k = 1 - blownTimer / 150;
+  ctx.save();
+  ctx.translate(W / 2, H / 2);
+  ctx.lineCap = 'round';
+  for (let i = 0; i < 10; i++) {
+    const r = 40 + i * 30;
+    const start = tick * (0.08 + i * 0.01) + i;
+    ctx.strokeStyle = 'rgba(235, 240, 250, ' + (0.15 + k * 0.4) + ')';
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.arc(0, 0, r, start, start + Math.PI * 0.8);
+    ctx.stroke();
+  }
+  ctx.restore();
+  ctx.fillStyle = 'rgba(220, 230, 245, ' + Math.max(0, (k - 0.6) * 2.2) + ')';
+  ctx.fillRect(0, 0, W, H);
+  panel(W / 2 - 170, H / 2 - 50, 340, 96);
+  drawText('태풍에 휩쓸렸다!', W / 2, H / 2 - 8, FONT_KR(26, 700), '#ffd07a', 'center', 10);
+  drawText(mode === 'easy' ? '칼립소의 섬 처음으로 되돌아간다…' : '모든 것을 잃고 처음 바다로 되돌아간다…', W / 2, H / 2 + 24, FONT_KR(14, 500), '#d6e4ec');
+}
+
+// --- 상단 정보판 ---
+function drawHUD() {
+  const bar = ctx.createLinearGradient(0, 0, 0, 80);
+  bar.addColorStop(0, 'rgba(3, 15, 26, 0.9)');
+  bar.addColorStop(1, 'rgba(3, 15, 26, 0)');
+  ctx.fillStyle = bar;
+  ctx.fillRect(0, 0, W, 80);
+
+  drawText('SCORE' + (mode === 'easy' ? '  · 쉬운 버전' : ''), 16, 18, FONT_KR(10, 700), '#8fb6c9', 'left');
+  drawText(String(Math.floor(score)).padStart(5, '0'), 16, 39, FONT_EN(19, 700), '#ffffff', 'left');
+  drawText('BEST', W / 2, 18, FONT_EN(10, 700), '#8fb6c9');
+  drawText(String(Math.max(Math.floor(score), highScore)).padStart(5, '0'), W / 2, 39, FONT_EN(19, 700), '#e9c46a');
+
+  const hp = Math.max(0, player ? player.hull : SETTINGS.hull);
+  drawText(poisoned ? 'HULL · 저주 ×' + poisonStack : 'HULL', W - 16, 18, FONT_EN(10, 700), poisoned ? '#d6a6ff' : '#8fb6c9', 'right');
+  const bx = W - 116, by = 28, bw = 100, bh = 9;
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.fillRect(bx, by, bw, bh);
+  ctx.fillStyle = poisoned ? '#b77dff' : hp > 60 ? '#7bd389' : hp > 30 ? '#f4c95d' : '#ef6f6c';
+  ctx.fillRect(bx, by, bw * hp / SETTINGS.hull, bh);
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(bx, by, bw, bh);
+
+  // 출발 → 이타카 항해 진행 (해역 경계마다 눈금)
+  const p = progress();
+  const x0 = 60, x1 = W - 60, y = 56;
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.fillRect(x0, y - 1.5, x1 - x0, 3);
+  ctx.fillStyle = '#e9c46a';
+  ctx.fillRect(x0, y - 1.5, (x1 - x0) * p, 3);
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+  let acc = 0, total = 0;
+  for (let i = 0; i < STAGES.length; i++) total += stageLength(i);
+  for (let i = 0; i < STAGES.length - 1; i++) {
+    acc += stageLength(i);
+    ctx.fillRect(x0 + (x1 - x0) * acc / total - 0.5, y - 4, 1, 8);
+  }
+  ctx.fillStyle = '#c9a36b';
+  ctx.beginPath(); ctx.arc(x0 - 8, y, 4, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#7fae62';
+  ctx.beginPath(); ctx.arc(x1 + 8, y, 4, 0, TAU); ctx.fill();
+  const mx = x0 + (x1 - x0) * p;
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.moveTo(mx + 6, y);
+  ctx.lineTo(mx - 3, y - 4);
+  ctx.lineTo(mx - 3, y + 4);
+  ctx.closePath();
+  ctx.fill();
+  drawText('트로이', x0 - 8, 74, FONT_KR(9, 500), '#c9a36b');
+  drawText('이타카', x1 + 8, 74, FONT_KR(9, 500), '#9fd38a');
+  drawText((stage + 1) + '/' + STAGES.length + '  ' + STAGES[stage].name, W / 2, 74, FONT_KR(11, 700), '#d6e9f3');
+  if (player && STAGES[stage].event === 'home' && !arriving) drawAxeTally();
+
+  // 부스터 게이지 (왼쪽 아래, 바람 위)
+  ctx.fillStyle = 'rgba(3, 15, 26, 0.6)';
+  ctx.fillRect(12, H - 68, 96, 26);
+  drawText('부스터', 34, H - 51, FONT_KR(11, 700), boosting ? '#ffe7a3' : '#bcd7e6');
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.fillRect(58, H - 60, 44, 8);
+  ctx.fillStyle = boosting ? '#ffd27a' : boost > 15 ? '#8fe3ff' : '#6b7c88';
+  ctx.fillRect(58, H - 60, 44 * boost / 100, 8);
+
+  // 바람 (왼쪽 아래)
+  ctx.fillStyle = 'rgba(3, 15, 26, 0.6)';
+  ctx.fillRect(12, H - 38, 96, 26);
+  drawText('바람', 30, H - 21, FONT_KR(11, 700), '#bcd7e6');
+  const cx = 74, cy = H - 25, len = 6 + Math.min(1.5, Math.abs(windX)) * 18, dir = windX >= 0 ? 1 : -1;
+  ctx.strokeStyle = '#e8f6ff';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(cx - dir * len / 2, cy);
+  ctx.lineTo(cx + dir * len / 2, cy);
+  ctx.lineTo(cx + dir * len / 2 - dir * 5, cy - 4);
+  ctx.moveTo(cx + dir * len / 2, cy);
+  ctx.lineTo(cx + dir * len / 2 - dir * 5, cy + 4);
+  ctx.stroke();
+
+  // 남은 거리 (오른쪽 아래)
+  ctx.fillStyle = 'rgba(3, 15, 26, 0.6)';
+  ctx.fillRect(W - 158, H - 38, 146, 26);
+  if (STAGES[stage].event === 'home' && !arriving) drawText('남은 도끼 ' + (SETTINGS.axeCount - axesHit) + '개', W - 85, H - 21, FONT_KR(11, 700), '#ffe08a');
+  else drawText('이타카까지 ' + leagueText(), W - 85, H - 21, FONT_KR(11, 700), '#bcd7e6');
+}
+
+// --- 시작 화면 ---
+const MODE_BOX_Y = 372, MODE_BOX_H = 62;
+
+function drawStartScreen() {
+  drawShip(W / 2, H - 62 + Math.sin(tick * 0.04) * 4, { tilt: Math.sin(tick * 0.02) * 0.06, oar: tick * 0.12, scale: 1.5 });
+
+  drawText('ODYSSEUS', W / 2, 190, FONT_EN(52, 900), '#f3e6c4', 'center', 18);
+  drawText('귀향의 항해', W / 2, 228, FONT_KR(20, 700), '#e9c46a', 'center', 8);
+  drawText('트로이 전쟁은 끝났다.', W / 2, 270, FONT_KR(14, 400), '#d6e4ec');
+  drawText('신들의 시련이 기다리는 아홉 바다를 건너', W / 2, 292, FONT_KR(14, 400), '#d6e4ec');
+  drawText('고향 이타카로 돌아가라!', W / 2, 314, FONT_KR(14, 400), '#d6e4ec');
+
+  // 버전 고르기
+  const boxes = [
+    { m: 'easy', x: W / 2 - 160, title: '쉬운 버전', sub: '난파해도 그 바다부터 다시', color: '#9ff0b4' },
+    { m: 'normal', x: W / 2 + 6, title: '일반 버전', sub: '난파하면 처음 바다부터', color: '#ffd07a' },
+  ];
+  for (const bx of boxes) {
+    const on = mode === bx.m;
+    const r = 10, x = bx.x, y = MODE_BOX_Y, w = 154, h = MODE_BOX_H;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+    ctx.fillStyle = on ? 'rgba(10, 34, 50, 0.92)' : 'rgba(6, 20, 32, 0.6)';
+    ctx.fill();
+    ctx.strokeStyle = on ? bx.color : 'rgba(255, 255, 255, 0.15)';
+    ctx.lineWidth = on ? 2 : 1;
+    ctx.stroke();
+    ctx.globalAlpha = on ? 1 : 0.45;
+    drawText((on ? '▶ ' : '') + bx.title, x + w / 2, y + 26, FONT_KR(16, 700), bx.color);
+    drawText(bx.sub, x + w / 2, y + 47, FONT_KR(11, 500), '#d6e4ec');
+    ctx.globalAlpha = 1;
+  }
+  drawText(isTouch ? '상자를 터치해 버전 고르기' : '← →  버전 고르기', W / 2, MODE_BOX_Y + MODE_BOX_H + 18, FONT_KR(11, 500), '#8fb6c9');
+  blinkText(isTouch ? '빈 곳을 터치해 출항' : 'PRESS SPACE TO SET SAIL', MODE_BOX_Y + MODE_BOX_H + 44);
+  drawText('BEST (' + (mode === 'easy' ? '쉬운' : '일반') + ')  ' + String(highScore).padStart(5, '0'), W / 2, MODE_BOX_Y + MODE_BOX_H + 68, FONT_KR(12, 700), '#e9c46a');
+}
+
+// --- 귀환 성공 화면 ---
+function drawVictoryScreen() {
+  drawIthaca(W / 2, 220, 1);
+  drawShip(W / 2, 400 + Math.sin(tick * 0.05) * 3, { oar: tick * 0.12, scale: 1.3 });
+  drawText('HOME AT LAST', W / 2, 478, FONT_EN(30, 900), '#ffe7a3', 'center', 16);
+  drawText('이타카 귀환 성공!', W / 2, 512, FONT_KR(20, 700), '#ffffff');
+  drawText('SCORE  ' + Math.floor(score) + '     BEST  ' + highScore, W / 2, 546, FONT_EN(14, 700), '#e9c46a');
+  drawText(mode === 'easy' ? '쉬운 버전' : '일반 버전', W / 2, 568, FONT_KR(12, 700), mode === 'easy' ? '#9ff0b4' : '#ffd07a');
+  blinkText(isTouch ? '화면을 터치해 다시 출항' : 'PRESS SPACE TO SAIL AGAIN', 596);
+  drawText(isTouch ? '[ 여기를 터치: 버전 다시 고르기 ]' : 'M  버전 다시 고르기', W / 2, 620, FONT_KR(11, 500), '#8fb6c9');
+}
+
+// --- 글자와 패널 도우미 ---
+function drawText(text, x, y, font, color, align = 'center', glowSize = 0) {
+  ctx.font = font;
+  ctx.textAlign = align;
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = color;
+  if (glowSize > 0) {
+    ctx.shadowColor = color;
+    ctx.shadowBlur = glowSize;
+  }
+  ctx.fillText(text, x, y);
+  ctx.shadowBlur = 0;
+}
+
+function blinkText(text, y) {
+  ctx.globalAlpha = 0.55 + 0.45 * Math.sin(tick * 0.08);
+  drawText(text, W / 2, y, /[가-힣]/.test(text) ? FONT_KR(14, 700) : FONT_EN(14, 700), '#ffffff', 'center', 8);
+  ctx.globalAlpha = 1;
+}
+
+function dimScreen() {
+  ctx.fillStyle = 'rgba(2, 10, 18, 0.6)';
+  ctx.fillRect(0, 0, W, H);
+}
+
+function panel(x, y, w, h) {
+  const r = 12;
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(6, 20, 32, 0.88)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(233, 196, 106, 0.35)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+}
+
+
+// ⑦ 반복
+// 한 번의 계산(1/60초 분량)
+function step() {
+  if (state !== 'paused') {
+    tick++;
+    for (const w of waves) {
+      w.y += SETTINGS.sailSpeed;
+      w.x += windX * 0.3;
+      if (w.y > H + 10) { w.y = -10; w.x = rand(0, W); }
+      if (w.x < -15) w.x = W + 15;
+      if (w.x > W + 15) w.x = -15;
+    }
+    for (const g of glitters) {
+      g.y += SETTINGS.sailSpeed;
+      if (g.y > H) { g.y = 0; g.x = rand(0, W); }
+    }
+    shake *= 0.88;
+    if (redFlash > 0) redFlash--;
+    if (whiteFlash > 0) whiteFlash--;
+    updateEffects();
+  }
+  if (state === 'playing') update();
+  if (state === 'blown') {
+    blownTimer--;
+    if (blownTimer <= 0) {
+      if (mode === 'easy') {                               // 쉬운 버전: 칼립소의 섬 처음으로
+        startGame(stage);
+        bannerNote = '태풍에 휩쓸려 이 바다의 처음으로 되돌아왔다…';
+      } else {
+        startGame(0);                                      // 일반 버전: 점수도 0, 첫 해역부터 다시
+        bannerNote = '태풍에 휩쓸려 처음 바다로 되돌아왔다…';
+      }
+    }
+  }
+}
+
+// ⑦ 반복 — 화면이 1초에 몇 번 그려지든(60Hz 모니터, 120Hz 휴대폰…) 게임 계산은 항상 1초에 60번.
+//    휴대폰(터치 화면)은 touchGameSpeed만큼 느리게 흐른다 (0.75면 1초에 45번 계산 → 모든 것이 컴퓨터의 0.75배 속도)
+loadResume();
+let lastTime = null, timeAcc = 0;
+function loop(ts) {
+  if (lastTime === null) lastTime = ts;
+  timeAcc += Math.min(ts - lastTime, 250);                 // 다른 탭에 다녀와도 한꺼번에 몰아서 계산하지 않게
+  lastTime = ts;
+  const stepMs = 1000 / (60 * (isTouch ? SETTINGS.touchGameSpeed : 1));
+  let n = 0;
+  while (timeAcc >= stepMs && n < 6) { step(); timeAcc -= stepMs; n++; }
+  if (n === 6) timeAcc = 0;
+  draw();
+  requestAnimationFrame(loop);
+}
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
